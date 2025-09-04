@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-#     "griffe>=1.8.0",
+#     "griffe>=1.11.2",
 #     "typing-extensions",
 # ]
 # ///
@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any, Generator
 
 import griffe
-from _griffe.extensions.dataclasses import _set_dataclass_init
+from griffe._internal.extensions.dataclasses import _set_dataclass_init
 from typing_extensions import TypeAlias
 
 logger = griffe.get_logger(__name__)

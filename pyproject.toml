@@ -60,7 +60,7 @@ test = [
 docs = [
     "mkdocs-material[imaging]>=9.5.43",
     "mkdocstrings-python>=1.13.0",
-    "griffe>=1.8.0",
+    "griffe>=1.11.2",
 ]
 
 [project.scripts]

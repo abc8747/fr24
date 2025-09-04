@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-#     "griffe>=1.8.0",
+#     "griffe>=1.11.2",
 #     "typing-extensions",
 #     "typer"
 # ]
