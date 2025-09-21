@@ -95,6 +95,8 @@ class FlightListParams:
     """Number of results per page - use `100` if authenticated."""
     timestamp: IntoTimestamp | Literal["now"] | None = "now"
     """Show flights with ATD before this Unix timestamp"""
+    filter_by: Literal["historic"] | None = None
+    """If `historic`, do not return scheduled or live flights"""
 
     def __post_init__(self) -> None:
         if self.reg is None and self.flight is None:
@@ -147,7 +149,8 @@ async def flight_list(
         "page": params.page,
         "limit": params.limit,
     }
-
+    if params.filter_by is not None:
+        request_data["filterBy"] = params.filter_by
     if timestamp is not None:
         request_data["timestamp"] = timestamp
 

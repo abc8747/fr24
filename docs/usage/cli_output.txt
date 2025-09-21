@@ -59,6 +59,8 @@ Options:
                                   authenticated.  [default: 10]
   --timestamp TIMESTAMP_S         Show flights with ATD before this Unix
                                   timestamp  [default: now]
+  --filter-by [historic]          If `historic`, do not return scheduled or
+                                  live flights
   -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
@@ -85,6 +87,8 @@ Options:
                                   authenticated.  [default: 10]
   --timestamp TIMESTAMP_S         Show flights with ATD before this Unix
                                   timestamp  [default: now]
+  --filter-by [historic]          If `historic`, do not return scheduled or
+                                  live flights
   --delay INTEGER                 Delay between requests in seconds.
                                   [default: 5]
   --max-pages INTEGER             Maximum number of pages to fetch.

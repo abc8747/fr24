@@ -211,6 +211,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
         page: int = 1,
         limit: int = 10,
         timestamp: IntoTimestamp | Literal["now"] | None = "now",
+        filter_by: Literal["historic"] | None = None,
     ) -> FlightListResult:
         """Fetch the flight list.
 
@@ -219,9 +220,15 @@ class FlightListService(SupportsFetch[FlightListParams]):
         :param page: Page number
         :param limit: Number of results per page - use `100` if authenticated.
         :param timestamp: Show flights with ATD before this Unix timestamp
+        :param filter_by: If `historic`, do not return scheduled or live flights
         """
         params = FlightListParams(
-            reg=reg, flight=flight, page=page, limit=limit, timestamp=timestamp
+            reg=reg,
+            flight=flight,
+            page=page,
+            limit=limit,
+            timestamp=timestamp,
+            filter_by=filter_by,
         )
         response = await flight_list(
             self._factory.http.client,
@@ -251,6 +258,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
         page: int = 1,
         limit: int = 10,
         timestamp: IntoTimestamp | Literal["now"] | None = "now",
+        filter_by: Literal["historic"] | None = None,
         delay: int = 5,
         max_pages: int | None = None,
     ) -> AsyncIterator[FlightListResult]:
@@ -261,6 +269,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
         :param page: Page number
         :param limit: Number of results per page - use `100` if authenticated.
         :param timestamp: Show flights with ATD before this Unix timestamp
+        :param filter_by: If `historic`, do not return scheduled or live flights
         :param delay: Delay between requests in seconds.
         :param max_pages: Maximum number of pages to fetch.
         """
@@ -275,6 +284,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
                 page=page,
                 limit=limit,
                 timestamp=current_timestamp,
+                filter_by=filter_by,
             )
             response_dict = result.to_dict()
             # shouldn't happen, but stop in case we overshot
