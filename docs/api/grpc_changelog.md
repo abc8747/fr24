@@ -5,6 +5,9 @@ All known changes of the gRPC messages are documented here.
 Client versions are usually updated every 5 days, most frequently on Mon/Tue 10am.
 This list is not exhaustive.
 
+## `25.261.0637` (2025-09-18)
+- add field: `FlightDetailsResponse.positionBuffer`, `FollowFlightResponse.positionBuffer`, `TrailPoint.source`
+
 ## `25.135.1104` (2025-05-15)
 - add field: `Icon.CONC`
 - add message: `FlightProgress`, `FlightDetailsRequest`, `FlightDetailsResponse`, `PlaybackFlightRequest`, `PlaybackFlightResponse`

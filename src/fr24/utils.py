@@ -61,7 +61,7 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_HEADERS = {
     "User-Agent": (
-        "Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0"
+        "Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0"
     ),
     "Accept": "text/html,application/xhtml+xml,application/xml;"
     "q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -73,6 +73,7 @@ DEFAULT_HEADERS = {
     "Sec-Fetch-Dest": "empty",
     "Sec-Fetch-Mode": "cors",
     "Sec-Fetch-Site": "same-site",
+    "Sec-GPC": "1",
     "TE": "trailers",
 }
 

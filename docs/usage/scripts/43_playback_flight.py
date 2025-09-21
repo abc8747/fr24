@@ -16,7 +16,7 @@ from fr24.proto.headers import get_grpc_headers
 async def playback_flight_data() -> PlaybackFlightResponse:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
-        message = PlaybackFlightParams(flight_id=0x3a6d881a, timestamp=1747794900)
+        message = PlaybackFlightParams(flight_id=0x3c500fdb, timestamp=1758467125)
         response = await playback_flight(client, message, headers)
         return parse_data(response.content, PlaybackFlightResponse).unwrap()
 
@@ -27,83 +27,88 @@ data
 """
 # --8<-- [start:output0]
 aircraft_info {
-  icao_address: 7867035
-  type: "A359"
-  icon: A330
-  full_description: "Airbus A350-941"
+  icao_address: 7866977
+  reg: "B-KQM"
+  type: "B77W"
+  icon: B777
+  full_description: "Boeing 777-367(ER)"
   images_list {
-    url: "https://www.jetphotos.com/photo/11633658"
-    copyright: "lix1aolu"
-    thumbnail: "https://cdn.jetphotos.com/200/6/850117_1739185739_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/6/850117_1739185739.jpg"
-    large: "https://cdn.jetphotos.com/640/6/850117_1739185739.jpg"
+    url: "https://www.jetphotos.com/photo/11825817"
+    copyright: "ZSHC_Linzx"
+    thumbnail: "https://cdn.jetphotos.com/200/5/1291679_1756473618_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/5/1291679_1756473618.jpg"
+    large: "https://cdn.jetphotos.com/640/5/1291679_1756473618.jpg"
   }
   images_list {
-    url: "https://www.jetphotos.com/photo/11634217"
-    copyright: "Waibibabu"
-    thumbnail: "https://cdn.jetphotos.com/200/6/591483_1739217827_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/6/591483_1739217827.jpg"
-    large: "https://cdn.jetphotos.com/640/6/591483_1739217827.jpg"
+    url: "https://www.jetphotos.com/photo/11813969"
+    copyright: "CAN-Eric"
+    thumbnail: "https://cdn.jetphotos.com/200/5/967682_1755532162_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/5/967682_1755532162.jpg"
+    large: "https://cdn.jetphotos.com/640/5/967682_1755532162.jpg"
   }
   images_list {
-    url: "https://www.jetphotos.com/photo/11620028"
-    copyright: "ZBAA cao"
-    thumbnail: "https://cdn.jetphotos.com/200/6/723478_1737987561_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/6/723478_1737987561.jpg"
-    large: "https://cdn.jetphotos.com/640/6/723478_1737987561.jpg"
+    url: "https://www.jetphotos.com/photo/11803561"
+    copyright: "cc12214"
+    thumbnail: "https://cdn.jetphotos.com/200/6/585221_1754572527_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/6/585221_1754572527.jpg"
+    large: "https://cdn.jetphotos.com/640/6/585221_1754572527.jpg"
   }
   msn_available: true
   age_available: true
-  registered_owners: "Cathay Pacific"
+  registered_owners: "Cathay Pacific (Oneworld Livery)"
   is_country_of_reg_available: true
 }
 schedule_info {
-  flight_number: "CX150"
+  flight_number: "CX251"
   operated_by_id: 57
   painted_as_id: 57
-  origin_id: 431
-  destination_id: 1366
-  scheduled_departure: 1747794900
-  scheduled_arrival: 1747827000
-  actual_departure: 1747796246
-  actual_arrival: 1747826241
-  arr_terminal: "1"
-  baggage_belt: "2"
+  origin_id: 1366
+  destination_id: 1942
+  scheduled_departure: 1758465600
+  scheduled_arrival: 1758516000
+  actual_departure: 1758466901
+  arr_terminal: "3"
 }
 flight_info {
-  flightid: 980256794
-  lat: -27.4022541
-  lon: 153.113098
-  track: 30
-  speed: 1
-  timestamp_ms: 1747794874975
-  on_ground: true
-  callsign: "CPA150"
+  flightid: 1011879899
+  lat: 22.2923298
+  lon: 114.087372
+  track: 173
+  alt: 6325
+  speed: 242
+  timestamp_ms: 1758467118710
+  callsign: "CPA251"
   ems_availability {
+    qnh_availability: true
+    amcp_availability: true
+    oat_availability: true
+    ias_availability: true
+    tas_availability: true
+    mach_availability: true
+    agps_availability: true
+    agpsdiff_availability: true
+    wind_dir_availability: true
+    wind_speed_availability: true
+    rs_availability: true
   }
   squawk_availability: true
   vspeed_availability: true
   airspace_availability: true
-  server_time_ms: 1747895055592
+  server_time_ms: 1758467148386
 }
 flight_trail_list {
-  snapshot_id: 1747794677
-  lat: -27.4009781
-  lon: 153.112823
-  heading: 306
-}
-flight_trail_list {
-  snapshot_id: 1747794731
-  lat: -27.4011135
-  lon: 153.113037
-  spd: 2
-  heading: 312
+  snapshot_id: 1758465991
+  lat: 22.3132782
+  lon: 113.934616
+  heading: 70
 }
 ...
 flight_trail_list {
-  snapshot_id: 1747827307
-  lat: 22.3126259
-  lon: 113.925751
-  heading: 53
+  snapshot_id: 1758467147
+  lat: 22.2578888
+  lon: 114.087273
+  altitude: 6800
+  spd: 267
+  heading: 180
 }
 """

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fr24"
-version = "0.2.0"
+version = "0.2.1"
 description = "Parse gRPC and JSON data from flightradar24"
 authors = [
     { name = "Abraham Cheung", email = "abraham@ylcheung.com" },
@@ -68,7 +68,7 @@ fr24 = 'fr24.cli:app'
 
 [project.optional-dependencies]
 rich = ["loguru", "rich"]
-cli = ["typer>=0.15.1"]
+cli = ["typer>=0.19"]
 tui = ["textual>=1.0.0", "pandas>=2.2.3"]
 
 

@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from fr24.proto import _common_pb2 as fr24_dot_proto_dot___common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x66r24/proto/_follow_flight.proto\x1a\x18\x66r24/proto/_common.proto\"b\n\x13\x46ollowFlightRequest\x12\x11\n\tflight_id\x18\x01 \x01(\x07\x12\x38\n\x10restriction_mode\x18\x02 \x01(\x0e\x32\x1e._common.RestrictionVisibility\"\xb0\x02\n\x14\x46ollowFlightResponse\x12,\n\raircraft_info\x18\x01 \x01(\x0b\x32\x15._common.AircraftInfo\x12(\n\x0b\x66light_plan\x18\x02 \x01(\x0b\x32\x13._common.FlightPlan\x12,\n\rschedule_info\x18\x03 \x01(\x0b\x32\x15._common.ScheduleInfo\x12\x30\n\x0f\x66light_progress\x18\x04 \x01(\x0b\x32\x17._common.FlightProgress\x12\x30\n\x0b\x66light_info\x18\x05 \x01(\x0b\x32\x1b._common.ExtendedFlightInfo\x12.\n\x11\x66light_trail_list\x18\x06 \x03(\x0b\x32\x13._common.TrailPointb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1f\x66r24/proto/_follow_flight.proto\x1a\x18\x66r24/proto/_common.proto\"b\n\x13\x46ollowFlightRequest\x12\x11\n\tflight_id\x18\x01 \x01(\x07\x12\x38\n\x10restriction_mode\x18\x02 \x01(\x0e\x32\x1e._common.RestrictionVisibility\"\xe2\x02\n\x14\x46ollowFlightResponse\x12,\n\raircraft_info\x18\x01 \x01(\x0b\x32\x15._common.AircraftInfo\x12(\n\x0b\x66light_plan\x18\x02 \x01(\x0b\x32\x13._common.FlightPlan\x12,\n\rschedule_info\x18\x03 \x01(\x0b\x32\x15._common.ScheduleInfo\x12\x30\n\x0f\x66light_progress\x18\x04 \x01(\x0b\x32\x17._common.FlightProgress\x12\x30\n\x0b\x66light_info\x18\x05 \x01(\x0b\x32\x1b._common.ExtendedFlightInfo\x12.\n\x11\x66light_trail_list\x18\x06 \x03(\x0b\x32\x13._common.TrailPoint\x12\x30\n\x0fposition_buffer\x18\x07 \x01(\x0b\x32\x17._common.PositionBufferb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,5 +35,5 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_FOLLOWFLIGHTREQUEST']._serialized_start=61
   _globals['_FOLLOWFLIGHTREQUEST']._serialized_end=159
   _globals['_FOLLOWFLIGHTRESPONSE']._serialized_start=162
-  _globals['_FOLLOWFLIGHTRESPONSE']._serialized_end=466
+  _globals['_FOLLOWFLIGHTRESPONSE']._serialized_end=516
 # @@protoc_insertion_point(module_scope)

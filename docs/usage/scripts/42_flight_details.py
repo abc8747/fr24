@@ -16,7 +16,7 @@ from fr24.proto.headers import get_grpc_headers
 async def flight_details_data() -> FlightDetailsResponse:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
-        params = FlightDetailsParams(flight_id=0x3a7e02c1)
+        params = FlightDetailsParams(flight_id=0x3c500fdb)
         response = await flight_details(client, params, headers)
         return parse_data(response.content, FlightDetailsResponse).unwrap()
 
@@ -27,69 +27,68 @@ data
 """
 # --8<-- [start:output0]
 aircraft_info {
-  icao_address: 7901761
-  reg: "B-LQD"
-  type: "A359"
-  icon: A330
-  full_description: "Airbus A350-941"
+  icao_address: 7866977
+  reg: "B-KQM"
+  type: "B77W"
+  icon: B777
+  full_description: "Boeing 777-367(ER)"
   images_list {
-    url: "https://www.jetphotos.com/photo/11697954"
-    copyright: "David Li"
-    thumbnail: "https://cdn.jetphotos.com/200/5/675179_1744593599_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/5/675179_1744593599.jpg"
-    large: "https://cdn.jetphotos.com/640/5/675179_1744593599.jpg"
+    url: "https://www.jetphotos.com/photo/11825817"
+    copyright: "ZSHC_Linzx"
+    thumbnail: "https://cdn.jetphotos.com/200/5/1291679_1756473618_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/5/1291679_1756473618.jpg"
+    large: "https://cdn.jetphotos.com/640/5/1291679_1756473618.jpg"
   }
   images_list {
-    url: "https://www.jetphotos.com/photo/11703546"
-    copyright: "Michael Eaton"
-    thumbnail: "https://cdn.jetphotos.com/200/6/528687_1745054061_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/6/528687_1745054061.jpg"
-    large: "https://cdn.jetphotos.com/640/6/528687_1745054061.jpg"
+    url: "https://www.jetphotos.com/photo/11813969"
+    copyright: "CAN-Eric"
+    thumbnail: "https://cdn.jetphotos.com/200/5/967682_1755532162_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/5/967682_1755532162.jpg"
+    large: "https://cdn.jetphotos.com/640/5/967682_1755532162.jpg"
   }
   images_list {
-    url: "https://www.jetphotos.com/photo/11682674"
-    copyright: "Dominic Oakes"
-    thumbnail: "https://cdn.jetphotos.com/200/6/649488_1743374705_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/6/649488_1743374705.jpg"
-    large: "https://cdn.jetphotos.com/640/6/649488_1743374705.jpg"
+    url: "https://www.jetphotos.com/photo/11803561"
+    copyright: "cc12214"
+    thumbnail: "https://cdn.jetphotos.com/200/6/585221_1754572527_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/6/585221_1754572527.jpg"
+    large: "https://cdn.jetphotos.com/640/6/585221_1754572527.jpg"
   }
   msn_available: true
   age_available: true
-  registered_owners: "Cathay Pacific"
+  registered_owners: "Cathay Pacific (Oneworld Livery)"
   is_country_of_reg_available: true
 }
 schedule_info {
-  flight_number: "CX748"
+  flight_number: "CX251"
   operated_by_id: 57
   painted_as_id: 57
-  origin_id: 1627
-  destination_id: 1366
-  scheduled_departure: 1748164800
-  scheduled_arrival: 1748212200
-  actual_departure: 1748165560
-  arr_terminal: "1"
+  origin_id: 1366
+  destination_id: 1942
+  scheduled_departure: 1758465600
+  scheduled_arrival: 1758516000
+  actual_departure: 1758466901
+  arr_terminal: "3"
 }
 flight_progress {
-  traversed_distance: 8271718
-  remaining_distance: 2474032
-  elapsed_time: 33428
-  remaining_time: 11700
-  eta: 1748210688
-  great_circle_distance: 10671581
-  mean_flight_time: 44471
-  flight_stage: AIRBORNE
-  delay_status: GREEN
-  progress_pct: 74
+  traversed_distance: 13728
+  remaining_distance: 9652855
+  elapsed_time: 156
+  remaining_time: 51708
+  eta: 1758518765
+  great_circle_distance: 9647791
+  mean_flight_time: 48161
+  flight_stage: ASCENDING
+  delay_status: RED
 }
 flight_info {
-  flightid: 981336769
-  lat: 7.2621026
-  lon: 96.8550873
-  track: 60
-  alt: 41000
-  speed: 446
-  timestamp_ms: 1748198985330
-  callsign: "CPA748"
+  flightid: 1011879899
+  lat: 22.3374939
+  lon: 114.046074
+  track: 99
+  alt: 4975
+  speed: 205
+  timestamp_ms: 1758467055960
+  callsign: "CPA251"
   ems_availability {
     qnh_availability: true
     amcp_availability: true
@@ -101,28 +100,61 @@ flight_info {
     agpsdiff_availability: true
     wind_dir_availability: true
     wind_speed_availability: true
+    rs_availability: true
   }
   squawk_availability: true
   vspeed_availability: true
   airspace_availability: true
-  server_time_ms: 1748198988037
+  server_time_ms: 1758467057331
 }
 flight_plan {
 }
 flight_trail_list {
-  snapshot_id: 1748164567
-  lat: -26.1300163
-  lon: 28.23349
-  heading: 320
+  snapshot_id: 1758465991
+  lat: 22.3132782
+  lon: 113.934616
+  heading: 70
 }
 ...
 flight_trail_list {
-  snapshot_id: 1748198963
-  lat: 7.23896599
-  lon: 96.814743
-  altitude: 41000
-  spd: 445
-  heading: 60
+  snapshot_id: 1758467049
+  lat: 22.3383179
+  lon: 114.039337
+  altitude: 4800
+  spd: 206
+  heading: 91
+}
+position_buffer {
+  recent_positions_list {
+    delta_lat: -45
+    delta_lon: 274
+    delta_ms: 2710
+  }
+  recent_positions_list {
+    delta_lat: -50
+    delta_lon: 324
+    delta_ms: 3180
+  }
+  recent_positions_list {
+    delta_lat: -78
+    delta_lon: 585
+    delta_ms: 5720
+  }
+  recent_positions_list {
+    delta_lat: -86
+    delta_lon: 778
+    delta_ms: 7570
+  }
+  recent_positions_list {
+    delta_lat: -92
+    delta_lon: 976
+    delta_ms: 9540
+  }
+  recent_positions_list {
+    delta_lat: -91
+    delta_lon: 1073
+    delta_ms: 10500
+  }
 }
 # --8<-- [end:output0]
 """

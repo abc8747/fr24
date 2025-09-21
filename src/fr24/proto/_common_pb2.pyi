@@ -1181,6 +1181,7 @@ class TrailPoint(Message):
     SPD_FIELD_NUMBER: int
     HEADING_FIELD_NUMBER: int
     VSPD_FIELD_NUMBER: int
+    SOURCE_FIELD_NUMBER: int
     snapshot_id: int
     """Snapshot ID, likely Unix timestamp in seconds (e.g. `1741356300`)"""
     lat: float
@@ -1197,6 +1198,7 @@ class TrailPoint(Message):
     """
     vspd: int
     """Vertical Speed, feet per minute"""
+    source: DataSource.ValueType
     def __init__(
         self,
         *,
@@ -1207,8 +1209,9 @@ class TrailPoint(Message):
         spd: int = ...,
         heading: int = ...,
         vspd: int = ...,
+        source: DataSource.ValueType = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["altitude", b"altitude", "heading", b"heading", "lat", b"lat", "lon", b"lon", "snapshot_id", b"snapshot_id", "spd", b"spd", "vspd", b"vspd"]) -> None: ...
+    def ClearField(self, field_name: Literal["altitude", b"altitude", "heading", b"heading", "lat", b"lat", "lon", b"lon", "snapshot_id", b"snapshot_id", "source", b"source", "spd", b"spd", "vspd", b"vspd"]) -> None: ...
 
 @final
 class Duration(Message):

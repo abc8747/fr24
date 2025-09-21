@@ -344,6 +344,7 @@ message TrailPoint {
     // Note: despite the name, heading is not transmitted in ADS-B.
     uint32 heading = 6;
     int32 vspd = 7; // Vertical Speed, feet per minute
+    _common.DataSource source = 8;
 }
 
 // NOTE: unused anywhere

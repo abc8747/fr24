@@ -262,13 +262,8 @@ def create_typer_signature(
                     "format",
                     inspect.Parameter.KEYWORD_ONLY,
                     annotation=Annotated[
-                        str,  # `Literal[]` is not yet implemented: https://github.com/tiangolo/typer/pull/429
-                        typer.Option(
-                            "-f",
-                            "--format",
-                            help="Output format",
-                            click_type=click.Choice(get_args(TabularFileFmt)),
-                        ),
+                        TabularFileFmt,
+                        typer.Option("-f", "--format", help="Output format"),
                     ],
                     default=default_fmt,
                 ),
@@ -276,12 +271,9 @@ def create_typer_signature(
                     "when_file_exists",
                     inspect.Parameter.KEYWORD_ONLY,
                     annotation=Annotated[
-                        str,
+                        FileExistsBehaviour,
                         typer.Option(
-                            help="Action when output file path already exists.",
-                            click_type=click.Choice(
-                                get_args(FileExistsBehaviour)
-                            ),
+                            help="Action when output file path already exists."
                         ),
                     ],
                     default="backup",

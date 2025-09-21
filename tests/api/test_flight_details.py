@@ -27,7 +27,7 @@ async def test_flight_details_simple(
 
     df = flight_details_result.to_polars()
     assert df.height == 1
-    assert df.width == 31
+    assert df.width == 32
 
 
 @pytest.mark.anyio

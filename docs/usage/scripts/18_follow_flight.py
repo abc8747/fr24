@@ -35,177 +35,178 @@ await my_follow_flight()
 # --8<-- [start:proto]
 ##### 0 #####
 aircraft_info {
-  icao_address: 5031041
-  type: "B744"
-  icon: B747
-  full_description: "Boeing 747-48EF"
-  service: CARGO
+  icao_address: 7701252
+  reg: "RP-C9903"
+  type: "A321"
+  icon: A320
+  full_description: "Airbus A321-231"
   images_list {
-    url: "https://www.jetphotos.com/photo/11372499"
-    copyright: "R Skywalker"
-    thumbnail: "https://cdn.jetphotos.com/200/5/609890_1717848712_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/5/609890_1717848712.jpg"
-    large: "https://cdn.jetphotos.com/640/5/609890_1717848712.jpg"
+    url: "https://www.jetphotos.com/photo/11825012"
+    copyright: "yajoo"
+    thumbnail: "https://cdn.jetphotos.com/200/5/2378185_1756401937_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/5/2378185_1756401937.jpg"
+    large: "https://cdn.jetphotos.com/640/5/2378185_1756401937.jpg"
   }
   images_list {
-    url: "https://www.jetphotos.com/photo/11358154"
-    copyright: "Tim-Patrick Müller"
-    thumbnail: "https://cdn.jetphotos.com/200/5/1615840_1716633484_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/5/1615840_1716633484.jpg"
-    large: "https://cdn.jetphotos.com/640/5/1615840_1716633484.jpg"
+    url: "https://www.jetphotos.com/photo/11813525"
+    copyright: "Landing HKG"
+    thumbnail: "https://cdn.jetphotos.com/200/6/522343_1755503883_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/6/522343_1755503883.jpg"
+    large: "https://cdn.jetphotos.com/640/6/522343_1755503883.jpg"
   }
   images_list {
-    url: "https://www.jetphotos.com/photo/11337719"
-    copyright: "Siegi N."
-    thumbnail: "https://cdn.jetphotos.com/200/6/417379_1714816605_tb.jpg"
-    medium: "https://cdn.jetphotos.com/400/6/417379_1714816605.jpg"
-    large: "https://cdn.jetphotos.com/640/6/417379_1714816605.jpg"
+    url: "https://www.jetphotos.com/photo/11745327"
+    copyright: "saTrL"
+    thumbnail: "https://cdn.jetphotos.com/200/5/630999_1749204666_tb.jpg"
+    medium: "https://cdn.jetphotos.com/400/5/630999_1749204666.jpg"
+    large: "https://cdn.jetphotos.com/640/5/630999_1749204666.jpg"
   }
   msn_available: true
   age_available: true
-  registered_owners: "Network Aviation"
-}
-flight_plan {
+  registered_owners: "Philippine Airlines"
+  is_country_of_reg_available: true
 }
 schedule_info {
-  flight_number: "CC4400"
-  operated_by_id: 437
+  flight_number: "PR311"
+  operated_by_id: 98
+  painted_as_id: 98
   origin_id: 1366
-  actual_departure: 1720074023
+  destination_id: 2266
+  scheduled_departure: 1758466800
+  scheduled_arrival: 1758475200
+  arr_terminal: "1"
 }
 flight_progress {
-  elapsed_time: 1611
+  traversed_distance: 657
+  remaining_distance: 1143081
+  great_circle_distance: 1143502
+  mean_flight_time: 5886
+  flight_stage: ON_GROUND
 }
 flight_info {
-  flightid: 905705829
-  lat: 21.2512665
-  lon: 112.568764
-  track: 278
-  alt: 31000
-  speed: 512
-  timestamp: 1720075629
-  callsign: "ABD4400"
+  flightid: 1011880908
+  lat: 22.3098583
+  lon: 113.922615
+  track: 160
+  speed: 8
+  timestamp_ms: 1758466956660
+  on_ground: true
+  callsign: "PAL311"
   ems_availability {
-    amcp_availability: true
-    oat_availability: true
-    tas_availability: true
-    mach_availability: true
-    agps_availability: true
-    agpsdiff_availability: true
-    wind_dir_availability: true
-    wind_speed_availability: true
+    rs_availability: true
   }
   squawk_availability: true
-  vspeed_availability: true
   airspace_availability: true
+  server_time_ms: 1758466960115
 }
 flight_trail_list {
-  snapshot_id: 1720073072
-  lat: 22.3014889
-  lon: 113.923706
-  heading: 340
-}
-flight_trail_list {
-  snapshot_id: 1720073114
-  lat: 22.3012848
-  lon: 113.92379
+  snapshot_id: 1758466272
+  lat: 22.3157578
+  lon: 113.932076
   spd: 3
-  heading: 340
+  heading: 177
 }
-
 ...
-  altitude: 31000
-  spd: 512
-  heading: 278
+}
+flight_trail_list {
+  snapshot_id: 1758466950
+  lat: 22.3100777
+  lon: 113.922523
+  spd: 9
+  heading: 160
+}
+position_buffer {
+  recent_positions_list {
+    delta_lat: -5
+    delta_lon: 2
+    delta_ms: 1670
+  }
+  recent_positions_list {
+    delta_lat: -9
+    delta_lon: 3
+    delta_ms: 2610
+  }
+  recent_positions_list {
+    delta_lat: -21
+    delta_lon: 9
+    delta_ms: 6010
+  }
+  recent_positions_list {
+    delta_lat: -47
+    delta_lon: 18
+    delta_ms: 12350
+  }
 }
 
 ##### 1 #####
 schedule_info {
-  flight_number: "CC4400"
-  operated_by_id: 437
+  flight_number: "PR311"
+  operated_by_id: 98
+  painted_as_id: 98
   origin_id: 1366
-  actual_departure: 1720074023
+  destination_id: 2266
+  scheduled_departure: 1758466800
+  scheduled_arrival: 1758475200
+  arr_terminal: "1"
 }
 flight_progress {
-  elapsed_time: 1615
+  traversed_distance: 662
+  remaining_distance: 1143066
+  great_circle_distance: 1143502
+  mean_flight_time: 5886
+  flight_stage: ON_GROUND
 }
 flight_info {
-  flightid: 905705829
-  lat: 21.2530975
-  lon: 112.555733
-  track: 278
-  alt: 31000
-  speed: 512
-  timestamp: 1720075634
-  callsign: "ABD4400"
+  flightid: 1011880908
+  lat: 22.3097286
+  lon: 113.922668
+  track: 160
+  speed: 8
+  timestamp_ms: 1758466960150
+  on_ground: true
+  callsign: "PAL311"
   ems_availability {
-    amcp_availability: true
-    oat_availability: true
-    tas_availability: true
-    mach_availability: true
-    agps_availability: true
-    agpsdiff_availability: true
-    wind_dir_availability: true
-    wind_speed_availability: true
+    rs_availability: true
   }
   squawk_availability: true
-  vspeed_availability: true
   airspace_availability: true
+  server_time_ms: 1758466963120
 }
 
 ##### 2 #####
 schedule_info {
-  flight_number: "CC4400"
-  operated_by_id: 437
+  flight_number: "PR311"
+  operated_by_id: 98
+  painted_as_id: 98
   origin_id: 1366
-  actual_departure: 1720074023
+  destination_id: 2266
+  scheduled_departure: 1758466800
+  scheduled_arrival: 1758475200
+  arr_terminal: "1"
 }
 flight_progress {
-  elapsed_time: 1619
+  traversed_distance: 667
+  remaining_distance: 1143051
+  great_circle_distance: 1143502
+  mean_flight_time: 5886
+  flight_stage: ON_GROUND
 }
 flight_info {
-  flightid: 905705829
-  lat: 21.2530975
-  lon: 112.555733
-  track: 278
-  alt: 31000
-  speed: 512
-  timestamp: 1720075634
-  callsign: "ABD4400"
+  flightid: 1011880908
+  lat: 22.3095818
+  lon: 113.922714
+  track: 160
+  speed: 9
+  timestamp_ms: 1758466963941
+  on_ground: true
+  callsign: "PAL311"
   ems_availability {
-    amcp_availability: true
-    oat_availability: true
-    tas_availability: true
-    mach_availability: true
-    agps_availability: true
-    agpsdiff_availability: true
-    wind_dir_availability: true
-    wind_speed_availability: true
+    rs_availability: true
   }
   squawk_availability: true
-  vspeed_availability: true
   airspace_availability: true
+  server_time_ms: 1758466966122
 }
 
-##### 3 #####
-schedule_info {
-  flight_number: "CC4400"
-  operated_by_id: 437
-  origin_id: 1366
-  actual_departure: 1720074023
-}
-flight_progress {
-  elapsed_time: 1623
-}
-flight_info {
-  flightid: 905705829
-  lat: 21.2557068
-  lon: 112.537407
-  track: 278
-  alt: 31000
-  speed: 512
-  timestamp: 1720075641
-  callsign: "ABD4400"
-...
 # --8<-- [end:proto]
 """

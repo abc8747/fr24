@@ -230,6 +230,7 @@ class TrailPointRecord(TypedDict):
     ground_speed: Annotated[Union[int, None], DType(pl.Int16())]
     track: Annotated[Union[int, None], DType(pl.UInt16())]
     vertical_speed: Annotated[Union[int, None], DType(pl.Int16())]
+    source: Annotated[Union[int, None], DType(pl.UInt8())]
 
 
 trail_point_schema = to_schema(TrailPointRecord)
@@ -293,7 +294,10 @@ class FlightDetailsRecord(
     _FlightInfoRecord,
     _FlightTrailRecord,
 ):
-    pass
+    position_buffer: Annotated[
+        list[RecentPositionRecord],
+        DType(pl.List(pl.Struct(position_buffer_struct_schema))),
+    ]
 
 
 flight_details_schema = to_schema(FlightDetailsRecord)

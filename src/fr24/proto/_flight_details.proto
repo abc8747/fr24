@@ -29,4 +29,5 @@ message FlightDetailsResponse {
     _common.ExtendedFlightInfo flight_info = 4;
     _common.FlightPlan flight_plan = 5;
     repeated _common.TrailPoint flight_trail_list = 6;
+    _common.PositionBuffer position_buffer = 7;
 }

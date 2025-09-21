@@ -660,6 +660,9 @@ def flight_details_dict(
         "flight_trail_list": [
             trail_point_dict(tp) for tp in response.flight_trail_list
         ],
+        "position_buffer": live_feed_position_buffer_dict(
+            response.position_buffer
+        ),
     }
 
 
@@ -672,6 +675,7 @@ def trail_point_dict(tp: TrailPoint) -> TrailPointRecord:
         "ground_speed": tp.spd,
         "track": tp.heading,
         "vertical_speed": tp.vspd,
+        "source": tp.source,
     }
 
 

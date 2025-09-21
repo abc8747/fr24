@@ -15,6 +15,7 @@ from fr24.proto._common_pb2 import (
     ExtendedFlightInfo,
     FlightPlan,
     FlightProgress,
+    PositionBuffer,
     RestrictionVisibility,
     ScheduleInfo,
     TrailPoint,
@@ -63,6 +64,7 @@ class FollowFlightResponse(Message):
     FLIGHT_PROGRESS_FIELD_NUMBER: int
     FLIGHT_INFO_FIELD_NUMBER: int
     FLIGHT_TRAIL_LIST_FIELD_NUMBER: int
+    POSITION_BUFFER_FIELD_NUMBER: int
     @property
     def aircraft_info(self) -> AircraftInfo: ...
     @property
@@ -75,6 +77,8 @@ class FollowFlightResponse(Message):
     def flight_info(self) -> ExtendedFlightInfo: ...
     @property
     def flight_trail_list(self) -> RepeatedCompositeFieldContainer[TrailPoint]: ...
+    @property
+    def position_buffer(self) -> PositionBuffer: ...
     def __init__(
         self,
         *,
@@ -84,6 +88,7 @@ class FollowFlightResponse(Message):
         flight_progress: FlightProgress | None = ...,
         flight_info: ExtendedFlightInfo | None = ...,
         flight_trail_list: Iterable[TrailPoint] | None = ...,
+        position_buffer: PositionBuffer | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "schedule_info", b"schedule_info"]) -> bool: ...
-    def ClearField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "schedule_info", b"schedule_info"]) -> None: ...
+    def HasField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "position_buffer", b"position_buffer", "schedule_info", b"schedule_info"]) -> bool: ...
+    def ClearField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "position_buffer", b"position_buffer", "schedule_info", b"schedule_info"]) -> None: ...
