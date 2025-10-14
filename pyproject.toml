@@ -24,6 +24,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Typing :: Typed",
 ]
 dependencies = [
@@ -53,7 +54,7 @@ lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",
     "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
-    "pydantic>=2.9.2",
+    "pydantic>=2.12.0",          # for extra="forbid", >3.14
     "pytest>=8.3.3",
     "fr24[rich]",
 ]

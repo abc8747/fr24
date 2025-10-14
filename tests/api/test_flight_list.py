@@ -7,7 +7,7 @@ import httpx
 import orjson
 import polars as pl
 import pytest
-from pydantic import ConfigDict, TypeAdapter
+from pydantic import TypeAdapter
 
 from fr24 import FR24, FR24Cache
 from fr24.json import (
@@ -56,11 +56,9 @@ async def test_ll_flight_list(client: httpx.AsyncClient) -> None:
     )
     assert len(result) == landed.shape[0]
 
-    class FlightList_(FlightList):
-        __pydantic_config__ = ConfigDict(extra="forbid")  # type: ignore
-
-    ta = TypeAdapter(FlightList_)
-    ta.validate_python(list_, strict=True)
+    ta = TypeAdapter(FlightList)
+    ta.rebuild()
+    ta.validate_python(list_, extra="forbid", strict=True)
 
 
 # core

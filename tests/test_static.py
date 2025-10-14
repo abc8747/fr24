@@ -3,7 +3,7 @@ from typing import Awaitable, Callable, Type
 
 import httpx
 import pytest
-from pydantic import ConfigDict, TypeAdapter
+from pydantic import TypeAdapter
 
 from fr24.static import (
     fetch_aircraft_family,
@@ -39,8 +39,6 @@ def test_fetch_static_types(
 
     data = asyncio.run(fetch_data_())
 
-    class StaticDataType(static_data_type):  # type: ignore
-        __pydantic_model__ = ConfigDict(extra="forbid")
-
-    ta = TypeAdapter(StaticDataType)
-    ta.validate_python(data, strict=True)
+    ta = TypeAdapter(static_data_type)
+    ta.rebuild()
+    ta.validate_python(data, extra="forbid", strict=True)

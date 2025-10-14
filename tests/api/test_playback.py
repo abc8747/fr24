@@ -1,5 +1,5 @@
 import pytest
-from pydantic import ConfigDict, TypeAdapter
+from pydantic import TypeAdapter
 
 from fr24 import FR24, FR24Cache
 
@@ -17,11 +17,9 @@ async def test_playback_simple(fr24: FR24) -> None:
 
     from fr24.types.json import Playback
 
-    class Playback_(Playback):
-        __pydantic_config__ = ConfigDict(extra="forbid")  # type: ignore
-
-    ta = TypeAdapter(Playback_)
-    ta.validate_python(result.to_dict(), strict=True)
+    ta = TypeAdapter(Playback)
+    ta.rebuild()
+    ta.validate_python(result.to_dict(), extra="forbid", strict=True)
 
 
 @pytest.mark.anyio
