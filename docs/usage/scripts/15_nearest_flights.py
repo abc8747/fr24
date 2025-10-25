@@ -1,22 +1,20 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script]
 from fr24 import FR24, FR24Cache
 
+
 async def my_nearest_flights() -> None:
     async with FR24() as fr24:
         result = await fr24.nearest_flights.fetch(
-            lat=22.31257,
-            lon=113.92708,
-            radius=10000,
-            limit=1500
+            lat=22.31257, lon=113.92708, radius=10000, limit=1500
         )
         print(result)
         print(result.to_dict())
         print(result.to_polars())
         result.write_table(FR24Cache.default())
+
 
 await my_nearest_flights()
 # --8<-- [end:script]

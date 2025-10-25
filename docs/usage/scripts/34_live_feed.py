@@ -1,31 +1,29 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
 import httpx
-from fr24.grpc import (
-    LiveFeedParams,
-    BoundingBox,
-    live_feed,
-)
+from fr24.grpc import LiveFeedParams, BoundingBox, live_feed
 from fr24.proto.v1_pb2 import LiveFeedResponse
 from fr24.proto import parse_data
 from fr24.proto.headers import get_grpc_headers
 
+
 async def france_data() -> LiveFeedResponse:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
-        params = LiveFeedParams(bounding_box=BoundingBox(north=50, west=-7, south=40, east=10))
+        params = LiveFeedParams(
+            bounding_box=BoundingBox(north=50, west=-7, south=40, east=10)
+        )
         response = await live_feed(client, params, headers)
         result = parse_data(response.content, LiveFeedResponse)
-        return result.unwrap() # (1)!
+        return result.unwrap()  # (1)!
 
 
 data = await france_data()
 data
 # --8<-- [end:script0]
-#%%
+# %%
 """
 # --8<-- [start:output0]
 flights_list {
@@ -70,7 +68,7 @@ from google.protobuf.json_format import MessageToDict
 
 MessageToDict(data)["flightsList"]
 # --8<-- [end:script1]
-#%%
+# %%
 """
 # --8<-- [start:output1]
 [{'flightid': 941292228,

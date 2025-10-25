@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
@@ -12,6 +11,7 @@ from fr24.proto.v1_pb2 import (
 from fr24.proto import parse_data
 from fr24.proto.headers import get_grpc_headers
 
+
 async def live_flights_status_data() -> LiveFlightsStatusResponse:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
@@ -20,6 +20,7 @@ async def live_flights_status_data() -> LiveFlightsStatusResponse:
         )
         response = await live_flights_status(client, message, headers)
         return parse_data(response.content, LiveFlightsStatusResponse).unwrap()
+
 
 data = await live_flights_status_data()
 data

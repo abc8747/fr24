@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script]
@@ -18,7 +17,6 @@ async def my_top_flights() -> None:
 
 await my_top_flights()
 # --8<-- [end:script]
-# fmt: off
 # %%
 """
 # --8<-- [start:result]

@@ -1,9 +1,9 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
-#%%
+# %%
 # --8<-- [start:script0]
 from fr24 import FR24, FR24Cache
+
 
 async def my_list() -> None:
     async with FR24() as fr24:
@@ -11,9 +11,10 @@ async def my_list() -> None:
         print(result.to_polars())
         result.write_table(FR24Cache.default())
 
+
 await my_list()
 # --8<-- [end:script0]
-#%%
+# %%
 """
 # --8<-- [start:df0]
 shape: (10, 15)
@@ -62,6 +63,7 @@ from fr24 import FR24, FR24Cache
 
 cache = FR24Cache.default()
 
+
 async def my_full_list() -> None:
     async with FR24() as fr24:
         results = fr24.flight_list.new_result_collection()  # (1)!
@@ -70,11 +72,12 @@ async def my_full_list() -> None:
             if input() == "x":
                 break
             results.write_table(cache)
-        print(results.to_polars()) # (3)!
+        print(results.to_polars())  # (3)!
+
 
 await my_full_list()
 # --8<-- [end:script1]
-#%%
+# %%
 """
 # --8<-- [start:df1]
 shape: (22, 15)

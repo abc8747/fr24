@@ -73,7 +73,6 @@ Dump the current (or playback of) live feed data.
     └──────────────────────────────────────────────────────────────────────────┘
     ```
 
-
 ### `flight-list` & `flight-list-all`
 
 Dump the flight list for a given registration or flight number.
@@ -139,7 +138,6 @@ Dump the historical track playback data.
     ```console
     --8<-- "docs/usage/cli_output.txt:fr24_playback"
     ```
-
 
 ### `nearest-flights`, `live-flights-status`, `flight-details`, `top-flights`, `playback-flight`
 

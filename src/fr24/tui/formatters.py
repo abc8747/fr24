@@ -21,55 +21,74 @@ class Time:
         return format(dt, __format_spec)
 
 
-@dataclass_frozen
-class Airport:
-    airport: AirportJSON | None
-
-    def to_text(self) -> Text:
-        if self.airport is None:
-            return Text("")
-
-        code = self.airport.get("code")
-        icao = code.get("icao", "") if code else ""
-
-        city = ""
-        if position := self.airport.get("position"):
-            city = position.get("region", {}).get("city", "")
-
-        if not city:
-            city = self.airport.get("name", "")
-
-        if city and icao:
-            text = Text(city)
-            text.append(" (", style="dim")
-            text.append(icao, style="dim")
-            text.append(")", style="dim")
-            return text
-        if city:
-            return Text(city)
-        if icao:
-            text = Text("(", style="dim")
-            text.append(icao, style="dim")
-            text.append(")", style="dim")
-            return text
+def fmt_airport(airport: AirportJSON | None) -> Text:
+    if airport is None:
         return Text("")
 
+    code = airport.get("code")
+    icao = code.get("icao", "") if code else ""
 
-@dataclass_frozen
-class Aircraft:
-    aircraft: AircraftInfo | None
+    city = ""
+    if position := airport.get("position"):
+        city = position.get("region", {}).get("city", "")
 
-    def to_text(self) -> Text:
-        if self.aircraft is None:
-            return Text("")
+    if not city:
+        city = airport.get("name", "")
 
-        registration = self.aircraft.get("registration")
-        typecode = self.aircraft.get("model", {}).get("code", "")
+    if city and icao:
+        text = Text(city)
+        text.append(" (", style="dim")
+        text.append(icao, style="dim")
+        text.append(")", style="dim")
+        return text
+    if city:
+        return Text(city)
+    if icao:
+        text = Text("(", style="dim")
+        text.append(icao, style="dim")
+        text.append(")", style="dim")
+        return text
+    return Text("")
 
-        if registration:
-            text = Text(registration)
-            text.append(" (", style="dim")
-            text.append(typecode, style="dim")
-            text.append(")", style="dim")
-            return text
-        return Text(typecode, style="dim")
+
+def fmt_aircraft(aircraft: AircraftInfo | None) -> Text:
+    if aircraft is None:
+        return Text("")
+
+    registration = aircraft.get("registration")
+    typecode = aircraft.get("model", {}).get("code", "")
+
+    if registration:
+        text = Text(registration)
+        text.append(" (", style="dim")
+        text.append(typecode, style="dim")
+        text.append(")", style="dim")
+        return text
+    return Text(typecode, style="dim")
+
+
+BLUE = "#5d9ad4"
+GREEN = "#67a76d"
+ORANGE = "#bd8a44"
+RED = "#cf7a78"
+GREY = "#959595"
+
+
+def fmt_status(
+    status_text: str,
+    *,
+    colours: dict[str, str] = {
+        "Scheduled": BLUE,
+        "Departed": GREEN,
+        "Estimated": GREEN,
+        "Landed": GREEN,
+        "Delayed": ORANGE,
+        "Canceled": RED,
+        "Diverted": RED,
+        "Unknown": GREY,
+    },
+) -> Text:
+    for status, status_color in colours.items():
+        if status_text.startswith(status):
+            return Text(status_text, style=status_color)
+    return Text(status_text, style=GREY)

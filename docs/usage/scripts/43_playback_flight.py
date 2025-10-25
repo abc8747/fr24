@@ -1,13 +1,9 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
 import httpx
-from fr24.grpc import (
-    PlaybackFlightParams,
-    playback_flight,
-)
+from fr24.grpc import PlaybackFlightParams, playback_flight
 from fr24.proto.v1_pb2 import PlaybackFlightResponse
 from fr24.proto import parse_data
 from fr24.proto.headers import get_grpc_headers
@@ -16,14 +12,17 @@ from fr24.proto.headers import get_grpc_headers
 async def playback_flight_data() -> PlaybackFlightResponse:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
-        message = PlaybackFlightParams(flight_id=0x3c500fdb, timestamp=1758467125)
+        message = PlaybackFlightParams(
+            flight_id=0x3C500FDB, timestamp=1758467125
+        )
         response = await playback_flight(client, message, headers)
         return parse_data(response.content, PlaybackFlightResponse).unwrap()
+
 
 data = await playback_flight_data()
 data
 # --8<-- [end:script0]
-#%%
+# %%
 """
 # --8<-- [start:output0]
 aircraft_info {

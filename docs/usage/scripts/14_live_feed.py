@@ -1,11 +1,11 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script]
 from fr24 import FR24, FR24Cache, BoundingBox
 
 bbox = BoundingBox(south=42, north=52, west=-8, east=10)
+
 
 async def my_feed() -> None:
     async with FR24() as fr24:
@@ -14,6 +14,7 @@ async def my_feed() -> None:
         print(result.to_dict())
         print(result.to_polars())
         result.write_table(FR24Cache.default())
+
 
 await my_feed()
 # --8<-- [end:script]
@@ -73,7 +74,7 @@ LiveFeedResult(
 
 # --8<-- [end:dict]
 """
-#%%
+# %%
 """
 # --8<-- [start:polars]
 shape: (171, 18)
@@ -125,10 +126,12 @@ import time
 yesterday = int(time.time() - 86400)
 bbox = BoundingBox(south=42, north=52, west=-8, east=10)
 
+
 async def my_feed() -> None:
     async with FR24() as fr24:
         result = await fr24.live_feed_playback.fetch(bbox, timestamp=yesterday)
         print(result.to_polars())
+
 
 await my_feed()
 # --8<-- [end:script2]

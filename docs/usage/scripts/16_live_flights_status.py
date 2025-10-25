@@ -1,9 +1,9 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script]
 from fr24 import FR24, FR24Cache
+
 
 async def get_nearest_flight_ids(fr24: FR24) -> list[int]:
     nearest_result = await fr24.nearest_flights.fetch(
@@ -13,6 +13,7 @@ async def get_nearest_flight_ids(fr24: FR24) -> list[int]:
         flight.flight.flightid
         for flight in nearest_result.to_proto().flights_list
     ]
+
 
 async def my_live_flights_status() -> None:
     async with FR24() as fr24:

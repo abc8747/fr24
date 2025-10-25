@@ -11,7 +11,7 @@ from fr24 import FR24
 from fr24.types.json import is_aircraft, is_airport, is_schedule
 
 
-def get_fr24(app: App) -> FR24:
+def get_fr24(app: App[None]) -> FR24:
     return app.fr24  # type: ignore
 
 

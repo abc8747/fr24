@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 from fr24 import FR24
@@ -34,6 +33,7 @@ from fr24.proto.headers import get_grpc_headers
 
 import polars as pl
 
+
 async def my_arrivals() -> AirportList:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
@@ -41,7 +41,7 @@ async def my_arrivals() -> AirportList:
             client,
             AirportListParams(airport="tls", mode="arrivals"),
             headers=headers,
-            auth=None
+            auth=None,
         )
         response.raise_for_status()
         list_ = response.json()

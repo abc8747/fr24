@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
@@ -9,6 +8,7 @@ from fr24.authentication import login
 from fr24.json import playback, playback_df, PlaybackParams
 from fr24.types.json import Playback
 from fr24.proto.headers import get_grpc_headers
+
 
 async def my_playback() -> Playback:
     headers = httpx.Headers(get_grpc_headers(auth=None))
@@ -24,7 +24,7 @@ async def my_playback() -> Playback:
         )
         response.raise_for_status()
         list_ = response.json()
-        return list_ # type: ignore
+        return list_  # type: ignore
 
 
 list_ = await my_playback()

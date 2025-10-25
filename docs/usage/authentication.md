@@ -9,7 +9,7 @@ By default, the client is not authenticated. You can check the status using the 
     ```
 
 === "Output"
-    
+
     ```
     warning: not authenticated
     help: provide your credentials in environment variables, either:
@@ -47,7 +47,7 @@ An example of it can be found at [`fr24.example.conf`](https://github.com/abc874
 Examples:
 
 === "username + password"
-    
+
     ```ini
     [global]
     username=example13@example.com
@@ -55,14 +55,12 @@ Examples:
     ```
 
 === "subscription_key + token"
-    
+
     ```ini
     [global]
     subscription_key=dQw4w9WgXcQdQw4w9WgXcQdQw4w9WgXcQdQw4w9WgXcQ
     token=eyq2IlMJ5ip3ElLJ5aMKWmqT9fo3MyrJ91n25iq3EbMKW1oTImLJ5xp29xo2x=
     ```
-
-
 
 [^1]: When the [FR24 class][fr24.FR24]' context is entered, a request is automatically made to retrieve the OAuth tokens
 [^2]: `fr24_token` should be a JWT with the `exp` claim in a month, while `fr24_subscription_key` should be the shorter one. `fr24_token` is optional but live feed will fail without it. Be sure to update the JWT in time.

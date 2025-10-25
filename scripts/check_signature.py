@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-#     "griffe>=1.11.2",
+#     "griffe>=1.14.0",
 #     "typing-extensions",
 # ]
 # ///
@@ -57,7 +57,7 @@ class FR24CheckSignatureExtension(griffe.Extension):
         if dataclass_path is not None:
             self.methods_to_check[func] = dataclass_path
 
-    def on_package_loaded(
+    def on_package(
         self, *, pkg: griffe.Module, loader: griffe.GriffeLoader, **kwargs: Any
     ) -> None:
         self.method_signature_issues = 0

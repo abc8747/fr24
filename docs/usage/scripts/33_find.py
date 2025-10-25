@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
@@ -19,7 +18,7 @@ results = await my_find()
 df = pl.json_normalize(results["results"])
 print(df)
 # --8<-- [end:script0]
-#%%
+# %%
 # --8<-- [start:script1]
 from fr24.types.json import Find
 from fr24.json import find, FindParams
@@ -28,14 +27,12 @@ from fr24.proto.headers import get_grpc_headers
 import polars as pl
 import httpx
 
+
 async def my_find() -> Find:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
         response = await find(
-            client,
-            FindParams(query="paris"),
-            headers=headers,
-            auth=None
+            client, FindParams(query="paris"), headers=headers, auth=None
         )
         response.raise_for_status()
         results = response.json()

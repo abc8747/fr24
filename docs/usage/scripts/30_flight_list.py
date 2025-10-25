@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
@@ -10,6 +9,7 @@ from fr24.authentication import login
 from fr24.json import flight_list, flight_list_df, FlightListParams
 from fr24.types.json import FlightList
 from fr24.proto.headers import get_grpc_headers
+
 
 async def my_list() -> FlightList:
     headers = httpx.Headers(get_grpc_headers(auth=None))
@@ -28,14 +28,14 @@ async def my_list() -> FlightList:
         )
         response.raise_for_status()
         list_ = response.json()
-        return list_ # type: ignore
+        return list_  # type: ignore
 
 
 list_ = await my_list()
 df = flight_list_df(list_)
 df
 # --8<-- [end:script0]
-#%%
+# %%
 """
 # --8<-- [start:df0]
 shape: (6, 15)

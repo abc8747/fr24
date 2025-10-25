@@ -7,29 +7,17 @@ from pathlib import Path
 from typing import Iterator, Literal, TypeVar
 
 import httpx
-from rich.text import Text
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import ScrollableContainer
-from textual.widgets import (
-    DataTable,
-    Footer,
-    Header,
-    Input,
-    Label,
-    Static,
-)
+from textual.widgets import DataTable, Footer, Header, Input, Label, Static
 
 from fr24 import FR24
-from fr24.tui.formatters import Aircraft, Airport, Time
+from fr24.tui.formatters import Time, fmt_aircraft, fmt_airport, fmt_status
 from fr24.tui.widgets import AircraftWidget, AirportWidget, FlightWidget
 from fr24.types import IntoTimestamp, IntTimestampS
-from fr24.types.json import (
-    FlightList,
-    FlightListItem,
-    is_schedule,
-)
+from fr24.types.json import FlightList, FlightListItem, is_schedule
 from fr24.utils import UnwrapError, get_current_timestamp, to_unix_timestamp
 
 T = TypeVar("T")
@@ -50,35 +38,6 @@ class SearchBlock(Static):
         yield FlightWidget(name="number")
         yield AirportWidget(id="departure", name="origin")
         yield AirportWidget(id="arrival", name="destination")
-
-
-BLUE = "#5d9ad4"
-GREEN = "#67a76d"
-ORANGE = "#bd8a44"
-RED = "#cf7a78"
-GREY = "#959595"
-
-
-def _format_status(
-    status_text: str,
-    *,
-    colours: dict[str, str] = {
-        "Scheduled": BLUE,
-        "Departed": GREEN,
-        "Estimated": GREEN,
-        "Landed": GREEN,
-        "Delayed": ORANGE,
-        "Canceled": RED,
-        "Diverted": RED,
-        "Unknown": GREY,
-    },
-) -> Text:
-    color = colours["Unknown"]
-    for status, status_color in colours.items():
-        if status_text.startswith(status):
-            color = status_color
-            break
-    return Text(status_text, style=color)
 
 
 class FR24Tui(App[None]):
@@ -352,7 +311,7 @@ class FR24Tui(App[None]):
                     ]
                 )
         except UnwrapError as e:
-            self.notify(f"Error: {e}", severity="error", title="API Error")
+            self.notify(str(e), severity="error", title="API Error")
         finally:
             self.set_loading(False)
 
@@ -394,15 +353,13 @@ class FR24Tui(App[None]):
                     f"{Time(entry['time']['scheduled']['departure']):%Y-%m-%d}",
                     entry["identification"]["number"]["default"],
                     entry["identification"]["callsign"],
-                    Aircraft(entry.get("aircraft")).to_text(),
-                    Airport(entry.get("airport", {}).get("origin")).to_text(),
-                    Airport(
-                        entry.get("airport", {}).get("destination")
-                    ).to_text(),
+                    fmt_aircraft(entry.get("aircraft")),
+                    fmt_airport(entry.get("airport", {}).get("origin")),
+                    fmt_airport(entry.get("airport", {}).get("destination")),
                     f"{Time(entry['time']['scheduled']['departure']):%H:%MZ}",
                     f"{Time(entry['time']['real']['departure']):%H:%MZ}",
                     f"{Time(entry['time']['scheduled']['arrival']):%H:%MZ}",
-                    _format_status(entry["status"]["text"] or ""),
+                    fmt_status(entry["status"]["text"] or ""),
                     entry["identification"]["id"],
                 )
                 for entry in data

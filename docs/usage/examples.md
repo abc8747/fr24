@@ -1,6 +1,5 @@
 # Overview
 
-
 | Name                                                                                  | Low-level API                                                                           | Service and Cache Location                                                                                                                                                                                           |
 | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Flight List](#flight-list)<br><span class="chip chip-json">JSON</span>               | [`flight_list`][fr24.json.flight_list]<br>[`flight_list_df`][fr24.json.flight_list_df]  | [`FlightListService`][fr24.service.FlightListService]<br><br>Cache Location:<br>`flight_list/`<br>`└── reg/`<br>`    └── {reg.upper()}.parquet`<br>`└── flight_list/`<br>`    └── {iata_flight_num.upper()}.parquet` |
@@ -28,6 +27,7 @@ You can find even more usage examples under [`tests/`](https://github.com/abc874
 ### Flight list
 
 #### Single page
+
 === "Jupyter cell"
 
     ```py
@@ -35,12 +35,13 @@ You can find even more usage examples under [`tests/`](https://github.com/abc874
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/10_flight_list.py:df0"
     ```
 
 #### Paginate all pages
+
 Queries for next page as long as user doesn't enter `x`, or if there are no pages left.
 In each iteration, rows are upserted and saved to the [cache](./directories.md).
 
@@ -48,7 +49,7 @@ Note that pagination cannot be run in parallel: fetching page N requires informa
 
 === "Jupyter cell"
 
-    ```py hl_lines="7 9 13"
+    ```py hl_lines="8 10 14"
     --8<-- "docs/usage/scripts/10_flight_list.py:script1"
     ```
 
@@ -57,7 +58,7 @@ Note that pagination cannot be run in parallel: fetching page N requires informa
     3. Merges the collections into a single table. Removes duplicates (if any).
 
 === "`results.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/10_flight_list.py:df1"
     ```
@@ -65,34 +66,36 @@ Note that pagination cannot be run in parallel: fetching page N requires informa
 ### Playback
 
 #### Miracle on the Hudson
+
 Downloads the flight trajectory for [UA1549](https://en.wikipedia.org/wiki/US_Airways_Flight_1549)
 
 === "Jupyter cell"
 
-    ```py hl_lines="6"
+    ```py hl_lines="7"
     --8<-- "docs/usage/scripts/11_playback.py:script0"
     ```
 
     1. From https://www.flightradar24.com/data/pinned/ua1549-2fb3041#2fb3041.
 
 === "`data.df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/11_playback.py:df0"
     ```
 
 === "`data.metadata`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/11_playback.py:metadata0"
     ```
 
 #### File operations
+
 Saves trajectory data to disk, reads the track and metadata from it.
 
 === "Jupyter cell"
 
-    ```py hl_lines="9 11"
+    ```py hl_lines="10 12"
     --8<-- "docs/usage/scripts/11_playback.py:script1"
     ```
     
@@ -100,13 +103,13 @@ Saves trajectory data to disk, reads the track and metadata from it.
     2. Load the parquet from the [cache](./directories.md).
 
 === "`data_local.df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/11_playback.py:df0"
     ```
 
 === "`data_local.metadata`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/11_playback.py:metadata0"
     ```
@@ -120,7 +123,7 @@ Saves trajectory data to disk, reads the track and metadata from it.
     ```
 
 === "`df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/32_arrivals.py:df0"
     ```
@@ -134,7 +137,7 @@ Saves trajectory data to disk, reads the track and metadata from it.
     ```
 
 === "`df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/33_find.py:df0"
     ```
@@ -142,6 +145,7 @@ Saves trajectory data to disk, reads the track and metadata from it.
 ### Live Feed
 
 #### Live
+
 This example is covered in detail in the [quickstart](./quickstart.md).
 
 === "Jupyter cell"
@@ -151,24 +155,25 @@ This example is covered in detail in the [quickstart](./quickstart.md).
     ```
 
 === "`result`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/14_live_feed.py:result"
     ```
 
 === "`result.to_dict()`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/14_live_feed.py:dict"
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/14_live_feed.py:polars"
     ```
 
 #### Playback
+
 Fetches the live feed three days ago.
 
 === "Jupyter cell"
@@ -178,7 +183,7 @@ Fetches the live feed three days ago.
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/14_live_feed.py:polars2"
     ```
@@ -192,19 +197,19 @@ Fetches the live feed three days ago.
     ```
 
 === "`result`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/15_nearest_flights.py:result"
     ```
 
 === "`result.to_dict()`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/15_nearest_flights.py:dict"
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/15_nearest_flights.py:polars"
     ```
@@ -220,19 +225,19 @@ Retrieve the flight status for the closest flights from a location
     ```
 
 === "`result`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/16_live_flights_status.py:result"
     ```
 
 === "`result.to_dict()`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/16_live_flights_status.py:dict"
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/16_live_flights_status.py:polars"
     ```
@@ -266,7 +271,7 @@ Stream real-time updates to the state vector of an aircraft.
     ```
 
 === "`result.to_proto()`"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/18_follow_flight.py:proto"
     ```
@@ -280,19 +285,19 @@ Stream real-time updates to the state vector of an aircraft.
     ```
 
 === "`result`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/19_top_flights.py:result"
     ```
 
 === "`result.to_dict()`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/19_top_flights.py:dict"
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/19_top_flights.py:polars"
     ```
@@ -308,19 +313,19 @@ Retrieve detailed information about a flight
     ```
 
 === "`result`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/22_flight_details.py:result"
     ```
 
 === "`result.to_dict()`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/22_flight_details.py:dict"
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/22_flight_details.py:polars"
     ```
@@ -336,19 +341,19 @@ Retrieve detailed historical flight information including complete trail
     ```
 
 === "`result`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/16_playback_flight.py:result"
     ```
 
 === "`result.to_dict()`"
-    
+
     ```py
     --8<-- "docs/usage/scripts/16_playback_flight.py:dict"
     ```
 
 === "`result.to_polars()`"
-    
+
     ```
     --8<-- "docs/usage/scripts/16_playback_flight.py:polars"
     ```
@@ -361,14 +366,14 @@ For maximum control, you can also use `fr24` in a procedural style. You will hav
 
 === "Jupyter cell"
 
-    ```py hl_lines="19"
+    ```py hl_lines="20"
     --8<-- "docs/usage/scripts/30_flight_list.py:script0"
     ```
 
     1. Replace it with the current time.
 
 === "`df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/30_flight_list.py:df0"
     ```
@@ -382,7 +387,7 @@ For maximum control, you can also use `fr24` in a procedural style. You will hav
     ```
 
 === "`df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/31_playback.py:df0"
     ```
@@ -396,7 +401,7 @@ For maximum control, you can also use `fr24` in a procedural style. You will hav
     ```
 
 === "`df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/32_arrivals.py:df0"
     ```
@@ -410,7 +415,7 @@ For maximum control, you can also use `fr24` in a procedural style. You will hav
     ```
 
 === "`df`"
-    
+
     ```
     --8<-- "docs/usage/scripts/33_find.py:df0"
     ```
@@ -428,7 +433,7 @@ Demonstrates custom bounding boxes.
     1. The type is a `Result[LiveFeedResponse, ProtoError]`, calling the `.unwrap()` method raises an exception if there is an error.
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/34_live_feed.py:output0"
     ```
@@ -442,7 +447,7 @@ In JSON format:
     ```
 
 === "Output"
-    
+
     ```py
     --8<-- "docs/usage/scripts/34_live_feed.py:output1"
     ```
@@ -456,7 +461,7 @@ In JSON format:
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/35_nearest_flights.py:output0"
     ```
@@ -470,7 +475,7 @@ In JSON format:
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/36_live_flights_status.py:output0"
     ```
@@ -486,7 +491,7 @@ In JSON format:
     ```
 
 === "Protobuf Output"
-    
+
     ```
     --8<-- "docs/usage/scripts/37_search_index.py:output0"
     ```
@@ -502,7 +507,7 @@ See [above](#follow-flight) for more information.
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/38_follow_flight.py:output0"
     ```
@@ -516,7 +521,7 @@ See [above](#follow-flight) for more information.
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/39_top_flights.py:output0"
     ```
@@ -525,7 +530,6 @@ See [above](#follow-flight) for more information.
 
 !!! warning "Unstable API: returns empty `DATA` frame as of Sep 2024"
 
-
 === "Jupyter cell"
 
     ```py
@@ -533,7 +537,7 @@ See [above](#follow-flight) for more information.
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/40_live_trail.py:output0"
     ```
@@ -549,7 +553,7 @@ See [above](#follow-flight) for more information.
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/41_historic_trail.py:output0"
     ```
@@ -563,11 +567,10 @@ See [above](#follow-flight) for more information.
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/42_flight_details.py:output0"
     ```
-
 
 ### Playback Flight
 
@@ -578,7 +581,7 @@ See [above](#follow-flight) for more information.
     ```
 
 === "Protobuf Output"
-    
+
     ```proto
     --8<-- "docs/usage/scripts/43_playback_flight.py:output0"
     ```

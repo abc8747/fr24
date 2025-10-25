@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script]
@@ -8,11 +7,13 @@ import httpx
 from fr24 import FR24
 from fr24.proto.v1_pb2 import NearestFlightsResponse
 
+
 async def get_nearest_flights(fr24: FR24) -> NearestFlightsResponse:
     nearest_result = await fr24.nearest_flights.fetch(
         lat=22.31257, lon=113.92708, radius=10000, limit=1500
     )
     return nearest_result.to_proto()
+
 
 async def my_follow_flight() -> None:
     timeout = httpx.Timeout(5, read=120)
@@ -27,9 +28,9 @@ async def my_follow_flight() -> None:
             if i > 2:
                 break
 
+
 await my_follow_flight()
 # --8<-- [end:script]
-# fmt: off
 # %%
 """
 # --8<-- [start:proto]

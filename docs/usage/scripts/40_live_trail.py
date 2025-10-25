@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
@@ -13,7 +12,7 @@ from fr24.proto.headers import get_grpc_headers
 async def live_trail_data() -> LiveTrailResponse:
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient() as client:
-        message = LiveTrailRequest(flight_id=0x395c43cf)
+        message = LiveTrailRequest(flight_id=0x395C43CF)
         response = await live_trail(client, message, headers)
         return parse_data(response.content, LiveTrailResponse).unwrap()
 
@@ -21,7 +20,7 @@ async def live_trail_data() -> LiveTrailResponse:
 data = await live_trail_data()
 data
 # --8<-- [end:script0]
-#%%
+# %%
 """
 # --8<-- [start:output0]
 radar_records_list {

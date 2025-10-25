@@ -44,7 +44,7 @@ The following sections will break down what each line does under the hood.
 
 === "`example.py`"
 
-    ```py hl_lines="4"
+    ```py hl_lines="5"
     --8<-- "docs/usage/scripts/00_introduction.py:script-1"
     ```
 
@@ -59,7 +59,7 @@ When `FR24()` is first initialised, it creates an unauthenticated [HTTPX client]
     See [authentication](./authentication.md) for more details.
 
 !!! question "How to pass in my own HTTPX client?"
-    
+
     To share clients across code, pass it into the [fr24.FR24][] constructor.
 
     ```py
@@ -74,7 +74,7 @@ Next, `fr24` contains multiple *services*, each of which [implements the `fetch`
 
 === "`example.py`"
 
-    ```py hl_lines="5-6"
+    ```py hl_lines="6"
     --8<-- "docs/usage/scripts/00_introduction.py:script-2"
     ```
 
@@ -112,7 +112,7 @@ The `result` implements:
 
 === "`example.py`"
 
-    ```py hl_lines="7-9"
+    ```py hl_lines="8-10"
     --8<-- "docs/usage/scripts/00_introduction.py:script-3"
     ```
 
@@ -138,7 +138,7 @@ The `result` implements:
 If you wish, you can [convert the `polars` DataFrame into `pandas`](https://docs.pola.rs/api/python/stable/reference/dataframe/api/polars.DataFrame.to_pandas.html).
 
 !!! warning
-    
+
     `to_polars` tries to convert a *list of records* in the `result` into a 2D table. Extra metadata that does not fit in a table (e.g. airline information in the [flight list service][fr24.service.FlightListService]) **will be discarded**.
 
 ## Writing to a file
@@ -147,7 +147,7 @@ You can write the data in JSON format:
 
 === "`example.py`"
 
-    ```py hl_lines="2 8-9"
+    ```py hl_lines="2 9-10"
     --8<-- "docs/usage/scripts/00_introduction.py:script-4"
     ```
 
@@ -157,7 +157,7 @@ Alternatively, you can serialize the tabular form of the data in the [Parquet](h
 
 === "`example.py`"
 
-    ```py hl_lines="8-9 2 11-13"
+    ```py hl_lines="2 9-10 12-14"
     --8<-- "docs/usage/scripts/00_introduction.py:script-5"
     ```
 
@@ -172,7 +172,7 @@ You can also write the table into a [cache][fr24.cache.FR24Cache]:
 
 === "`example.py`"
 
-    ```py hl_lines="4 6 11"
+    ```py hl_lines="4 6 12"
     --8<-- "docs/usage/scripts/00_introduction.py:script-6"
     ```
 
@@ -217,9 +217,8 @@ These directories are created automatically when `FR24Cache` is initialised.
     --8<-- "docs/usage/scripts/00_introduction.py:result-polars"
     ```
 
-# Notes
+## Notes
 
 See the [examples gallery](./examples.md) to learn more.
-
 
 Intersphinx for this project could be found [here](https://abc8747.github.io/fr24/objects.inv).

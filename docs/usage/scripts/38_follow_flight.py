@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
@@ -14,7 +13,7 @@ async def follow_flight_data() -> None:
     timeout = httpx.Timeout(5, read=120)
     headers = httpx.Headers(get_grpc_headers(auth=None))
     async with httpx.AsyncClient(timeout=timeout) as client:
-        message = FollowFlightRequest(flight_id=0x3c500fdb)
+        message = FollowFlightRequest(flight_id=0x3C500FDB)
         i = 0
         async for response in follow_flight_stream(client, message, headers):
             print(f"##### {i} #####")

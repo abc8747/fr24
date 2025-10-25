@@ -1,5 +1,4 @@
 # ruff: noqa
-# fmt: off
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script]
@@ -8,13 +7,15 @@ from fr24 import FR24, BoundingBox
 
 bbox = BoundingBox(south=42, north=52, west=-8, east=10)
 
-async def main() -> None: # (1)!
+
+async def main() -> None:  # (1)!
     async with FR24() as fr24:
-        result = await fr24.live_feed.fetch(bbox) # (2)!
+        result = await fr24.live_feed.fetch(bbox)  # (2)!
         print(result)
         print(result.to_proto())
         print(result.to_dict())
         print(result.to_polars())
+
 
 if __name__ == "__main__":
     asyncio.run(main())  # (3)!
@@ -155,45 +156,59 @@ shape: (1_383, 18)
 └──────────────┴───────────┴───────────┴───────────┴───┴─────┴────────┴──────────────┴─────────────┘
 # --8<-- [end:result-polars]
 """
-#%%
+# %%
 # --8<-- [start:script-1]
 from fr24 import FR24
+
 
 async def my_feed() -> None:
     async with FR24() as fr24:
         ...
+
+
 # --8<-- [end:script-1]
-#%%
+# %%
 # --8<-- [start:login]
 from fr24 import FR24
+
 
 async def main() -> None:
     async with FR24() as fr24:
         # anonymous now
-        await fr24.login() # reads from environment or configuration file, or,
-        await fr24.login(creds={"username": "...", "password": "..."}) # or,
+        await fr24.login()  # reads from environment or configuration file, or,
+        await fr24.login(creds={"username": "...", "password": "..."})  # or,
         await fr24.login(creds={"subscriptionKey": "...", "token": "..."})
+
+
 # --8<-- [end:login]
-#%%
+# %%
 # --8<-- [start:client-sharing]
 import httpx
 
 from fr24 import FR24
 
-client = httpx.AsyncClient(http1=False, http2=True, transport=httpx.AsyncHTTPTransport(retries=5))
+client = httpx.AsyncClient(
+    http1=False, http2=True, transport=httpx.AsyncHTTPTransport(retries=5)
+)
+
 
 async def main() -> None:
     async with FR24(client) as fr24:
         ...
+
+
 # --8<-- [end:client-sharing]
 # %%
 # --8<-- [start:script-2]
 from fr24 import FR24, BBOX_FRANCE_UIR
 
+
 async def my_feed() -> None:
     async with FR24() as fr24:
         result = await fr24.live_feed.fetch(BBOX_FRANCE_UIR)
         print(result.response.content)
+
+
 # --8<-- [end:script-2]
 
 # %%
@@ -216,10 +231,11 @@ b'...truncated
 \x18\xa1Gx\xb4\xcb\xe3\x8b\xd72 \x92\xe1\xe3\x8b\xd72\x80\x00\x00\x00\x0fgrpc-status:0\r\n'
 # --8<-- [end:result-response-content]
 """
-#%%
+# %%
 # --8<-- [start:script-3]
 import asyncio
 from fr24 import FR24, BBOX_FRANCE_UIR
+
 
 async def main() -> None:
     async with FR24() as fr24:
@@ -227,50 +243,61 @@ async def main() -> None:
         print(result.to_proto())
         print(result.to_dict())
         print(result.to_polars())
+
+
 # --8<-- [end:script-3]
-#%%
+# %%
 # --8<-- [start:script-4]
 import asyncio
 import json
 from fr24 import FR24, BBOX_FRANCE_UIR
+
 
 async def main() -> None:
     async with FR24() as fr24:
         result = await fr24.live_feed.fetch(BBOX_FRANCE_UIR)
         with open("path/to/some/file.json", "w") as f:
             json.dump(result.to_dict(), f, indent=4)
+
+
 # --8<-- [end:script-4]
-#%%
+# %%
 # --8<-- [start:script-5]
 import asyncio
 from io import BytesIO
 from fr24 import FR24, BBOX_FRANCE_UIR
 
+
 async def main() -> None:
     async with FR24() as fr24:
         result = await fr24.live_feed.fetch(BBOX_FRANCE_UIR)
-        result.write_table("path/to/some/file.parquet") # (1)!
-        result.write_table("path/to/some/file.csv", format="csv") # (2)!
+        result.write_table("path/to/some/file.parquet")  # (1)!
+        result.write_table("path/to/some/file.csv", format="csv")  # (2)!
 
         buffer = BytesIO()
         result.write_table(buffer, format="parquet")
         buffer.seek(0)
+
+
 # --8<-- [end:script-5]
-#%%
+# %%
 # --8<-- [start:script-6]
 import asyncio
 from fr24 import FR24, FR24Cache, BBOX_FRANCE_UIR
 
 cache = FR24Cache("path/to/some/directory/")
 # alternatively, use the default cache directory:
-cache = FR24Cache.default() # (1)!
+cache = FR24Cache.default()  # (1)!
+
 
 async def main() -> None:
     async with FR24() as fr24:
         result = await fr24.live_feed.fetch(BBOX_FRANCE_UIR)
         result.write_table(cache)
+
+
 # --8<-- [end:script-6]
-#%%
+# %%
 # --8<-- [start:script-7]
 from fr24 import FR24Cache
 
@@ -284,7 +311,7 @@ for fp in cache.live_feed.glob("*"):
 # alternatively, scan one file:
 lf = cache.live_feed.scan_table(timestamp=1733036597)
 # --8<-- [end:script-7]
-#%%
+# %%
 """
 # --8<-- [start:output-7]
 /home/user/.cache/fr24/feed/1733036597.parquet

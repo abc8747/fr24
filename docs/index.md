@@ -168,4 +168,4 @@ fr24 tui
 }
 ```
 
-Official Flightradar24 API: https://fr24api.flightradar24.com/
+Official Resources: [Python SDK](https://github.com/Flightradar24/fr24api-sdk-python), [API](https://fr24api.flightradar24.com/)
