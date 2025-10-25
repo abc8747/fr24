@@ -49,7 +49,6 @@ plugins:
           paths: [src]
           inventories:
             - https://docs.python.org/3/objects.inv
-            - http://pandas.pydata.org/pandas-docs/stable/objects.inv
             - https://numpy.org/doc/stable/objects.inv
           options:
             inherited_members: true

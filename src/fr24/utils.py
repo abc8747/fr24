@@ -81,35 +81,56 @@ DEFAULT_HEADERS = {
 @overload
 def to_unix_timestamp(
     timestamp: IntoTimestamp | Literal["now"] | str,
+    *,
+    format: str | None = None,
 ) -> IntTimestampS | Literal["now"]: ...
 
 
 @overload
-def to_unix_timestamp(timestamp: None) -> None: ...
+def to_unix_timestamp(
+    timestamp: None, *, format: str | None = None
+) -> None: ...
 
 
 def to_unix_timestamp(
     timestamp: IntoTimestamp | str | Literal["now"] | None,
+    *,
+    format: str | None = None,
 ) -> IntTimestampS | Literal["now"] | None:
-    """Casts timestamp-like object to a Unix timestamp in integer seconds."""
+    """Casts datetime-like object to a Unix timestamp in **integer** seconds.
+
+    :param timestamp: Datetime-like object, such as `2025-10-13T10:30:00+05:30`,
+        `2025/10/13`, `01-02-2025` etc.
+        If you wish to parse non-ISO8601 strings (e.g. named/abbreviated month
+        `Mar` or `March`, timezone abbreviations `EST` etc.), please use the
+        `dateutil` package.
+    :param format: Format to use for conversion: see the [`chrono` documentation](https://docs.rs/chrono/latest/chrono/format/strftime/index.html).
+        If `None` (default), the format is inferred against a
+        [known sequence of pattern groups](https://github.com/pola-rs/polars/blob/a765e92556e0a6f14760dc90612bf1511dcee864/crates/polars-time/src/chunkedarray/string/patterns.rs).
+    """
     if isinstance(timestamp, str):
-        # TODO(abrah): should we eagerly return the current timestamp just like
-        # `pd.Timestamp("now")`? we might want to defer this to the caller.
         if timestamp == "now":
+            # the caller is responsible for calling `get_current_timestamp()`,
+            # which can happen at a later time during the API `fetch()` call
             return "now"
         # try to interpret string as integer timestamp in seconds first
         try:
             return to_unix_timestamp(int(timestamp))
         except ValueError:
             pass
-        # otherwise assume it's a format that `chronos` understands
+        # otherwise assume it's a format that `polars` understands
         import polars as pl
 
         try:
-            dt = pl.Series(values=(timestamp,)).str.to_datetime().item(0)
+            dt: datetime = (
+                pl.Series(values=(timestamp,))
+                .str.to_datetime(format=format)
+                .item(0)
+            )
         except pl.exceptions.ComputeError:
             raise ValueError(
-                f"invalid ISO8601/chronos timestamp: {timestamp!r}"
+                f"invalid datetime string: {timestamp!r}\n"
+                "help: must be ISO8601-like."
             )
         return int(dt.timestamp())
     if isinstance(timestamp, datetime):
@@ -117,8 +138,8 @@ def to_unix_timestamp(
     if isinstance(timestamp, int):
         if timestamp > 4102462800:  # 2100-01-01
             raise ValueError(
-                f"timestamp {timestamp} is too large, "
-                "should be in seconds, not milliseconds"
+                f"timestamp {timestamp} is too large\n"
+                "help: should be in seconds, not milliseconds"
             )
         return timestamp
     return None

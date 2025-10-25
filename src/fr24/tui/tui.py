@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import asyncio
 import json
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterator, TypeVar
+from typing import Iterator, Literal, TypeVar
 
 import httpx
 from textual import on
@@ -19,7 +20,6 @@ from textual.widgets import (
     Static,
 )
 
-import pandas as pd
 from fr24.authentication import login
 from fr24.json import (
     AirportListParams,
@@ -38,12 +38,14 @@ from fr24.json import (
 )
 from fr24.tui.formatters import Aircraft, Airport, Time
 from fr24.tui.widgets import AircraftWidget, AirportWidget, FlightWidget
+from fr24.types import IntoTimestamp, IntTimestampS
 from fr24.types.json import (
     Authentication,
     FlightList,
     FlightListItem,
     is_schedule,
 )
+from fr24.utils import get_current_timestamp, to_unix_timestamp
 
 T = TypeVar("T")
 
@@ -57,7 +59,7 @@ class SearchBlock(Static):
     def compose(self) -> ComposeResult:
         yield Label("date")
         self.date_input = Input(id="date")
-        self.date_input.value = f"{pd.Timestamp('now'):%d %b %y}"
+        self.date_input.value = f"{datetime.now(tz=timezone.utc):%Y-%m-%d}"
         yield self.date_input
         yield AircraftWidget(name="aircraft")
         yield FlightWidget(name="number")
@@ -156,7 +158,8 @@ class FR24(App[None]):
         if len(self.line_info) == 0:
             return
         date = self.line_info["date"] + " " + self.line_info["STD"]
-        timestamp = int(pd.Timestamp(date).timestamp())
+        timestamp = to_unix_timestamp(date, format="%Y-%m-%d %H:%MZ")
+        assert timestamp != "now"
         result = playback_parse(
             await playback(
                 self.client,
@@ -175,7 +178,7 @@ class FR24(App[None]):
     @on(Input.Submitted)
     async def action_refresh(self) -> None:
         ts_str = self.query_one("#date", Input).value
-        ts = pd.Timestamp(ts_str if ts_str else "now", tz="utc")
+        ts = to_unix_timestamp(ts_str if ts_str else "now")
 
         aircraft_widget = self.query_one(AircraftWidget)
         if aircraft := aircraft_widget.aircraft_id:
@@ -189,6 +192,7 @@ class FR24(App[None]):
         arrival_widget = self.query_one("#arrival", AirportWidget)
         if departure := departure_widget.airport_id:
             if arrival := arrival_widget.airport_id:
+                ts = get_current_timestamp() if ts == "now" else ts
                 await self.lookup_city_pair(departure, arrival, ts=ts)
                 return
             await self.lookup_departure(departure, ts=ts)
@@ -197,14 +201,16 @@ class FR24(App[None]):
             await self.lookup_arrival(arrival, ts=ts)
             return
 
-    async def lookup_aircraft(self, value: str, ts: str | pd.Timestamp) -> None:
+    async def lookup_aircraft(
+        self, value: str, ts: IntoTimestamp | Literal["now"]
+    ) -> None:
         results = flight_list_parse(
             await flight_list(
                 self.client,
                 FlightListParams(
                     reg=value,
                     limit=100,
-                    timestamp=int(pd.Timestamp(ts).timestamp()),
+                    timestamp=ts,
                 ),
                 self.json_headers,
                 auth=self.auth,
@@ -212,14 +218,16 @@ class FR24(App[None]):
         ).unwrap()
         self.update_table(results["result"]["response"].get("data", None))
 
-    async def lookup_number(self, value: str, ts: str | pd.Timestamp) -> None:
+    async def lookup_number(
+        self, value: str, ts: IntoTimestamp | Literal["now"]
+    ) -> None:
         results = flight_list_parse(
             await flight_list(
                 self.client,
                 FlightListParams(
                     flight=value,
                     limit=100,
-                    timestamp=int(pd.Timestamp(ts).timestamp()),
+                    timestamp=ts,
                 ),
                 self.json_headers,
                 auth=self.auth,
@@ -228,7 +236,7 @@ class FR24(App[None]):
         self.update_table(results["result"]["response"].get("data", None))
 
     async def lookup_city_pair(
-        self, departure: str, arrival: str, ts: pd.Timestamp
+        self, departure: str, arrival: str, ts: IntTimestampS
     ) -> None:
         results = find_parse(
             await find(
@@ -298,7 +306,7 @@ class FR24(App[None]):
                     for entry in compacted_view
                     if (sobt := entry["time"]["scheduled"]["departure"])
                     is not None
-                    and sobt < ts.timestamp() + 3600 * 24
+                    and sobt < ts + 3600 * 24
                 ),
                 key=by_departure_time,
             )
@@ -306,7 +314,9 @@ class FR24(App[None]):
 
             await asyncio.sleep(2)
 
-    async def lookup_arrival(self, value: str, ts: str | pd.Timestamp) -> None:
+    async def lookup_arrival(
+        self, value: str, ts: IntoTimestamp | Literal["now"]
+    ) -> None:
         results = airport_list_parse(
             await airport_list(
                 self.client,
@@ -314,7 +324,7 @@ class FR24(App[None]):
                     airport=value,
                     mode="arrivals",
                     limit=100,
-                    timestamp=int(pd.Timestamp(ts).timestamp()),
+                    timestamp=ts,
                 ),
                 self.json_headers,
                 auth=self.auth,
@@ -331,7 +341,7 @@ class FR24(App[None]):
             )
 
     async def lookup_departure(
-        self, value: str, ts: str | pd.Timestamp
+        self, value: str, ts: IntoTimestamp | Literal["now"]
     ) -> None:
         results = airport_list_parse(
             await airport_list(
@@ -340,7 +350,7 @@ class FR24(App[None]):
                     airport=value,
                     mode="departures",
                     limit=100,
-                    timestamp=int(pd.Timestamp(ts).timestamp()),
+                    timestamp=ts,
                 ),
                 self.json_headers,
                 auth=self.auth,
@@ -364,7 +374,7 @@ class FR24(App[None]):
         table.add_rows(
             [
                 (
-                    f"{Time(entry['time']['scheduled']['departure']):%d %b %y}",
+                    f"{Time(entry['time']['scheduled']['departure']):%Y-%m-%d}",
                     entry["identification"]["number"]["default"],
                     entry["identification"]["callsign"],
                     f"{Aircraft(entry['aircraft']):%r (%c)}",

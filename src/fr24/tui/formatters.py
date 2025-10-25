@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-import pandas as pd
+from datetime import datetime, timezone
+
 from fr24.types import IntTimestampS
 from fr24.types.json import AircraftInfo
 from fr24.types.json import CommonAirport as AirportJSON
@@ -9,16 +10,13 @@ from fr24.utils import dataclass_frozen
 
 @dataclass_frozen
 class Time:
-    timestamp: None | IntTimestampS | str | pd.Timestamp
+    timestamp: None | IntTimestampS
 
     def __format__(self, __format_spec: str) -> str:
         if self.timestamp is None:
             return ""
-        if isinstance(self.timestamp, int):
-            ts = pd.Timestamp(self.timestamp, unit="s", tz="utc")
-        else:
-            ts = pd.Timestamp(self.timestamp, tz="utc")
-        return format(ts, __format_spec)
+        dt = datetime.fromtimestamp(self.timestamp, tz=timezone.utc)
+        return format(dt, __format_spec)
 
 
 @dataclass_frozen
