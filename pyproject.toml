@@ -35,6 +35,14 @@ dependencies = [
     "protobuf==5.28.*",
 ]
 
+[project.optional-dependencies]
+rich = ["rich"]
+cli = ["typer>=0.19"]
+tui = ["fr24[cli]", "textual>=1.0.0", "pandas>=2.2.3"]
+
+[project.scripts]
+fr24 = 'fr24.cli:app'
+
 [project.urls]
 Repository = "https://github.com/abc8747/fr24.git"
 Documentation = "https://abc8747.github.io/fr24/"
@@ -54,7 +62,7 @@ lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",
     "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
-    "pydantic>=2.12.0",          # for extra="forbid", >3.14
+    "pydantic>=2.12.0",          # >2.12 for extra="forbid", >3.14
     "pytest>=8.3.3",
     "fr24[rich]",
 ]
@@ -63,14 +71,6 @@ docs = [
     "mkdocstrings-python>=1.13.0",
     "griffe>=1.11.2",
 ]
-
-[project.scripts]
-fr24 = 'fr24.cli:app'
-
-[project.optional-dependencies]
-rich = ["loguru", "rich"]
-cli = ["typer>=0.19"]
-tui = ["textual>=1.0.0", "pandas>=2.2.3"]
 
 
 [tool.ruff]
