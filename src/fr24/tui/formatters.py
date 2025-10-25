@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
+from rich.text import Text
+
 from fr24.types import IntTimestampS
 from fr24.types.json import AircraftInfo
 from fr24.types.json import CommonAirport as AirportJSON
@@ -23,39 +25,51 @@ class Time:
 class Airport:
     airport: AirportJSON | None
 
-    def __format__(self, __format_spec: str) -> str:
+    def to_text(self) -> Text:
         if self.airport is None:
-            return ""
-        output = __format_spec
-        if code := self.airport.get("code"):
-            output = output.replace("%a", code["iata"])
-            output = output.replace("%o", code["icao"])
-        else:
-            return ""
-        if name := self.airport.get("name"):
-            output.replace("%n", name)
-        else:
-            output = output.replace("%n", "")
+            return Text("")
+
+        code = self.airport.get("code")
+        icao = code.get("icao", "") if code else ""
+
+        city = ""
         if position := self.airport.get("position"):
-            output = output.replace("%y", position["region"]["city"])
-        else:
-            output = output.replace("%y", "")
-        return output
+            city = position.get("region", {}).get("city", "")
+
+        if not city:
+            city = self.airport.get("name", "")
+
+        if city and icao:
+            text = Text(city)
+            text.append(" (", style="dim")
+            text.append(icao, style="dim")
+            text.append(")", style="dim")
+            return text
+        if city:
+            return Text(city)
+        if icao:
+            text = Text("(", style="dim")
+            text.append(icao, style="dim")
+            text.append(")", style="dim")
+            return text
+        return Text("")
 
 
 @dataclass_frozen
 class Aircraft:
-    aircraft: AircraftInfo
+    aircraft: AircraftInfo | None
 
-    def __format__(self, __format_spec: str) -> str:
+    def to_text(self) -> Text:
         if self.aircraft is None:
-            return ""
-        registration = self.aircraft["registration"]
-        hexcode = self.aircraft["hex"]
-        model_text = self.aircraft["model"]["text"]
-        return (
-            __format_spec.replace("%c", self.aircraft["model"]["code"])
-            .replace("%r", registration if registration else "")
-            .replace("%x", hexcode if hexcode else "")
-            .replace("%p", model_text if model_text else "")
-        )
+            return Text("")
+
+        registration = self.aircraft.get("registration")
+        typecode = self.aircraft.get("model", {}).get("code", "")
+
+        if registration:
+            text = Text(registration)
+            text.append(" (", style="dim")
+            text.append(typecode, style="dim")
+            text.append(")", style="dim")
+            return text
+        return Text(typecode, style="dim")

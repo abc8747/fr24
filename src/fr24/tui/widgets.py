@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import re
 
 from textual import on
@@ -17,8 +16,6 @@ def get_fr24(app: App) -> FR24:
 
 
 class AirportWidget(Static):
-    UPDATE_TASK: None | asyncio.Task[None] = None
-
     def compose(self) -> ComposeResult:
         assert self.name is not None
         self.iata = Static("", id="iata")
@@ -35,23 +32,23 @@ class AirportWidget(Static):
         yield self.fullname
 
     @on(Input.Changed)
-    async def lookup_airport(self) -> None:
+    def lookup_airport(self) -> None:
         self.app.query_one(AircraftWidget).input.value = ""
         self.app.query_one(FlightWidget).input.value = ""
         input_ = self.query_one(Input)
         if len(value := input_.value) >= 3:
-            if AirportWidget.UPDATE_TASK is not None:
-                AirportWidget.UPDATE_TASK.cancel()
-            AirportWidget.UPDATE_TASK = asyncio.create_task(
-                self.update_airport(value)
+            self.run_worker(
+                self.update_airport(value),
+                name="airport_lookup",
+                exclusive=True,
             )
         else:
-            self.iata.update()
-            self.icao.update()
-            self.fullname.update()
+            self.update_info()
             self.airport_id = ""
 
     def update_info(self, info: None | dict[str, str] = None) -> None:
+        # NOTE(abr): for some odd reason when i backspace too quickly it doesn't
+        # clear properly
         if info is None:
             self.icao.update()
             self.iata.update()
@@ -85,8 +82,6 @@ class AirportWidget(Static):
 
 
 class AircraftWidget(Static):
-    UPDATE_TASK: None | asyncio.Task[None] = None
-
     def compose(self) -> ComposeResult:
         assert self.name is not None
         self.hex = Static("", id="hex")
@@ -103,16 +98,16 @@ class AircraftWidget(Static):
             yield self.type
 
     @on(Input.Changed)
-    async def lookup_aircraft(self) -> None:
+    def lookup_aircraft(self) -> None:
         self.app.query_one(FlightWidget).input.value = ""
         for widget in self.app.query(AirportWidget):
             widget.input.value = ""
         input_ = self.query_one(Input)
         if len(value := input_.value) >= 3:
-            if AircraftWidget.UPDATE_TASK is not None:
-                AircraftWidget.UPDATE_TASK.cancel()
-            AircraftWidget.UPDATE_TASK = asyncio.create_task(
-                self.update_aircraft(value)
+            self.run_worker(
+                self.update_aircraft(value),
+                name="aircraft_lookup",
+                exclusive=True,
             )
         else:
             self.update_info()
@@ -152,8 +147,6 @@ class AircraftWidget(Static):
 
 
 class FlightWidget(Static):
-    UPDATE_TASK: None | asyncio.Task[None] = None
-
     def compose(self) -> ComposeResult:
         assert self.name is not None
         self.flight = Static("", id="flight")
@@ -170,16 +163,14 @@ class FlightWidget(Static):
         self.input.focus()
 
     @on(Input.Changed)
-    async def lookup_number(self) -> None:
+    def lookup_number(self) -> None:
         self.app.query_one(AircraftWidget).input.value = ""
         for widget in self.app.query(AirportWidget):
             widget.input.value = ""
         input_ = self.query_one(Input)
         if len(value := input_.value) >= 3:
-            if FlightWidget.UPDATE_TASK is not None:
-                FlightWidget.UPDATE_TASK.cancel()
-            FlightWidget.UPDATE_TASK = asyncio.create_task(
-                self.update_number(value)
+            self.run_worker(
+                self.update_number(value), name="flight_lookup", exclusive=True
             )
         else:
             self.update_info()
