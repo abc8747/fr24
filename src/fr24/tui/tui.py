@@ -133,7 +133,14 @@ class FR24(App[None]):
     async def action_login(self) -> None:
         self.auth = await login(self.client)
         if self.auth is not None:
-            self.sub_title = f"(authenticated: {self.auth['user']['identity']})"
+            identity = self.auth.get("user", {}).get("identity") or self.auth[
+                "userData"
+            ].get("identity")
+            self.sub_title = (
+                f"(authenticated: {identity})"
+                if identity
+                else "(authenticated)"
+            )
             self.query_one(Header).add_class("authenticated")
             self.query_one(Footer).add_class("authenticated")
 
@@ -190,7 +197,7 @@ class FR24(App[None]):
             await self.lookup_arrival(arrival, ts=ts)
             return
 
-    async def lookup_aircraft(self, value: str, ts: str) -> None:
+    async def lookup_aircraft(self, value: str, ts: str | pd.Timestamp) -> None:
         results = flight_list_parse(
             await flight_list(
                 self.client,
@@ -205,7 +212,7 @@ class FR24(App[None]):
         ).unwrap()
         self.update_table(results["result"]["response"].get("data", None))
 
-    async def lookup_number(self, value: str, ts: str) -> None:
+    async def lookup_number(self, value: str, ts: str | pd.Timestamp) -> None:
         results = flight_list_parse(
             await flight_list(
                 self.client,
@@ -299,7 +306,7 @@ class FR24(App[None]):
 
             await asyncio.sleep(2)
 
-    async def lookup_arrival(self, value: str, ts: str) -> None:
+    async def lookup_arrival(self, value: str, ts: str | pd.Timestamp) -> None:
         results = airport_list_parse(
             await airport_list(
                 self.client,
@@ -323,7 +330,9 @@ class FR24(App[None]):
                 ]
             )
 
-    async def lookup_departure(self, value: str, ts: str) -> None:
+    async def lookup_departure(
+        self, value: str, ts: str | pd.Timestamp
+    ) -> None:
         results = airport_list_parse(
             await airport_list(
                 self.client,
