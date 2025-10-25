@@ -4,12 +4,16 @@ import asyncio
 import re
 
 from textual import on
-from textual.app import ComposeResult
+from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Input, Label, Static
 
-from fr24.json import FindParams, find, find_parse
+from fr24 import FR24
 from fr24.types.json import is_aircraft, is_airport, is_schedule
+
+
+def get_fr24(app: App) -> FR24:
+    return app.fr24  # type: ignore
 
 
 class AirportWidget(Static):
@@ -60,15 +64,8 @@ class AirportWidget(Static):
             self.airport_id = info["iata"]
 
     async def update_airport(self, value: str) -> None:
-        params = FindParams(query=value)
-        find_results = find_parse(
-            await find(
-                self.app.client,  # type: ignore
-                params,
-                self.app.json_headers,  # type: ignore
-                auth=self.app.auth,  # type: ignore
-            )
-        ).unwrap()
+        result = await get_fr24(self.app).find.fetch(query=value)
+        find_results = result.to_dict()
         if find_results is None:
             return self.update_info()
         candidate = next(
@@ -138,15 +135,8 @@ class AircraftWidget(Static):
             self.aircraft_id = reg
 
     async def update_aircraft(self, value: str) -> None:
-        params = FindParams(query=value)
-        res = find_parse(
-            await find(
-                self.app.client,  # type: ignore
-                params,
-                self.app.json_headers,  # type: ignore
-                auth=self.app.auth,  # type: ignore
-            )
-        ).unwrap()
+        result = await get_fr24(self.app).find.fetch(query=value)
+        res = result.to_dict()
         if res is None:
             return self.update_info()
         candidates = (elt for elt in res["results"] if is_aircraft(elt))
@@ -209,15 +199,8 @@ class FlightWidget(Static):
             self.number = number
 
     async def update_number(self, value: str) -> None:
-        params = FindParams(query=value)
-        find_results = find_parse(
-            await find(
-                self.app.client,  # type: ignore
-                params,
-                self.app.json_headers,  # type: ignore
-                auth=self.app.auth,  # type: ignore
-            )
-        ).unwrap()
+        result = await get_fr24(self.app).find.fetch(query=value)
+        find_results = result.to_dict()
         if find_results is None:
             return self.update_info()
         candidate = next(
