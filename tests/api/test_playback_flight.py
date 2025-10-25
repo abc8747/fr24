@@ -9,7 +9,7 @@ from fr24.utils import to_flight_id
 async def flight_list_result(
     fr24: FR24,
 ) -> FlightListResult:
-    REG = "B-LRA"
+    REG = "B-LXA"
     result = await fr24.flight_list.fetch(reg=REG)
     return result
 

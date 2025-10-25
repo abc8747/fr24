@@ -62,6 +62,8 @@ class AirportWidget(Static):
 
     async def update_airport(self, value: str) -> None:
         result = await get_fr24(self.app).find.fetch(query=value)
+        if self.input.value != value:
+            return  # stale worker, discard result.
         find_results = result.to_dict()
         if find_results is None:
             return self.update_info()
@@ -131,6 +133,8 @@ class AircraftWidget(Static):
 
     async def update_aircraft(self, value: str) -> None:
         result = await get_fr24(self.app).find.fetch(query=value)
+        if self.input.value != value:
+            return
         res = result.to_dict()
         if res is None:
             return self.update_info()
@@ -191,6 +195,8 @@ class FlightWidget(Static):
 
     async def update_number(self, value: str) -> None:
         result = await get_fr24(self.app).find.fetch(query=value)
+        if self.input.value != value:
+            return
         find_results = result.to_dict()
         if find_results is None:
             return self.update_info()
