@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fr24"
-version = "0.2.3"
+version = "0.2.4"
 description = "Parse gRPC and JSON data from flightradar24"
 authors = [
     { name = "Abraham Cheung", email = "abraham@ylcheung.com" },

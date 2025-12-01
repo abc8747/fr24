@@ -15,4 +15,5 @@ message PlaybackFlightResponse {
     _common.ScheduleInfo schedule_info = 2;
     _common.ExtendedFlightInfo flight_info = 3;
     repeated _common.TrailPoint flight_trail_list = 4;
+    _common.FlightProgress flight_progress = 5;
 }

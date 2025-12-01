@@ -132,6 +132,7 @@ class _DataSourceEnumTypeWrapper(_EnumTypeWrapper[_DataSource.ValueType], type):
     UAT: _DataSource.ValueType  # 7
     SPIDERTRACKS: _DataSource.ValueType  # 8
     AUS: _DataSource.ValueType  # 9
+    AIERON: _DataSource.ValueType  # 10
 
 class DataSource(_DataSource, metaclass=_DataSourceEnumTypeWrapper): ...
 
@@ -145,6 +146,7 @@ OTHER_DATA_SOURCE: DataSource.ValueType  # 6
 UAT: DataSource.ValueType  # 7
 SPIDERTRACKS: DataSource.ValueType  # 8
 AUS: DataSource.ValueType  # 9
+AIERON: DataSource.ValueType  # 10
 
 class _Icon:
     ValueType = NewType("ValueType", int)

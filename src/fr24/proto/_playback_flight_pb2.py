@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from fr24.proto import _common_pb2 as fr24_dot_proto_dot___common__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!fr24/proto/_playback_flight.proto\x1a\x18\x66r24/proto/_common.proto\"w\n\x15PlaybackFlightRequest\x12\x11\n\tflight_id\x18\x01 \x01(\x07\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x38\n\x10restriction_mode\x18\x03 \x01(\x0e\x32\x1e._common.RestrictionVisibility\"\xd6\x01\n\x16PlaybackFlightResponse\x12,\n\raircraft_info\x18\x01 \x01(\x0b\x32\x15._common.AircraftInfo\x12,\n\rschedule_info\x18\x02 \x01(\x0b\x32\x15._common.ScheduleInfo\x12\x30\n\x0b\x66light_info\x18\x03 \x01(\x0b\x32\x1b._common.ExtendedFlightInfo\x12.\n\x11\x66light_trail_list\x18\x04 \x03(\x0b\x32\x13._common.TrailPointb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!fr24/proto/_playback_flight.proto\x1a\x18\x66r24/proto/_common.proto\"w\n\x15PlaybackFlightRequest\x12\x11\n\tflight_id\x18\x01 \x01(\x07\x12\x11\n\ttimestamp\x18\x02 \x01(\x04\x12\x38\n\x10restriction_mode\x18\x03 \x01(\x0e\x32\x1e._common.RestrictionVisibility\"\x88\x02\n\x16PlaybackFlightResponse\x12,\n\raircraft_info\x18\x01 \x01(\x0b\x32\x15._common.AircraftInfo\x12,\n\rschedule_info\x18\x02 \x01(\x0b\x32\x15._common.ScheduleInfo\x12\x30\n\x0b\x66light_info\x18\x03 \x01(\x0b\x32\x1b._common.ExtendedFlightInfo\x12.\n\x11\x66light_trail_list\x18\x04 \x03(\x0b\x32\x13._common.TrailPoint\x12\x30\n\x0f\x66light_progress\x18\x05 \x01(\x0b\x32\x17._common.FlightProgressb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,5 +35,5 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_PLAYBACKFLIGHTREQUEST']._serialized_start=63
   _globals['_PLAYBACKFLIGHTREQUEST']._serialized_end=182
   _globals['_PLAYBACKFLIGHTRESPONSE']._serialized_start=185
-  _globals['_PLAYBACKFLIGHTRESPONSE']._serialized_end=399
+  _globals['_PLAYBACKFLIGHTRESPONSE']._serialized_end=449
 # @@protoc_insertion_point(module_scope)

@@ -13,6 +13,7 @@ from collections.abc import (
 from fr24.proto._common_pb2 import (
     AircraftInfo,
     ExtendedFlightInfo,
+    FlightProgress,
     RestrictionVisibility,
     ScheduleInfo,
     TrailPoint,
@@ -65,6 +66,7 @@ class PlaybackFlightResponse(Message):
     SCHEDULE_INFO_FIELD_NUMBER: int
     FLIGHT_INFO_FIELD_NUMBER: int
     FLIGHT_TRAIL_LIST_FIELD_NUMBER: int
+    FLIGHT_PROGRESS_FIELD_NUMBER: int
     @property
     def aircraft_info(self) -> AircraftInfo: ...
     @property
@@ -73,6 +75,8 @@ class PlaybackFlightResponse(Message):
     def flight_info(self) -> ExtendedFlightInfo: ...
     @property
     def flight_trail_list(self) -> RepeatedCompositeFieldContainer[TrailPoint]: ...
+    @property
+    def flight_progress(self) -> FlightProgress: ...
     def __init__(
         self,
         *,
@@ -80,6 +84,7 @@ class PlaybackFlightResponse(Message):
         schedule_info: ScheduleInfo | None = ...,
         flight_info: ExtendedFlightInfo | None = ...,
         flight_trail_list: Iterable[TrailPoint] | None = ...,
+        flight_progress: FlightProgress | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "schedule_info", b"schedule_info"]) -> bool: ...
-    def ClearField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_trail_list", b"flight_trail_list", "schedule_info", b"schedule_info"]) -> None: ...
+    def HasField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_progress", b"flight_progress", "schedule_info", b"schedule_info"]) -> bool: ...
+    def ClearField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "schedule_info", b"schedule_info"]) -> None: ...

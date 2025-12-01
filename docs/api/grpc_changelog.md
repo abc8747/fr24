@@ -5,6 +5,9 @@ All known changes of the gRPC messages are documented here.
 Client versions are usually updated every 5 days, most frequently on Mon/Tue 10am.
 This list is not exhaustive.
 
+## `25.331.1404` (2025-11-27)
+- add field: `DataSource.AIERON`, `PlaybackFlightResponse.flight_progress`
+
 ## `25.261.0637` (2025-09-18)
 - add field: `FlightDetailsResponse.positionBuffer`, `FollowFlightResponse.positionBuffer`, `TrailPoint.source`
 

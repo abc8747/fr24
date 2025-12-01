@@ -12,6 +12,7 @@ from fr24.proto._common_pb2 import (
     A380 as A380,
     A3ST as A3ST,
     ADSB as ADSB,
+    AIERON as AIERON,
     AIRBORNE as AIRBORNE,
     AIRBORNE_ONLY as AIRBORNE_ONLY,
     ALL as ALL,

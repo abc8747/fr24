@@ -47,6 +47,7 @@ enum DataSource {
     UAT = 7;
     SPIDERTRACKS = 8;
     AUS = 9;
+    AIERON = 10;
 }
 
 enum Icon {
