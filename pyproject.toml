@@ -61,9 +61,10 @@ typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf==5.28.*"]
 lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",
-    "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
-    "pydantic>=2.12.0",          # >2.12 for extra="forbid", >3.14
+    "eval-type-backport>=0.2.0",         # for pydantic, <3.10 syntax
+    "pydantic>=2.12.0",                  # >2.12 for extra="forbid", >3.14
     "pytest>=8.3.3",
+    "pytest<9; python_version == '3.9'",
     "fr24[rich]",
 ]
 docs = [
