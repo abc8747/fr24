@@ -701,6 +701,11 @@ class Stats(TypedDict):
     count: StatsEntry
 
 
+class Info(TypedDict):
+    grpcEnabled: bool
+
+
 class Find(TypedDict):
     results: list[Entry]
     stats: Stats
+    info: Info

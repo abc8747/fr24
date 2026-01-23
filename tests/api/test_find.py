@@ -5,6 +5,7 @@ from typing_extensions import Annotated
 from fr24 import FR24
 from fr24.types.json import (
     Entry,
+    Info,
     Stats,
     is_aircraft,
     is_airport,
@@ -22,6 +23,7 @@ class FindResult(BaseModel):
 
     results: list[Annotated[Entry, Discriminator("type")]]
     stats: Stats
+    info: Info
 
 
 @pytest.mark.anyio
