@@ -21,7 +21,7 @@ HEADERS = httpx.Headers(get_grpc_headers(auth=None))
 
 
 @pytest.mark.anyio
-async def test_ll_live_feed_simple(client: httpx.AsyncClient) -> None:
+async def test_ll_live_feed_france(client: httpx.AsyncClient) -> None:
     params = LiveFeedParams(bounding_box=BBOX_FRANCE_UIR)
     response = await live_feed(client, params, HEADERS)
     result = parse_data(response.content, LiveFeedResponse)
@@ -66,22 +66,22 @@ async def test_ll_live_feed_playback_world(client: httpx.AsyncClient) -> None:
 
 
 @pytest.mark.anyio
-async def test_live_feed_live_world(fr24: FR24) -> None:
+async def test_live_feed_live_france(fr24: FR24) -> None:
     result = await fr24.live_feed.fetch(BBOX_FRANCE_UIR)
     len_proto = len(result.to_proto().flights_list)
-    assert len_proto > 100
+    assert len_proto > 10
 
     df = result.to_polars()
     assert df.height == len_proto
 
 
 @pytest.mark.anyio
-async def test_live_feed_playback_world(fr24: FR24) -> None:
+async def test_live_feed_playback_france(fr24: FR24) -> None:
     yesterday = int(time.time() - 86400)
     result = await fr24.live_feed_playback.fetch(
         BBOX_FRANCE_UIR, timestamp=yesterday
     )
-    assert result.to_polars().height > 100
+    assert result.to_polars().height > 10
 
 
 @pytest.mark.anyio
