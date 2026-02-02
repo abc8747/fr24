@@ -51,6 +51,7 @@ Issues = "https://github.com/abc8747/fr24/issues"
 [dependency-groups]
 dev = [
     "ipykernel>=6.29.5",
+    "textual-dev>=1.8.0",
     { include-group = "typing" },
     { include-group = "lint" },
     { include-group = "test" },

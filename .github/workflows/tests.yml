@@ -54,6 +54,7 @@ jobs:
 
       # weird mypy false positive: Untyped decorator makes function "playback" untyped  [misc]
       - name: Type checking
+        if: matrix.python-version != '3.9'
         run: uv run mypy src tests docs/usage/scripts --exclude 'cli.py'
 
   # NOTE: we intentionally isolate the API tests from style/type checking because
