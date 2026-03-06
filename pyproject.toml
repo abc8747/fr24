@@ -31,7 +31,7 @@ dependencies = [
     "httpx[zstd,http2]>=0.28.1",
     "orjson>=3.11.0",
     "platformdirs>=4.3.8",
-    "protobuf==5.28.*",
+    "protobuf>=6.33,<7",
 ]
 
 [project.optional-dependencies]
@@ -59,7 +59,7 @@ dev = [
     { include-group = "test" },
     { include-group = "docs" },
 ]
-typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf==5.28.*"]
+typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf>=6,<7"]
 lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",

@@ -12,99 +12,91 @@ the names `LiveFlightStatus`, `flight_id` and `data`
 are non-official.
 """
 
-from builtins import (
-    bool,
-    float,
-    int,
-)
-from collections.abc import (
-    Iterable,
-)
-from fr24.proto._common_pb2 import (
-    Status,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-    RepeatedScalarFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from fr24.proto import _common_pb2 as _common_pb2
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class LiveFlightStatusData(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    STATUS_FIELD_NUMBER: int
-    SQUAWK_FIELD_NUMBER: int
-    lat: float
-    lon: float
-    status: Status.ValueType
-    squawk: int
+@typing.final
+class LiveFlightStatusData(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    STATUS_FIELD_NUMBER: builtins.int
+    SQUAWK_FIELD_NUMBER: builtins.int
+    lat: builtins.float
+    lon: builtins.float
+    status: _common_pb2.Status.ValueType
+    squawk: builtins.int
     def __init__(
         self,
         *,
-        lat: float = ...,
-        lon: float = ...,
-        status: Status.ValueType = ...,
-        squawk: int = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
+        status: _common_pb2.Status.ValueType = ...,
+        squawk: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["lat", b"lat", "lon", b"lon", "squawk", b"squawk", "status", b"status"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["lat", b"lat", "lon", b"lon", "squawk", b"squawk", "status", b"status"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class LiveFlightsStatusRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class LiveFlightsStatusRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHT_IDS_LIST_FIELD_NUMBER: int
-    @property
-    def flight_ids_list(self) -> RepeatedScalarFieldContainer[int]: ...
+    FLIGHT_IDS_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def flight_ids_list(self) -> containers.RepeatedScalarFieldContainer[builtins.int]: ...
     def __init__(
         self,
         *,
-        flight_ids_list: Iterable[int] | None = ...,
+        flight_ids_list: abc.Iterable[builtins.int] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flight_ids_list", b"flight_ids_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flight_ids_list", b"flight_ids_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class LiveFlightStatus(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class LiveFlightStatus(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHT_ID_FIELD_NUMBER: int
-    DATA_FIELD_NUMBER: int
-    flight_id: int
-    @property
+    FLIGHT_ID_FIELD_NUMBER: builtins.int
+    DATA_FIELD_NUMBER: builtins.int
+    flight_id: builtins.int
+    @builtins.property
     def data(self) -> LiveFlightStatusData: ...
     def __init__(
         self,
         *,
-        flight_id: int = ...,
+        flight_id: builtins.int = ...,
         data: LiveFlightStatusData | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["data", b"data"]) -> bool: ...
-    def ClearField(self, field_name: Literal["data", b"data", "flight_id", b"flight_id"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["data", b"data"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["data", b"data", "flight_id", b"flight_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class LiveFlightsStatusResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class LiveFlightsStatusResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHTS_MAP_FIELD_NUMBER: int
-    @property
-    def flights_map(self) -> RepeatedCompositeFieldContainer[LiveFlightStatus]: ...
+    FLIGHTS_MAP_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def flights_map(self) -> containers.RepeatedCompositeFieldContainer[LiveFlightStatus]: ...
     def __init__(
         self,
         *,
-        flights_map: Iterable[LiveFlightStatus] | None = ...,
+        flights_map: abc.Iterable[LiveFlightStatus] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flights_map", b"flights_map"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flights_map", b"flights_map"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

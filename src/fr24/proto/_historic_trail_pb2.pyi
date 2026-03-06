@@ -3,55 +3,47 @@
 isort:skip_file
 """
 
-from builtins import (
-    int,
-)
-from collections.abc import (
-    Iterable,
-)
-from fr24.proto._common_pb2 import (
-    RadarHistoryRecord,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from fr24.proto import _common_pb2 as _common_pb2
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class HistoricTrailRequest(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    FLIGHT_ID_FIELD_NUMBER: int
-    flight_id: int
+@typing.final
+class HistoricTrailRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    FLIGHT_ID_FIELD_NUMBER: builtins.int
+    flight_id: builtins.int
     def __init__(
         self,
         *,
-        flight_id: int = ...,
+        flight_id: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flight_id", b"flight_id"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flight_id", b"flight_id"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class HistoricTrailResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class HistoricTrailResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    RADAR_RECORDS_LIST_FIELD_NUMBER: int
-    @property
-    def radar_records_list(self) -> RepeatedCompositeFieldContainer[RadarHistoryRecord]: ...
+    RADAR_RECORDS_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def radar_records_list(self) -> containers.RepeatedCompositeFieldContainer[_common_pb2.RadarHistoryRecord]: ...
     def __init__(
         self,
         *,
-        radar_records_list: Iterable[RadarHistoryRecord] | None = ...,
+        radar_records_list: abc.Iterable[_common_pb2.RadarHistoryRecord] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["radar_records_list", b"radar_records_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["radar_records_list", b"radar_records_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

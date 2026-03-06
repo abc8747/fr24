@@ -3,63 +3,30 @@
 isort:skip_file
 """
 
+from collections import abc as abc
+from fr24.proto import _common_pb2 as _common_pb2
+from google.protobuf import descriptor as descriptor
+from google.protobuf import field_mask_pb2 as field_mask_pb2
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+from google.protobuf.internal import enum_type_wrapper as enum_type_wrapper
+import builtins as builtins
 import sys
+import typing as typing
 
 if sys.version_info >= (3, 10):
-    import typing as typing_extensions
+    from typing import TypeAlias as _TypeAlias
 else:
-    import typing_extensions
-from builtins import (
-    bool,
-    float,
-    int,
-    str,
-    type,
-)
-from collections.abc import (
-    Iterable,
-)
-from fr24.proto._common_pb2 import (
-    DataSource,
-    Flight,
-    RestrictionVisibility,
-    Service,
-    Stats,
-    TrafficType,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    EnumDescriptor,
-    FileDescriptor,
-)
-from google.protobuf.field_mask_pb2 import (
-    FieldMask,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-    RepeatedScalarFieldContainer,
-)
-from google.protobuf.internal.enum_type_wrapper import (
-    _EnumTypeWrapper,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    NewType,
-    final,
-    overload,
-)
+    from typing_extensions import TypeAlias as _TypeAlias
 
-DESCRIPTOR: FileDescriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
 class _AirportFilterType:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _AirportFilterTypeEnumTypeWrapper(_EnumTypeWrapper[_AirportFilterType.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _AirportFilterTypeEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_AirportFilterType.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     BOTH: _AirportFilterType.ValueType  # 0
     INBOUND: _AirportFilterType.ValueType  # 1
     OUTBOUND: _AirportFilterType.ValueType  # 2
@@ -71,11 +38,11 @@ INBOUND: AirportFilterType.ValueType  # 1
 OUTBOUND: AirportFilterType.ValueType  # 2
 
 class _AirlineFilterType:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _AirlineFilterTypeEnumTypeWrapper(_EnumTypeWrapper[_AirlineFilterType.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _AirlineFilterTypeEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_AirlineFilterType.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     PAINTED_AS: _AirlineFilterType.ValueType  # 0
     OPERATED_BY: _AirlineFilterType.ValueType  # 1
 
@@ -84,310 +51,335 @@ class AirlineFilterType(_AirlineFilterType, metaclass=_AirlineFilterTypeEnumType
 PAINTED_AS: AirlineFilterType.ValueType  # 0
 OPERATED_BY: AirlineFilterType.ValueType  # 1
 
-@final
-class LocationBoundaries(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class LocationBoundaries(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    NORTH_FIELD_NUMBER: int
-    SOUTH_FIELD_NUMBER: int
-    WEST_FIELD_NUMBER: int
-    EAST_FIELD_NUMBER: int
-    north: float
+    NORTH_FIELD_NUMBER: builtins.int
+    SOUTH_FIELD_NUMBER: builtins.int
+    WEST_FIELD_NUMBER: builtins.int
+    EAST_FIELD_NUMBER: builtins.int
+    north: builtins.float
     """Maximum Latitude, degrees, -90 to 90"""
-    south: float
+    south: builtins.float
     """Minimum Latitude, degrees, -90 to 90"""
-    west: float
+    west: builtins.float
     """Minimum Longitude, degrees, -180 to 180"""
-    east: float
+    east: builtins.float
     """Maximum Longitude, degrees, -180 to 180"""
     def __init__(
         self,
         *,
-        north: float = ...,
-        south: float = ...,
-        west: float = ...,
-        east: float = ...,
+        north: builtins.float = ...,
+        south: builtins.float = ...,
+        west: builtins.float = ...,
+        east: builtins.float = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["east", b"east", "north", b"north", "south", b"south", "west", b"west"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["east", b"east", "north", b"north", "south", b"south", "west", b"west"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class VisibilitySettings(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class VisibilitySettings(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    SOURCES_LIST_FIELD_NUMBER: int
-    SERVICES_LIST_FIELD_NUMBER: int
-    TRAFFIC_TYPE_FIELD_NUMBER: int
-    ONLY_RESTRICTED_FIELD_NUMBER: int
-    traffic_type: TrafficType.ValueType
-    only_restricted: bool
-    @property
-    def sources_list(self) -> RepeatedScalarFieldContainer[DataSource.ValueType]: ...
-    @property
-    def services_list(self) -> RepeatedScalarFieldContainer[Service.ValueType]: ...
+    SOURCES_LIST_FIELD_NUMBER: builtins.int
+    SERVICES_LIST_FIELD_NUMBER: builtins.int
+    TRAFFIC_TYPE_FIELD_NUMBER: builtins.int
+    ONLY_RESTRICTED_FIELD_NUMBER: builtins.int
+    traffic_type: _common_pb2.TrafficType.ValueType
+    only_restricted: builtins.bool
+    @builtins.property
+    def sources_list(self) -> containers.RepeatedScalarFieldContainer[_common_pb2.DataSource.ValueType]: ...
+    @builtins.property
+    def services_list(self) -> containers.RepeatedScalarFieldContainer[_common_pb2.Service.ValueType]: ...
     def __init__(
         self,
         *,
-        sources_list: Iterable[DataSource.ValueType] | None = ...,
-        services_list: Iterable[Service.ValueType] | None = ...,
-        traffic_type: TrafficType.ValueType = ...,
-        only_restricted: bool | None = ...,
+        sources_list: abc.Iterable[_common_pb2.DataSource.ValueType] | None = ...,
+        services_list: abc.Iterable[_common_pb2.Service.ValueType] | None = ...,
+        traffic_type: _common_pb2.TrafficType.ValueType = ...,
+        only_restricted: builtins.bool | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["_only_restricted", b"_only_restricted", "only_restricted", b"only_restricted"]) -> bool: ...
-    def ClearField(self, field_name: Literal["_only_restricted", b"_only_restricted", "only_restricted", b"only_restricted", "services_list", b"services_list", "sources_list", b"sources_list", "traffic_type", b"traffic_type"]) -> None: ...
-    def WhichOneof(self, oneof_group: Literal["_only_restricted", b"_only_restricted"]) -> Literal["only_restricted"] | None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["_only_restricted", b"_only_restricted", "only_restricted", b"only_restricted"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["_only_restricted", b"_only_restricted", "only_restricted", b"only_restricted", "services_list", b"services_list", "sources_list", b"sources_list", "traffic_type", b"traffic_type"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    _WhichOneofReturnType__only_restricted: _TypeAlias = typing.Literal["only_restricted"]  # noqa: Y015
+    _WhichOneofArgType__only_restricted: _TypeAlias = typing.Literal["_only_restricted", b"_only_restricted"]  # noqa: Y015
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__only_restricted) -> _WhichOneofReturnType__only_restricted | None: ...
 
-@final
-class AirportFilter(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class AirportFilter(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    IATA_FIELD_NUMBER: int
-    COUNTRY_ID_FIELD_NUMBER: int
-    TYPE_FIELD_NUMBER: int
-    iata: str
-    country_id: int
+    IATA_FIELD_NUMBER: builtins.int
+    COUNTRY_ID_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    iata: builtins.str
+    country_id: builtins.int
     type: AirportFilterType.ValueType
     def __init__(
         self,
         *,
-        iata: str = ...,
-        country_id: int = ...,
+        iata: builtins.str = ...,
+        country_id: builtins.int = ...,
         type: AirportFilterType.ValueType = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["country_id", b"country_id", "iata", b"iata", "type", b"type"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["country_id", b"country_id", "iata", b"iata", "type", b"type"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Interval(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Interval(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    MIN_FIELD_NUMBER: int
-    MAX_FIELD_NUMBER: int
-    min: int
-    max: int
+    MIN_FIELD_NUMBER: builtins.int
+    MAX_FIELD_NUMBER: builtins.int
+    min: builtins.int
+    max: builtins.int
     def __init__(
         self,
         *,
-        min: int = ...,
-        max: int = ...,
+        min: builtins.int = ...,
+        max: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["max", b"max", "min", b"min"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["max", b"max", "min", b"min"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class AirlineFilter(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class AirlineFilter(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    ICAO_FIELD_NUMBER: int
-    TYPE_FIELD_NUMBER: int
-    icao: str
+    ICAO_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    icao: builtins.str
     """ICAO airline designator, e.g. `CPA`"""
     type: AirlineFilterType.ValueType
     def __init__(
         self,
         *,
-        icao: str = ...,
+        icao: builtins.str = ...,
         type: AirlineFilterType.ValueType = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["icao", b"icao", "type", b"type"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["icao", b"icao", "type", b"type"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Filter(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Filter(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    ALTITUDE_RANGES_LIST_FIELD_NUMBER: int
-    SPEED_RANGES_LIST_FIELD_NUMBER: int
-    AIRLINES_LIST_FIELD_NUMBER: int
-    CALLSIGNS_LIST_FIELD_NUMBER: int
-    RADARS_LIST_FIELD_NUMBER: int
-    REGS_LIST_FIELD_NUMBER: int
-    AIRPORTS_LIST_FIELD_NUMBER: int
-    FLIGHTS_LIST_FIELD_NUMBER: int
-    TYPES_LIST_FIELD_NUMBER: int
-    BIRTH_YEAR_RANGES_LIST_FIELD_NUMBER: int
-    SQUAWKS_LIST_FIELD_NUMBER: int
-    ORIGINS_LIST_FIELD_NUMBER: int
-    DESTINATIONS_LIST_FIELD_NUMBER: int
-    CATEGORIES_LIST_FIELD_NUMBER: int
-    AIRSPACES_LIST_FIELD_NUMBER: int
-    @property
-    def altitude_ranges_list(self) -> RepeatedCompositeFieldContainer[Interval]: ...
-    @property
-    def speed_ranges_list(self) -> RepeatedCompositeFieldContainer[Interval]:
+    ALTITUDE_RANGES_LIST_FIELD_NUMBER: builtins.int
+    SPEED_RANGES_LIST_FIELD_NUMBER: builtins.int
+    AIRLINES_LIST_FIELD_NUMBER: builtins.int
+    CALLSIGNS_LIST_FIELD_NUMBER: builtins.int
+    RADARS_LIST_FIELD_NUMBER: builtins.int
+    REGS_LIST_FIELD_NUMBER: builtins.int
+    AIRPORTS_LIST_FIELD_NUMBER: builtins.int
+    FLIGHTS_LIST_FIELD_NUMBER: builtins.int
+    TYPES_LIST_FIELD_NUMBER: builtins.int
+    BIRTH_YEAR_RANGES_LIST_FIELD_NUMBER: builtins.int
+    SQUAWKS_LIST_FIELD_NUMBER: builtins.int
+    ORIGINS_LIST_FIELD_NUMBER: builtins.int
+    DESTINATIONS_LIST_FIELD_NUMBER: builtins.int
+    CATEGORIES_LIST_FIELD_NUMBER: builtins.int
+    AIRSPACES_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def altitude_ranges_list(self) -> containers.RepeatedCompositeFieldContainer[Interval]: ...
+    @builtins.property
+    def speed_ranges_list(self) -> containers.RepeatedCompositeFieldContainer[Interval]:
         """Minimum and maximum ground speed, knots"""
 
-    @property
-    def airlines_list(self) -> RepeatedCompositeFieldContainer[AirlineFilter]: ...
-    @property
-    def callsigns_list(self) -> RepeatedScalarFieldContainer[str]: ...
-    @property
-    def radars_list(self) -> RepeatedScalarFieldContainer[str]:
+    @builtins.property
+    def airlines_list(self) -> containers.RepeatedCompositeFieldContainer[AirlineFilter]: ...
+    @builtins.property
+    def callsigns_list(self) -> containers.RepeatedScalarFieldContainer[builtins.str]: ...
+    @builtins.property
+    def radars_list(self) -> containers.RepeatedScalarFieldContainer[builtins.str]:
         """List of receiver IDs, e.g. `["T-VHST000"]`"""
 
-    @property
-    def regs_list(self) -> RepeatedScalarFieldContainer[str]: ...
-    @property
-    def airports_list(self) -> RepeatedCompositeFieldContainer[AirportFilter]: ...
-    @property
-    def flights_list(self) -> RepeatedScalarFieldContainer[str]: ...
-    @property
-    def types_list(self) -> RepeatedScalarFieldContainer[str]:
+    @builtins.property
+    def regs_list(self) -> containers.RepeatedScalarFieldContainer[builtins.str]: ...
+    @builtins.property
+    def airports_list(self) -> containers.RepeatedCompositeFieldContainer[AirportFilter]: ...
+    @builtins.property
+    def flights_list(self) -> containers.RepeatedScalarFieldContainer[builtins.str]: ...
+    @builtins.property
+    def types_list(self) -> containers.RepeatedScalarFieldContainer[builtins.str]:
         """List of aircraft types, e.g. `["B74*"]`"""
 
-    @property
-    def birth_year_ranges_list(self) -> RepeatedCompositeFieldContainer[Interval]: ...
-    @property
-    def squawks_list(self) -> RepeatedScalarFieldContainer[int]: ...
-    @property
-    def origins_list(self) -> RepeatedCompositeFieldContainer[AirportFilter]: ...
-    @property
-    def destinations_list(self) -> RepeatedCompositeFieldContainer[AirportFilter]: ...
-    @property
-    def categories_list(self) -> RepeatedScalarFieldContainer[Service.ValueType]: ...
-    @property
-    def airspaces_list(self) -> RepeatedScalarFieldContainer[str]: ...
+    @builtins.property
+    def birth_year_ranges_list(self) -> containers.RepeatedCompositeFieldContainer[Interval]: ...
+    @builtins.property
+    def squawks_list(self) -> containers.RepeatedScalarFieldContainer[builtins.int]: ...
+    @builtins.property
+    def origins_list(self) -> containers.RepeatedCompositeFieldContainer[AirportFilter]: ...
+    @builtins.property
+    def destinations_list(self) -> containers.RepeatedCompositeFieldContainer[AirportFilter]: ...
+    @builtins.property
+    def categories_list(self) -> containers.RepeatedScalarFieldContainer[_common_pb2.Service.ValueType]: ...
+    @builtins.property
+    def airspaces_list(self) -> containers.RepeatedScalarFieldContainer[builtins.str]: ...
     def __init__(
         self,
         *,
-        altitude_ranges_list: Iterable[Interval] | None = ...,
-        speed_ranges_list: Iterable[Interval] | None = ...,
-        airlines_list: Iterable[AirlineFilter] | None = ...,
-        callsigns_list: Iterable[str] | None = ...,
-        radars_list: Iterable[str] | None = ...,
-        regs_list: Iterable[str] | None = ...,
-        airports_list: Iterable[AirportFilter] | None = ...,
-        flights_list: Iterable[str] | None = ...,
-        types_list: Iterable[str] | None = ...,
-        birth_year_ranges_list: Iterable[Interval] | None = ...,
-        squawks_list: Iterable[int] | None = ...,
-        origins_list: Iterable[AirportFilter] | None = ...,
-        destinations_list: Iterable[AirportFilter] | None = ...,
-        categories_list: Iterable[Service.ValueType] | None = ...,
-        airspaces_list: Iterable[str] | None = ...,
+        altitude_ranges_list: abc.Iterable[Interval] | None = ...,
+        speed_ranges_list: abc.Iterable[Interval] | None = ...,
+        airlines_list: abc.Iterable[AirlineFilter] | None = ...,
+        callsigns_list: abc.Iterable[builtins.str] | None = ...,
+        radars_list: abc.Iterable[builtins.str] | None = ...,
+        regs_list: abc.Iterable[builtins.str] | None = ...,
+        airports_list: abc.Iterable[AirportFilter] | None = ...,
+        flights_list: abc.Iterable[builtins.str] | None = ...,
+        types_list: abc.Iterable[builtins.str] | None = ...,
+        birth_year_ranges_list: abc.Iterable[Interval] | None = ...,
+        squawks_list: abc.Iterable[builtins.int] | None = ...,
+        origins_list: abc.Iterable[AirportFilter] | None = ...,
+        destinations_list: abc.Iterable[AirportFilter] | None = ...,
+        categories_list: abc.Iterable[_common_pb2.Service.ValueType] | None = ...,
+        airspaces_list: abc.Iterable[builtins.str] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["airlines_list", b"airlines_list", "airports_list", b"airports_list", "airspaces_list", b"airspaces_list", "altitude_ranges_list", b"altitude_ranges_list", "birth_year_ranges_list", b"birth_year_ranges_list", "callsigns_list", b"callsigns_list", "categories_list", b"categories_list", "destinations_list", b"destinations_list", "flights_list", b"flights_list", "origins_list", b"origins_list", "radars_list", b"radars_list", "regs_list", b"regs_list", "speed_ranges_list", b"speed_ranges_list", "squawks_list", b"squawks_list", "types_list", b"types_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["airlines_list", b"airlines_list", "airports_list", b"airports_list", "airspaces_list", b"airspaces_list", "altitude_ranges_list", b"altitude_ranges_list", "birth_year_ranges_list", b"birth_year_ranges_list", "callsigns_list", b"callsigns_list", "categories_list", b"categories_list", "destinations_list", b"destinations_list", "flights_list", b"flights_list", "origins_list", b"origins_list", "radars_list", b"radars_list", "regs_list", b"regs_list", "speed_ranges_list", b"speed_ranges_list", "squawks_list", b"squawks_list", "types_list", b"types_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class LiveFeedRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class LiveFeedRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    BOUNDS_FIELD_NUMBER: int
-    SETTINGS_FIELD_NUMBER: int
-    FILTERS_LIST_FIELD_NUMBER: int
-    FLEETS_LIST_FIELD_NUMBER: int
-    HIGHLIGHT_MODE_FIELD_NUMBER: int
-    STATS_FIELD_NUMBER: int
-    LIMIT_FIELD_NUMBER: int
-    MAXAGE_FIELD_NUMBER: int
-    RESTRICTION_MODE_FIELD_NUMBER: int
-    FIELD_MASK_FIELD_NUMBER: int
-    SELECTED_FLIGHT_IDS_LIST_FIELD_NUMBER: int
-    fleets_list: str
+    BOUNDS_FIELD_NUMBER: builtins.int
+    SETTINGS_FIELD_NUMBER: builtins.int
+    FILTERS_LIST_FIELD_NUMBER: builtins.int
+    FLEETS_LIST_FIELD_NUMBER: builtins.int
+    HIGHLIGHT_MODE_FIELD_NUMBER: builtins.int
+    STATS_FIELD_NUMBER: builtins.int
+    LIMIT_FIELD_NUMBER: builtins.int
+    MAXAGE_FIELD_NUMBER: builtins.int
+    RESTRICTION_MODE_FIELD_NUMBER: builtins.int
+    FIELD_MASK_FIELD_NUMBER: builtins.int
+    SELECTED_FLIGHT_IDS_LIST_FIELD_NUMBER: builtins.int
+    fleets_list: builtins.str
     """requires authentication"""
-    highlight_mode: bool
-    stats: bool
+    highlight_mode: builtins.bool
+    stats: builtins.bool
     """Include statistics for the given area"""
-    limit: int
+    limit: builtins.int
     """Maximum number of flights (default 1500 for unauthenticated users, 2000 for authenticated users)"""
-    maxage: int
+    maxage: builtins.int
     """Maximum age since last update, seconds (default 14400)"""
-    restriction_mode: RestrictionVisibility.ValueType
-    @property
+    restriction_mode: _common_pb2.RestrictionVisibility.ValueType
+    @builtins.property
     def bounds(self) -> LocationBoundaries: ...
-    @property
+    @builtins.property
     def settings(self) -> VisibilitySettings: ...
-    @property
+    @builtins.property
     def filters_list(self) -> Filter: ...
-    @property
-    def field_mask(self) -> FieldMask: ...
-    @property
-    def selected_flight_ids_list(self) -> RepeatedScalarFieldContainer[int]: ...
+    @builtins.property
+    def field_mask(self) -> field_mask_pb2.FieldMask: ...
+    @builtins.property
+    def selected_flight_ids_list(self) -> containers.RepeatedScalarFieldContainer[builtins.int]: ...
     def __init__(
         self,
         *,
         bounds: LocationBoundaries | None = ...,
         settings: VisibilitySettings | None = ...,
         filters_list: Filter | None = ...,
-        fleets_list: str = ...,
-        highlight_mode: bool = ...,
-        stats: bool | None = ...,
-        limit: int | None = ...,
-        maxage: int | None = ...,
-        restriction_mode: RestrictionVisibility.ValueType | None = ...,
-        field_mask: FieldMask | None = ...,
-        selected_flight_ids_list: Iterable[int] | None = ...,
+        fleets_list: builtins.str = ...,
+        highlight_mode: builtins.bool = ...,
+        stats: builtins.bool | None = ...,
+        limit: builtins.int | None = ...,
+        maxage: builtins.int | None = ...,
+        restriction_mode: _common_pb2.RestrictionVisibility.ValueType | None = ...,
+        field_mask: field_mask_pb2.FieldMask | None = ...,
+        selected_flight_ids_list: abc.Iterable[builtins.int] | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["_limit", b"_limit", "_maxage", b"_maxage", "_restriction_mode", b"_restriction_mode", "_stats", b"_stats", "bounds", b"bounds", "field_mask", b"field_mask", "filters_list", b"filters_list", "limit", b"limit", "maxage", b"maxage", "restriction_mode", b"restriction_mode", "settings", b"settings", "stats", b"stats"]) -> bool: ...
-    def ClearField(self, field_name: Literal["_limit", b"_limit", "_maxage", b"_maxage", "_restriction_mode", b"_restriction_mode", "_stats", b"_stats", "bounds", b"bounds", "field_mask", b"field_mask", "filters_list", b"filters_list", "fleets_list", b"fleets_list", "highlight_mode", b"highlight_mode", "limit", b"limit", "maxage", b"maxage", "restriction_mode", b"restriction_mode", "selected_flight_ids_list", b"selected_flight_ids_list", "settings", b"settings", "stats", b"stats"]) -> None: ...
-    @overload
-    def WhichOneof(self, oneof_group: Literal["_limit", b"_limit"]) -> Literal["limit"] | None: ...
-    @overload
-    def WhichOneof(self, oneof_group: Literal["_maxage", b"_maxage"]) -> Literal["maxage"] | None: ...
-    @overload
-    def WhichOneof(self, oneof_group: Literal["_restriction_mode", b"_restriction_mode"]) -> Literal["restriction_mode"] | None: ...
-    @overload
-    def WhichOneof(self, oneof_group: Literal["_stats", b"_stats"]) -> Literal["stats"] | None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["_limit", b"_limit", "_maxage", b"_maxage", "_restriction_mode", b"_restriction_mode", "_stats", b"_stats", "bounds", b"bounds", "field_mask", b"field_mask", "filters_list", b"filters_list", "limit", b"limit", "maxage", b"maxage", "restriction_mode", b"restriction_mode", "settings", b"settings", "stats", b"stats"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["_limit", b"_limit", "_maxage", b"_maxage", "_restriction_mode", b"_restriction_mode", "_stats", b"_stats", "bounds", b"bounds", "field_mask", b"field_mask", "filters_list", b"filters_list", "fleets_list", b"fleets_list", "highlight_mode", b"highlight_mode", "limit", b"limit", "maxage", b"maxage", "restriction_mode", b"restriction_mode", "selected_flight_ids_list", b"selected_flight_ids_list", "settings", b"settings", "stats", b"stats"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    _WhichOneofReturnType__limit: _TypeAlias = typing.Literal["limit"]  # noqa: Y015
+    _WhichOneofArgType__limit: _TypeAlias = typing.Literal["_limit", b"_limit"]  # noqa: Y015
+    _WhichOneofReturnType__maxage: _TypeAlias = typing.Literal["maxage"]  # noqa: Y015
+    _WhichOneofArgType__maxage: _TypeAlias = typing.Literal["_maxage", b"_maxage"]  # noqa: Y015
+    _WhichOneofReturnType__restriction_mode: _TypeAlias = typing.Literal["restriction_mode"]  # noqa: Y015
+    _WhichOneofArgType__restriction_mode: _TypeAlias = typing.Literal["_restriction_mode", b"_restriction_mode"]  # noqa: Y015
+    _WhichOneofReturnType__stats: _TypeAlias = typing.Literal["stats"]  # noqa: Y015
+    _WhichOneofArgType__stats: _TypeAlias = typing.Literal["_stats", b"_stats"]  # noqa: Y015
+    @typing.overload
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__limit) -> _WhichOneofReturnType__limit | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__maxage) -> _WhichOneofReturnType__maxage | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__restriction_mode) -> _WhichOneofReturnType__restriction_mode | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__stats) -> _WhichOneofReturnType__stats | None: ...
 
-@final
-class LiveFeedResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class LiveFeedResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHTS_LIST_FIELD_NUMBER: int
-    STATS_FIELD_NUMBER: int
-    SELECTED_FLIGHT_LIST_FIELD_NUMBER: int
-    SERVER_TIME_MS_FIELD_NUMBER: int
-    server_time_ms: int
-    @property
-    def flights_list(self) -> RepeatedCompositeFieldContainer[Flight]: ...
-    @property
-    def stats(self) -> Stats: ...
-    @property
-    def selected_flight_list(self) -> RepeatedCompositeFieldContainer[Flight]: ...
+    FLIGHTS_LIST_FIELD_NUMBER: builtins.int
+    STATS_FIELD_NUMBER: builtins.int
+    SELECTED_FLIGHT_LIST_FIELD_NUMBER: builtins.int
+    SERVER_TIME_MS_FIELD_NUMBER: builtins.int
+    server_time_ms: builtins.int
+    @builtins.property
+    def flights_list(self) -> containers.RepeatedCompositeFieldContainer[_common_pb2.Flight]: ...
+    @builtins.property
+    def stats(self) -> _common_pb2.Stats: ...
+    @builtins.property
+    def selected_flight_list(self) -> containers.RepeatedCompositeFieldContainer[_common_pb2.Flight]: ...
     def __init__(
         self,
         *,
-        flights_list: Iterable[Flight] | None = ...,
-        stats: Stats | None = ...,
-        selected_flight_list: Iterable[Flight] | None = ...,
-        server_time_ms: int = ...,
+        flights_list: abc.Iterable[_common_pb2.Flight] | None = ...,
+        stats: _common_pb2.Stats | None = ...,
+        selected_flight_list: abc.Iterable[_common_pb2.Flight] | None = ...,
+        server_time_ms: builtins.int = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["stats", b"stats"]) -> bool: ...
-    def ClearField(self, field_name: Literal["flights_list", b"flights_list", "selected_flight_list", b"selected_flight_list", "server_time_ms", b"server_time_ms", "stats", b"stats"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["stats", b"stats"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flights_list", b"flights_list", "selected_flight_list", b"selected_flight_list", "server_time_ms", b"server_time_ms", "stats", b"stats"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class PlaybackRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class PlaybackRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    LIVE_FEED_REQUEST_FIELD_NUMBER: int
-    TIMESTAMP_FIELD_NUMBER: int
-    PREFETCH_FIELD_NUMBER: int
-    HFREQ_FIELD_NUMBER: int
-    timestamp: int
+    LIVE_FEED_REQUEST_FIELD_NUMBER: builtins.int
+    TIMESTAMP_FIELD_NUMBER: builtins.int
+    PREFETCH_FIELD_NUMBER: builtins.int
+    HFREQ_FIELD_NUMBER: builtins.int
+    timestamp: builtins.int
     """Start timestamp"""
-    prefetch: int
+    prefetch: builtins.int
     """End timestamp, should be timestamp + floor(7.5*(multiplier)) seconds
 
     For 1x playback, it should be timestamp + 7 seconds.
     """
-    hfreq: int
+    hfreq: builtins.int
     """High frequency mode, likely used to return granular data (?)"""
-    @property
+    @builtins.property
     def live_feed_request(self) -> LiveFeedRequest: ...
     def __init__(
         self,
         *,
         live_feed_request: LiveFeedRequest | None = ...,
-        timestamp: int = ...,
-        prefetch: int = ...,
-        hfreq: int | None = ...,
+        timestamp: builtins.int = ...,
+        prefetch: builtins.int = ...,
+        hfreq: builtins.int | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["_hfreq", b"_hfreq", "hfreq", b"hfreq", "live_feed_request", b"live_feed_request"]) -> bool: ...
-    def ClearField(self, field_name: Literal["_hfreq", b"_hfreq", "hfreq", b"hfreq", "live_feed_request", b"live_feed_request", "prefetch", b"prefetch", "timestamp", b"timestamp"]) -> None: ...
-    def WhichOneof(self, oneof_group: Literal["_hfreq", b"_hfreq"]) -> Literal["hfreq"] | None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["_hfreq", b"_hfreq", "hfreq", b"hfreq", "live_feed_request", b"live_feed_request"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["_hfreq", b"_hfreq", "hfreq", b"hfreq", "live_feed_request", b"live_feed_request", "prefetch", b"prefetch", "timestamp", b"timestamp"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
+    _WhichOneofReturnType__hfreq: _TypeAlias = typing.Literal["hfreq"]  # noqa: Y015
+    _WhichOneofArgType__hfreq: _TypeAlias = typing.Literal["_hfreq", b"_hfreq"]  # noqa: Y015
+    def WhichOneof(self, oneof_group: _WhichOneofArgType__hfreq) -> _WhichOneofReturnType__hfreq | None: ...
 
-@final
-class PlaybackResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class PlaybackResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    LIVE_FEED_RESPONSE_FIELD_NUMBER: int
-    @property
+    LIVE_FEED_RESPONSE_FIELD_NUMBER: builtins.int
+    @builtins.property
     def live_feed_response(self) -> LiveFeedResponse:
         """NOTE: position buffer is not included in the response."""
 
@@ -396,5 +388,7 @@ class PlaybackResponse(Message):
         *,
         live_feed_response: LiveFeedResponse | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["live_feed_response", b"live_feed_response"]) -> bool: ...
-    def ClearField(self, field_name: Literal["live_feed_response", b"live_feed_response"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["live_feed_response", b"live_feed_response"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["live_feed_response", b"live_feed_response"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

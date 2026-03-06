@@ -3,146 +3,130 @@
 isort:skip_file
 """
 
-from builtins import (
-    bool,
-    int,
-)
-from collections.abc import (
-    Iterable,
-)
-from fr24.proto._common_pb2 import (
-    AircraftInfo,
-    DelayStatus,
-    ExtendedFlightInfo,
-    FlightPlan,
-    FlightProgress,
-    FlightStage,
-    PositionBuffer,
-    RestrictionVisibility,
-    ScheduleInfo,
-    TrailPoint,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from fr24.proto import _common_pb2 as _common_pb2
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class FlightProgress(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    TRAVERSED_DISTANCE_FIELD_NUMBER: int
-    REMAINING_DISTANCE_FIELD_NUMBER: int
-    ELAPSED_TIME_FIELD_NUMBER: int
-    REMAINING_TIME_FIELD_NUMBER: int
-    ETA_FIELD_NUMBER: int
-    GREAT_CIRCLE_DISTANCE_FIELD_NUMBER: int
-    MEAN_FLIGHT_TIME_FIELD_NUMBER: int
-    FLIGHT_STAGE_FIELD_NUMBER: int
-    DELAY_STATUS_FIELD_NUMBER: int
-    PROGRESS_PCT_FIELD_NUMBER: int
-    traversed_distance: int
+@typing.final
+class FlightProgress(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    TRAVERSED_DISTANCE_FIELD_NUMBER: builtins.int
+    REMAINING_DISTANCE_FIELD_NUMBER: builtins.int
+    ELAPSED_TIME_FIELD_NUMBER: builtins.int
+    REMAINING_TIME_FIELD_NUMBER: builtins.int
+    ETA_FIELD_NUMBER: builtins.int
+    GREAT_CIRCLE_DISTANCE_FIELD_NUMBER: builtins.int
+    MEAN_FLIGHT_TIME_FIELD_NUMBER: builtins.int
+    FLIGHT_STAGE_FIELD_NUMBER: builtins.int
+    DELAY_STATUS_FIELD_NUMBER: builtins.int
+    PROGRESS_PCT_FIELD_NUMBER: builtins.int
+    traversed_distance: builtins.int
     """Distance traversed, meters"""
-    remaining_distance: int
+    remaining_distance: builtins.int
     """Distance remaining, meters"""
-    elapsed_time: int
+    elapsed_time: builtins.int
     """Elapsed time since departure, seconds"""
-    remaining_time: int
+    remaining_time: builtins.int
     """Remaining time until arrival, seconds"""
-    eta: int
+    eta: builtins.int
     """Estimated time of arrival, Unix timestamp in seconds"""
-    great_circle_distance: int
+    great_circle_distance: builtins.int
     """Great circle distance, meters"""
-    mean_flight_time: int
+    mean_flight_time: builtins.int
     """Mean flight time, seconds"""
-    flight_stage: FlightStage.ValueType
-    delay_status: DelayStatus.ValueType
-    progress_pct: int
+    flight_stage: _common_pb2.FlightStage.ValueType
+    delay_status: _common_pb2.DelayStatus.ValueType
+    progress_pct: builtins.int
     """Progress percentage of the flight (0-100)"""
     def __init__(
         self,
         *,
-        traversed_distance: int = ...,
-        remaining_distance: int = ...,
-        elapsed_time: int = ...,
-        remaining_time: int = ...,
-        eta: int = ...,
-        great_circle_distance: int = ...,
-        mean_flight_time: int = ...,
-        flight_stage: FlightStage.ValueType = ...,
-        delay_status: DelayStatus.ValueType = ...,
-        progress_pct: int = ...,
+        traversed_distance: builtins.int = ...,
+        remaining_distance: builtins.int = ...,
+        elapsed_time: builtins.int = ...,
+        remaining_time: builtins.int = ...,
+        eta: builtins.int = ...,
+        great_circle_distance: builtins.int = ...,
+        mean_flight_time: builtins.int = ...,
+        flight_stage: _common_pb2.FlightStage.ValueType = ...,
+        delay_status: _common_pb2.DelayStatus.ValueType = ...,
+        progress_pct: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["delay_status", b"delay_status", "elapsed_time", b"elapsed_time", "eta", b"eta", "flight_stage", b"flight_stage", "great_circle_distance", b"great_circle_distance", "mean_flight_time", b"mean_flight_time", "progress_pct", b"progress_pct", "remaining_distance", b"remaining_distance", "remaining_time", b"remaining_time", "traversed_distance", b"traversed_distance"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["delay_status", b"delay_status", "elapsed_time", b"elapsed_time", "eta", b"eta", "flight_stage", b"flight_stage", "great_circle_distance", b"great_circle_distance", "mean_flight_time", b"mean_flight_time", "progress_pct", b"progress_pct", "remaining_distance", b"remaining_distance", "remaining_time", b"remaining_time", "traversed_distance", b"traversed_distance"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class FlightDetailsRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class FlightDetailsRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHT_ID_FIELD_NUMBER: int
-    RESTRICTION_MODE_FIELD_NUMBER: int
-    VERBOSE_FIELD_NUMBER: int
-    flight_id: int
+    FLIGHT_ID_FIELD_NUMBER: builtins.int
+    RESTRICTION_MODE_FIELD_NUMBER: builtins.int
+    VERBOSE_FIELD_NUMBER: builtins.int
+    flight_id: builtins.int
     """FR24 Flight ID (e.g. `962788562` = `0x3962fcd2`)"""
-    restriction_mode: RestrictionVisibility.ValueType
-    verbose: bool
+    restriction_mode: _common_pb2.RestrictionVisibility.ValueType
+    verbose: builtins.bool
     """Whether to include `flight_plan` and `flight_trail_list` in the response"""
     def __init__(
         self,
         *,
-        flight_id: int = ...,
-        restriction_mode: RestrictionVisibility.ValueType = ...,
-        verbose: bool = ...,
+        flight_id: builtins.int = ...,
+        restriction_mode: _common_pb2.RestrictionVisibility.ValueType = ...,
+        verbose: builtins.bool = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flight_id", b"flight_id", "restriction_mode", b"restriction_mode", "verbose", b"verbose"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flight_id", b"flight_id", "restriction_mode", b"restriction_mode", "verbose", b"verbose"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class FlightDetailsResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class FlightDetailsResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    AIRCRAFT_INFO_FIELD_NUMBER: int
-    SCHEDULE_INFO_FIELD_NUMBER: int
-    FLIGHT_PROGRESS_FIELD_NUMBER: int
-    FLIGHT_INFO_FIELD_NUMBER: int
-    FLIGHT_PLAN_FIELD_NUMBER: int
-    FLIGHT_TRAIL_LIST_FIELD_NUMBER: int
-    POSITION_BUFFER_FIELD_NUMBER: int
-    @property
-    def aircraft_info(self) -> AircraftInfo: ...
-    @property
-    def schedule_info(self) -> ScheduleInfo: ...
-    @property
-    def flight_progress(self) -> FlightProgress: ...
-    @property
-    def flight_info(self) -> ExtendedFlightInfo: ...
-    @property
-    def flight_plan(self) -> FlightPlan: ...
-    @property
-    def flight_trail_list(self) -> RepeatedCompositeFieldContainer[TrailPoint]: ...
-    @property
-    def position_buffer(self) -> PositionBuffer: ...
+    AIRCRAFT_INFO_FIELD_NUMBER: builtins.int
+    SCHEDULE_INFO_FIELD_NUMBER: builtins.int
+    FLIGHT_PROGRESS_FIELD_NUMBER: builtins.int
+    FLIGHT_INFO_FIELD_NUMBER: builtins.int
+    FLIGHT_PLAN_FIELD_NUMBER: builtins.int
+    FLIGHT_TRAIL_LIST_FIELD_NUMBER: builtins.int
+    POSITION_BUFFER_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def aircraft_info(self) -> _common_pb2.AircraftInfo: ...
+    @builtins.property
+    def schedule_info(self) -> _common_pb2.ScheduleInfo: ...
+    @builtins.property
+    def flight_progress(self) -> _common_pb2.FlightProgress: ...
+    @builtins.property
+    def flight_info(self) -> _common_pb2.ExtendedFlightInfo: ...
+    @builtins.property
+    def flight_plan(self) -> _common_pb2.FlightPlan: ...
+    @builtins.property
+    def flight_trail_list(self) -> containers.RepeatedCompositeFieldContainer[_common_pb2.TrailPoint]: ...
+    @builtins.property
+    def position_buffer(self) -> _common_pb2.PositionBuffer: ...
     def __init__(
         self,
         *,
-        aircraft_info: AircraftInfo | None = ...,
-        schedule_info: ScheduleInfo | None = ...,
-        flight_progress: FlightProgress | None = ...,
-        flight_info: ExtendedFlightInfo | None = ...,
-        flight_plan: FlightPlan | None = ...,
-        flight_trail_list: Iterable[TrailPoint] | None = ...,
-        position_buffer: PositionBuffer | None = ...,
+        aircraft_info: _common_pb2.AircraftInfo | None = ...,
+        schedule_info: _common_pb2.ScheduleInfo | None = ...,
+        flight_progress: _common_pb2.FlightProgress | None = ...,
+        flight_info: _common_pb2.ExtendedFlightInfo | None = ...,
+        flight_plan: _common_pb2.FlightPlan | None = ...,
+        flight_trail_list: abc.Iterable[_common_pb2.TrailPoint] | None = ...,
+        position_buffer: _common_pb2.PositionBuffer | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "position_buffer", b"position_buffer", "schedule_info", b"schedule_info"]) -> bool: ...
-    def ClearField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "position_buffer", b"position_buffer", "schedule_info", b"schedule_info"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "position_buffer", b"position_buffer", "schedule_info", b"schedule_info"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_plan", b"flight_plan", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "position_buffer", b"position_buffer", "schedule_info", b"schedule_info"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
