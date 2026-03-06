@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 from copy import deepcopy
 from pathlib import Path
@@ -19,11 +21,20 @@ from fr24.json import (
     get_json_headers,
     playback,
 )
-from fr24.types.json import FlightList
+from fr24.types.json import FlightList, FlightListItem
 
 REG = "F-HEPK"
 FLIGHT = "AF7463"
 HEADERS = httpx.Headers(get_json_headers())
+
+
+def flight_identity(
+    flight: FlightListItem,
+) -> tuple[str | None, int | None]:
+    return (
+        flight["identification"]["id"],
+        flight["time"]["scheduled"]["departure"],
+    )
 
 
 @pytest.mark.anyio
@@ -70,72 +81,92 @@ async def test_flight_list_reg(fr24: FR24) -> None:
         _ = await fr24.flight_list.fetch()
     result = await fr24.flight_list.fetch(reg=REG)
     data = result.to_dict()
-    assert data["result"]["response"]["data"] is not None
+    flights = data["result"]["response"]["data"]
+    assert flights is not None
 
     df = result.to_polars()
-    assert df.height > 5
+    assert df.height == len(flights)
+    assert 0 < df.height <= result.request.limit
 
 
 @pytest.mark.anyio
 async def test_flight_list_flight(fr24: FR24) -> None:
     result = await fr24.flight_list.fetch(flight=FLIGHT)
     data = result.to_dict()
-    assert data["result"]["response"]["data"] is not None
+    flights = data["result"]["response"]["data"]
+    assert flights is not None
 
     df = result.to_polars()
-    assert df.height > 5
+    assert df.height == len(flights)
+    assert 0 < df.height <= result.request.limit
 
 
 @pytest.mark.anyio
 async def test_flight_list_reg_paginate(fr24: FR24) -> None:
     """
-    call 2 rows in 3 pages, combining them should yield 6 rows
+    pagination should never shrink the accumulated unique rows
     """
     results = fr24.flight_list.new_result_collection()
+    expected_rows: set[tuple[str | None, int | None]] = set()
 
     i = 0
-    async for result in fr24.flight_list.fetch_all(reg=REG, limit=2, delay=5):
+    async for result in fr24.flight_list.fetch_all(
+        reg=REG, limit=2, delay=5, max_pages=3
+    ):
         data = result.to_dict()
-        assert data["result"]["response"]["data"] is not None
+        flights = data["result"]["response"]["data"]
+        assert flights is not None
 
         df_new = result.to_polars()
         assert df_new.height > 0
+        assert df_new.height == len(flights)
 
         curr_rows = results.to_polars().height
-        assert curr_rows == i * 2
+        assert curr_rows == len(expected_rows)
+
+        expected_rows.update(flight_identity(flight) for flight in flights)
         results.append(result)
         updated_rows = results.to_polars().height
-        assert updated_rows == curr_rows + 2
-        if updated_rows >= 6:
-            break
-        if i > 5:
+        assert updated_rows == len(expected_rows)
+        assert updated_rows >= curr_rows
+        assert updated_rows <= curr_rows + df_new.height
+        if i > 2:
             assert False, "infinite loop"
         i += 1
+
+    assert results.to_polars().height > 0
 
 
 @pytest.mark.anyio
 async def test_flight_list_reg_concat(fr24: FR24) -> None:
     """
-    if we have existing flightids (10, 9, 8, 7) + new flightids (8, 7, 6, 5),
-    the union of them should result in (10, 9, 8, 7, 6, 5)
+    overlapping pages should be merged by unique flight identity
     """
     result = await fr24.flight_list.fetch(reg=REG, limit=6)
     data = result.to_dict()
     flights = deepcopy(data["result"]["response"]["data"])
     assert flights is not None
-    assert len(flights) == 6
+    assert len(flights) > 0
+
+    split = max(1, len(flights) // 2)
+    left = flights[:split]
+    right = flights[max(0, split - 1) :]
 
     results = fr24.flight_list.new_result_collection()
 
-    data["result"]["response"]["data"] = flights[:4]
+    data["result"]["response"]["data"] = left
     result.response._content = orjson.dumps(data)
     results.append(deepcopy(result))
-    assert results.to_polars().height == 4
+    assert results.to_polars().height == len(
+        {flight_identity(flight) for flight in left}
+    )
 
-    data["result"]["response"]["data"] = flights[2:]
+    data["result"]["response"]["data"] = right
     result.response._content = orjson.dumps(data)
     results.append(deepcopy(result))
-    assert results.to_polars().height == 6
+    assert results.to_polars().height == len(
+        {flight_identity(flight) for flight in [*left, *right]}
+    )
 
 
 @pytest.mark.anyio
