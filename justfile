@@ -1,11 +1,11 @@
-fmt:
-    uv run --python 3.9 ruff check src tests
-    uv run --python 3.9 ruff format --check src tests
-    uv run --python 3.9 mypy src tests docs/usage/scripts
-
 check:
-    uv run --python 3.9 ruff check src tests --fix
-    uv run --python 3.9 ruff format src tests
+    uv run ruff check src tests
+    uv run ruff format --check src tests
+    uv run --extra polars mypy src tests docs/usage/scripts
+
+fmt:
+    uv run ruff check src tests --fix
+    uv run ruff format src tests
     uv run --script scripts/check_signature.py
 
 compile_proto:

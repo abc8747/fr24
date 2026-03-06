@@ -42,6 +42,16 @@ For the latest stable version:
 pip install fr24
 ```
 
+> [!IMPORTANT]
+> `fr24` comes with minimal dependencies.
+> If you need `to_polars()`, `write_table()`, `scan_table()`, or CSV/Parquet (de)serialisation, install the `fr24[polars]`.
+>
+> Feature flags:
+>
+> - `fr24[polars]`: dataframe and table I/O support via Polars
+> - `fr24[cli]`: command-line interface dependencies, including `polars` and `rich`
+> - `fr24[tui]`: terminal UI dependencies, including `cli`
+
 For a development version, clone the repository and run in the directory:
 
 ```sh

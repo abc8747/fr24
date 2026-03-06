@@ -104,6 +104,17 @@ A further decoding step is needed.
 
 ## Conversion to other formats
 
+!!! important
+
+    `fr24` comes with minimal dependencies.
+    If you need `to_polars()`, `write_table()`, `scan_table()`, or CSV/Parquet (de)serialisation, install the `fr24[polars]`.
+
+    Feature flags:
+
+    - `fr24[polars]`: dataframe and table I/O support via Polars
+    - `fr24[cli]`: command-line interface dependencies
+    - `fr24[tui]`: terminal UI dependencies, including `cli`
+
 The `result` implements:
 
 - [the `to_proto` method][fr24.proto.SupportsToProto], parsing it into a **protobuf message**

@@ -5,15 +5,20 @@ from typing import AsyncGenerator
 
 import httpx
 import pytest
-from rich.logging import RichHandler
 
 from fr24 import FR24, FR24Cache
 
 
 def pytest_configure(config: pytest.Config) -> None:
+    try:
+        from rich.logging import RichHandler
+
+        handlers = [RichHandler()]
+    except ImportError:
+        handlers = []
     FORMAT = "%(message)s"
     logging.basicConfig(
-        level="INFO", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+        level="INFO", format=FORMAT, datefmt="[%X]", handlers=handlers
     )
 
 

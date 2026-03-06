@@ -7,9 +7,11 @@ from typing import TYPE_CHECKING, Generic, TypeVar, cast
 
 import httpx
 import orjson
-import polars as pl
 
-from .types.cache import flight_list_schema, playback_track_schema
+from .types.cache import (
+    flight_list_schema,
+    playback_track_schema,
+)
 from .types.json import AirportList, Find, FlightList, Playback
 from .utils import (
     DEFAULT_HEADERS,
@@ -18,12 +20,15 @@ from .utils import (
     Result,
     dataclass_opts,
     get_current_timestamp,
+    raise_missing_polars,
     to_flight_id_hex,
     to_unix_timestamp,
 )
 
 if TYPE_CHECKING:
     from typing import Annotated, Any, Literal
+
+    import polars as pl
 
     from .types import (
         IntoFlightId,
@@ -441,6 +446,11 @@ def playback_df(data: Playback) -> pl.DataFrame:
 
     If the response is empty, a warning is logged and an empty table is returned
     """
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
+
     flight = data["result"]["response"]["data"]["flight"]
     if len(track := flight["track"]) == 0:
         logger.warning("no data in response, table will be empty")
@@ -491,6 +501,11 @@ def flight_list_df(data: FlightList) -> pl.DataFrame:
 
     If the response is empty, a warning is logged and an empty table is returned
     """
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
+
     if (flights := data["result"]["response"]["data"]) is None:
         logger.warning("no data in response, table will be empty")
         return pl.DataFrame(schema=flight_list_schema)

@@ -173,7 +173,7 @@ class PlaybackCache(GlobMixin):
 @dataclass_frozen
 class TimestampedCache(GlobMixin):
     collection: Collection
-    schema: dict[str, pl.DataType]
+    schema: dict[str, pl.DataType] | None
 
     def get_path(self, timestamp: IntoTimestamp | str) -> BarePath:
         ts = to_unix_timestamp(timestamp)
@@ -236,7 +236,7 @@ class NearestFlightsCache(GlobMixin):
 @dataclass_frozen
 class FlightDetailsCache(GlobMixin):
     collection: Collection
-    schema: dict[str, pl.DataType]
+    schema: dict[str, pl.DataType] | None
 
     def get_path(
         self, flight_id: IntoFlightId, timestamp: IntoTimestamp | str
