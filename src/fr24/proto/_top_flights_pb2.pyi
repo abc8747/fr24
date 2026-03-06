@@ -3,112 +3,106 @@
 isort:skip_file
 """
 
-from builtins import (
-    int,
-    str,
-)
-from collections.abc import (
-    Iterable,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class FollowedFlight(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    FLIGHT_ID_FIELD_NUMBER: int
-    LIVE_CLICKS_FIELD_NUMBER: int
-    TOTAL_CLICKS_FIELD_NUMBER: int
-    FLIGHT_NUMBER_FIELD_NUMBER: int
-    CALLSIGN_FIELD_NUMBER: int
-    SQUAWK_FIELD_NUMBER: int
-    FROM_IATA_FIELD_NUMBER: int
-    FROM_CITY_FIELD_NUMBER: int
-    TO_IATA_FIELD_NUMBER: int
-    TO_CITY_FIELD_NUMBER: int
-    TYPE_FIELD_NUMBER: int
-    FULL_DESCRIPTION_FIELD_NUMBER: int
-    flight_id: int
+@typing.final
+class FollowedFlight(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    FLIGHT_ID_FIELD_NUMBER: builtins.int
+    LIVE_CLICKS_FIELD_NUMBER: builtins.int
+    TOTAL_CLICKS_FIELD_NUMBER: builtins.int
+    FLIGHT_NUMBER_FIELD_NUMBER: builtins.int
+    CALLSIGN_FIELD_NUMBER: builtins.int
+    SQUAWK_FIELD_NUMBER: builtins.int
+    FROM_IATA_FIELD_NUMBER: builtins.int
+    FROM_CITY_FIELD_NUMBER: builtins.int
+    TO_IATA_FIELD_NUMBER: builtins.int
+    TO_CITY_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    FULL_DESCRIPTION_FIELD_NUMBER: builtins.int
+    flight_id: builtins.int
     """FR24 Flight ID (e.g. `962709904` = `0x3961c990`)"""
-    live_clicks: int
+    live_clicks: builtins.int
     """Number of live clicks/views (e.g. `1212`)"""
-    total_clicks: int
+    total_clicks: builtins.int
     """Total number of clicks/views (e.g. `6128`)"""
-    flight_number: str
+    flight_number: builtins.str
     """Flight number (e.g. `"EK261"`)"""
-    callsign: str
+    callsign: builtins.str
     """Callsign (e.g. `"UAE261"`)"""
-    squawk: int
+    squawk: builtins.int
     """Squawk code (e.g. `4032` = `0o7700`)"""
-    from_iata: str
+    from_iata: builtins.str
     """IATA code of origin airport (e.g. `"DXB"`)"""
-    from_city: str
+    from_city: builtins.str
     """City name of origin airport (e.g. `"Dubai"`)"""
-    to_iata: str
+    to_iata: builtins.str
     """IATA code of destination airport (e.g. `"GRU"`)"""
-    to_city: str
+    to_city: builtins.str
     """City name of destination airport (e.g. `"Sao Paulo"`)"""
-    type: str
+    type: builtins.str
     """Aircraft type code (e.g. `"A388"`)"""
-    full_description: str
+    full_description: builtins.str
     """Full aircraft description (e.g. `"Airbus A380-861"`)"""
     def __init__(
         self,
         *,
-        flight_id: int = ...,
-        live_clicks: int = ...,
-        total_clicks: int = ...,
-        flight_number: str = ...,
-        callsign: str = ...,
-        squawk: int = ...,
-        from_iata: str = ...,
-        from_city: str = ...,
-        to_iata: str = ...,
-        to_city: str = ...,
-        type: str = ...,
-        full_description: str = ...,
+        flight_id: builtins.int = ...,
+        live_clicks: builtins.int = ...,
+        total_clicks: builtins.int = ...,
+        flight_number: builtins.str = ...,
+        callsign: builtins.str = ...,
+        squawk: builtins.int = ...,
+        from_iata: builtins.str = ...,
+        from_city: builtins.str = ...,
+        to_iata: builtins.str = ...,
+        to_city: builtins.str = ...,
+        type: builtins.str = ...,
+        full_description: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["callsign", b"callsign", "flight_id", b"flight_id", "flight_number", b"flight_number", "from_city", b"from_city", "from_iata", b"from_iata", "full_description", b"full_description", "live_clicks", b"live_clicks", "squawk", b"squawk", "to_city", b"to_city", "to_iata", b"to_iata", "total_clicks", b"total_clicks", "type", b"type"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["callsign", b"callsign", "flight_id", b"flight_id", "flight_number", b"flight_number", "from_city", b"from_city", "from_iata", b"from_iata", "full_description", b"full_description", "live_clicks", b"live_clicks", "squawk", b"squawk", "to_city", b"to_city", "to_iata", b"to_iata", "total_clicks", b"total_clicks", "type", b"type"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class TopFlightsRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class TopFlightsRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    LIMIT_FIELD_NUMBER: int
-    limit: int
+    LIMIT_FIELD_NUMBER: builtins.int
+    limit: builtins.int
     """1..=10"""
     def __init__(
         self,
         *,
-        limit: int = ...,
+        limit: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["limit", b"limit"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["limit", b"limit"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class TopFlightsResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class TopFlightsResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    SCOREBOARD_LIST_FIELD_NUMBER: int
-    @property
-    def scoreboard_list(self) -> RepeatedCompositeFieldContainer[FollowedFlight]: ...
+    SCOREBOARD_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def scoreboard_list(self) -> containers.RepeatedCompositeFieldContainer[FollowedFlight]: ...
     def __init__(
         self,
         *,
-        scoreboard_list: Iterable[FollowedFlight] | None = ...,
+        scoreboard_list: abc.Iterable[FollowedFlight] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["scoreboard_list", b"scoreboard_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["scoreboard_list", b"scoreboard_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

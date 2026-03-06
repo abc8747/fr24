@@ -3,93 +3,84 @@
 isort:skip_file
 """
 
-from builtins import (
-    bool,
-    float,
-    int,
-    str,
-)
-from collections.abc import (
-    Iterable,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class FlightSearchData(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    REG_FIELD_NUMBER: int
-    SCHD_FROM_FIELD_NUMBER: int
-    SCHD_TO_FIELD_NUMBER: int
-    FLIGHT_FIELD_NUMBER: int
-    OPERATOR_FIELD_NUMBER: int
-    AC_TYPE_FIELD_NUMBER: int
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    CALLSIGN_FIELD_NUMBER: int
-    ID_FIELD_NUMBER: int
-    RESTRICTED_FIELD_NUMBER: int
-    reg: str
-    schd_from: str
-    schd_to: str
-    flight: str
-    operator: str
-    ac_type: str
-    lat: float
-    lon: float
-    callsign: str
-    id: int
-    restricted: bool
+@typing.final
+class FlightSearchData(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    REG_FIELD_NUMBER: builtins.int
+    SCHD_FROM_FIELD_NUMBER: builtins.int
+    SCHD_TO_FIELD_NUMBER: builtins.int
+    FLIGHT_FIELD_NUMBER: builtins.int
+    OPERATOR_FIELD_NUMBER: builtins.int
+    AC_TYPE_FIELD_NUMBER: builtins.int
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    CALLSIGN_FIELD_NUMBER: builtins.int
+    ID_FIELD_NUMBER: builtins.int
+    RESTRICTED_FIELD_NUMBER: builtins.int
+    reg: builtins.str
+    schd_from: builtins.str
+    schd_to: builtins.str
+    flight: builtins.str
+    operator: builtins.str
+    ac_type: builtins.str
+    lat: builtins.float
+    lon: builtins.float
+    callsign: builtins.str
+    id: builtins.int
+    restricted: builtins.bool
     def __init__(
         self,
         *,
-        reg: str = ...,
-        schd_from: str = ...,
-        schd_to: str = ...,
-        flight: str = ...,
-        operator: str = ...,
-        ac_type: str = ...,
-        lat: float = ...,
-        lon: float = ...,
-        callsign: str = ...,
-        id: int = ...,
-        restricted: bool = ...,
+        reg: builtins.str = ...,
+        schd_from: builtins.str = ...,
+        schd_to: builtins.str = ...,
+        flight: builtins.str = ...,
+        operator: builtins.str = ...,
+        ac_type: builtins.str = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
+        callsign: builtins.str = ...,
+        id: builtins.int = ...,
+        restricted: builtins.bool = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["ac_type", b"ac_type", "callsign", b"callsign", "flight", b"flight", "id", b"id", "lat", b"lat", "lon", b"lon", "operator", b"operator", "reg", b"reg", "restricted", b"restricted", "schd_from", b"schd_from", "schd_to", b"schd_to"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["ac_type", b"ac_type", "callsign", b"callsign", "flight", b"flight", "id", b"id", "lat", b"lat", "lon", b"lon", "operator", b"operator", "reg", b"reg", "restricted", b"restricted", "schd_from", b"schd_from", "schd_to", b"schd_to"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class FetchSearchIndexRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class FetchSearchIndexRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
     def __init__(
         self,
     ) -> None: ...
 
-@final
-class FetchSearchIndexResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class FetchSearchIndexResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHTS_LIST_FIELD_NUMBER: int
-    @property
-    def flights_list(self) -> RepeatedCompositeFieldContainer[FlightSearchData]: ...
+    FLIGHTS_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def flights_list(self) -> containers.RepeatedCompositeFieldContainer[FlightSearchData]: ...
     def __init__(
         self,
         *,
-        flights_list: Iterable[FlightSearchData] | None = ...,
+        flights_list: abc.Iterable[FlightSearchData] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flights_list", b"flights_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flights_list", b"flights_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

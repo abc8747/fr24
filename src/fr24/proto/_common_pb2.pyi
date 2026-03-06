@@ -3,50 +3,28 @@
 isort:skip_file
 """
 
+from collections import abc as abc
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+from google.protobuf.internal import enum_type_wrapper as enum_type_wrapper
+import builtins as builtins
 import sys
+import typing as typing
 
 if sys.version_info >= (3, 10):
-    import typing as typing_extensions
+    from typing import TypeAlias as _TypeAlias
 else:
-    import typing_extensions
-from builtins import (
-    bool,
-    float,
-    int,
-    str,
-    type,
-)
-from collections.abc import (
-    Iterable,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    EnumDescriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.internal.enum_type_wrapper import (
-    _EnumTypeWrapper,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    NewType,
-    final,
-)
+    from typing_extensions import TypeAlias as _TypeAlias
 
-DESCRIPTOR: FileDescriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
 class _RestrictionVisibility:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _RestrictionVisibilityEnumTypeWrapper(_EnumTypeWrapper[_RestrictionVisibility.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _RestrictionVisibilityEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_RestrictionVisibility.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     NOT_VISIBLE: _RestrictionVisibility.ValueType  # 0
     PARTIALLY_VISIBLE: _RestrictionVisibility.ValueType  # 1
     FULLY_VISIBLE: _RestrictionVisibility.ValueType  # 2
@@ -65,11 +43,11 @@ PARTIALLY_VISIBLE: RestrictionVisibility.ValueType  # 1
 FULLY_VISIBLE: RestrictionVisibility.ValueType  # 2
 
 class _Service:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _ServiceEnumTypeWrapper(_EnumTypeWrapper[_Service.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _ServiceEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_Service.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     PASSENGER: _Service.ValueType  # 0
     CARGO: _Service.ValueType  # 1
     MILITARY_AND_GOVERNMENT: _Service.ValueType  # 2
@@ -99,11 +77,11 @@ OTHER_SERVICE: Service.ValueType  # 10
 NON_CATEGORIZED: Service.ValueType  # 11
 
 class _TrafficType:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _TrafficTypeEnumTypeWrapper(_EnumTypeWrapper[_TrafficType.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _TrafficTypeEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_TrafficType.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     NONE: _TrafficType.ValueType  # 0
     GROUND_ONLY: _TrafficType.ValueType  # 1
     AIRBORNE_ONLY: _TrafficType.ValueType  # 2
@@ -117,11 +95,11 @@ AIRBORNE_ONLY: TrafficType.ValueType  # 2
 ALL: TrafficType.ValueType  # 3
 
 class _DataSource:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _DataSourceEnumTypeWrapper(_EnumTypeWrapper[_DataSource.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _DataSourceEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_DataSource.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     ADSB: _DataSource.ValueType  # 0
     MLAT: _DataSource.ValueType  # 1
     FLARM: _DataSource.ValueType  # 2
@@ -149,11 +127,11 @@ AUS: DataSource.ValueType  # 9
 AIERON: DataSource.ValueType  # 10
 
 class _Icon:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _IconEnumTypeWrapper(_EnumTypeWrapper[_Icon.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _IconEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_Icon.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     B738: _Icon.ValueType  # 0
     """Boeing 737-800"""
     FGTR: _Icon.ValueType  # 1
@@ -283,11 +261,11 @@ CONC: Icon.ValueType  # 30
 """Concorde"""
 
 class _Status:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _StatusEnumTypeWrapper(_EnumTypeWrapper[_Status.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _StatusEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_Status.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     NORMAL: _Status.ValueType  # 0
     BACKGROUND: _Status.ValueType  # 1
     EMERGENCY: _Status.ValueType  # 2
@@ -303,11 +281,11 @@ NOT_AVAILABLE: Status.ValueType  # 3
 LIVE: Status.ValueType  # 4
 
 class _FlightStage:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _FlightStageEnumTypeWrapper(_EnumTypeWrapper[_FlightStage.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _FlightStageEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_FlightStage.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     UNKNOWN: _FlightStage.ValueType  # 0
     ON_GROUND: _FlightStage.ValueType  # 1
     ASCENDING: _FlightStage.ValueType  # 2
@@ -326,11 +304,11 @@ DESCENDING: FlightStage.ValueType  # 4
 DIVERSION: FlightStage.ValueType  # 5
 
 class _DelayStatus:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _DelayStatusEnumTypeWrapper(_EnumTypeWrapper[_DelayStatus.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _DelayStatusEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_DelayStatus.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     GRAY: _DelayStatus.ValueType  # 0
     GREEN: _DelayStatus.ValueType  # 1
     YELLOW: _DelayStatus.ValueType  # 2
@@ -344,11 +322,11 @@ YELLOW: DelayStatus.ValueType  # 2
 RED: DelayStatus.ValueType  # 3
 
 class _EmergencyStatus:
-    ValueType = NewType("ValueType", int)
-    V: typing_extensions.TypeAlias = ValueType
+    ValueType = typing.NewType("ValueType", builtins.int)
+    V: _TypeAlias = ValueType  # noqa: Y015
 
-class _EmergencyStatusEnumTypeWrapper(_EnumTypeWrapper[_EmergencyStatus.ValueType], type):
-    DESCRIPTOR: EnumDescriptor
+class _EmergencyStatusEnumTypeWrapper(enum_type_wrapper._EnumTypeWrapper[_EmergencyStatus.ValueType], builtins.type):
+    DESCRIPTOR: descriptor.EnumDescriptor
     NO_EMERGENCY: _EmergencyStatus.ValueType  # 0
     GENERAL_EMERGENCY: _EmergencyStatus.ValueType  # 1
     LIFEGUARD_MEDICAL_EMERGENCY: _EmergencyStatus.ValueType  # 2
@@ -370,927 +348,958 @@ UNLAWFUL_INTERFERENCE: EmergencyStatus.ValueType  # 5
 DOWNED_AIRCRAFT: EmergencyStatus.ValueType  # 6
 RESERVED: EmergencyStatus.ValueType  # 7
 
-@final
-class EMSInfo(Message):
+@typing.final
+class EMSInfo(message.Message):
     """Enhanced Mode-S data (EMS)"""
 
-    DESCRIPTOR: Descriptor
+    DESCRIPTOR: descriptor.Descriptor
 
-    QNH_FIELD_NUMBER: int
-    AMCP_FIELD_NUMBER: int
-    AFMS_FIELD_NUMBER: int
-    OAT_FIELD_NUMBER: int
-    IAS_FIELD_NUMBER: int
-    TAS_FIELD_NUMBER: int
-    MACH_FIELD_NUMBER: int
-    AGPS_FIELD_NUMBER: int
-    AGPSDIFF_FIELD_NUMBER: int
-    APFLAGS_FIELD_NUMBER: int
-    WIND_DIR_FIELD_NUMBER: int
-    WIND_SPEED_FIELD_NUMBER: int
-    RS_FIELD_NUMBER: int
-    qnh: int
+    QNH_FIELD_NUMBER: builtins.int
+    AMCP_FIELD_NUMBER: builtins.int
+    AFMS_FIELD_NUMBER: builtins.int
+    OAT_FIELD_NUMBER: builtins.int
+    IAS_FIELD_NUMBER: builtins.int
+    TAS_FIELD_NUMBER: builtins.int
+    MACH_FIELD_NUMBER: builtins.int
+    AGPS_FIELD_NUMBER: builtins.int
+    AGPSDIFF_FIELD_NUMBER: builtins.int
+    APFLAGS_FIELD_NUMBER: builtins.int
+    WIND_DIR_FIELD_NUMBER: builtins.int
+    WIND_SPEED_FIELD_NUMBER: builtins.int
+    RS_FIELD_NUMBER: builtins.int
+    qnh: builtins.int
     """Altimeter setting (QFE or QNH/QNE)"""
-    amcp: int
+    amcp: builtins.int
     """MCP/FCU selected altitude (BDS4,0)"""
-    afms: int
+    afms: builtins.int
     """FMS selected altitude (BDS4,0)"""
-    oat: int
+    oat: builtins.int
     """Outside air temperature, [TODO: update units]"""
-    ias: int
+    ias: builtins.int
     """Indicated airspeed (BDS6,0), knots"""
-    tas: int
+    tas: builtins.int
     """True airspeed (BDS0,5), knots"""
-    mach: int
+    mach: builtins.int
     """Mach number (BDS6,0), 1e3, e.g., `704` = M0.704"""
-    agps: int
+    agps: builtins.int
     """GPS altitude"""
-    agpsdiff: int
+    agpsdiff: builtins.int
     """Difference between amcp and agps"""
-    apflags: int
+    apflags: builtins.int
     """Autopilot flags, often null"""
-    wind_dir: int
+    wind_dir: builtins.int
     """Wind direction, [TODO: update units]"""
-    wind_speed: int
+    wind_speed: builtins.int
     """Wind speed, [TODO: update units]"""
-    rs: int
+    rs: builtins.int
     def __init__(
         self,
         *,
-        qnh: int = ...,
-        amcp: int = ...,
-        afms: int = ...,
-        oat: int = ...,
-        ias: int = ...,
-        tas: int = ...,
-        mach: int = ...,
-        agps: int = ...,
-        agpsdiff: int = ...,
-        apflags: int = ...,
-        wind_dir: int = ...,
-        wind_speed: int = ...,
-        rs: int = ...,
+        qnh: builtins.int = ...,
+        amcp: builtins.int = ...,
+        afms: builtins.int = ...,
+        oat: builtins.int = ...,
+        ias: builtins.int = ...,
+        tas: builtins.int = ...,
+        mach: builtins.int = ...,
+        agps: builtins.int = ...,
+        agpsdiff: builtins.int = ...,
+        apflags: builtins.int = ...,
+        wind_dir: builtins.int = ...,
+        wind_speed: builtins.int = ...,
+        rs: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["afms", b"afms", "agps", b"agps", "agpsdiff", b"agpsdiff", "amcp", b"amcp", "apflags", b"apflags", "ias", b"ias", "mach", b"mach", "oat", b"oat", "qnh", b"qnh", "rs", b"rs", "tas", b"tas", "wind_dir", b"wind_dir", "wind_speed", b"wind_speed"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["afms", b"afms", "agps", b"agps", "agpsdiff", b"agpsdiff", "amcp", b"amcp", "apflags", b"apflags", "ias", b"ias", "mach", b"mach", "oat", b"oat", "qnh", b"qnh", "rs", b"rs", "tas", b"tas", "wind_dir", b"wind_dir", "wind_speed", b"wind_speed"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class EMSAvailability(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class EMSAvailability(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    QNH_AVAILABILITY_FIELD_NUMBER: int
-    AMCP_AVAILABILITY_FIELD_NUMBER: int
-    AFMS_AVAILABILITY_FIELD_NUMBER: int
-    OAT_AVAILABILITY_FIELD_NUMBER: int
-    IAS_AVAILABILITY_FIELD_NUMBER: int
-    TAS_AVAILABILITY_FIELD_NUMBER: int
-    MACH_AVAILABILITY_FIELD_NUMBER: int
-    AGPS_AVAILABILITY_FIELD_NUMBER: int
-    AGPSDIFF_AVAILABILITY_FIELD_NUMBER: int
-    APFLAGS_AVAILABILITY_FIELD_NUMBER: int
-    WIND_DIR_AVAILABILITY_FIELD_NUMBER: int
-    WIND_SPEED_AVAILABILITY_FIELD_NUMBER: int
-    RS_AVAILABILITY_FIELD_NUMBER: int
-    qnh_availability: bool
-    amcp_availability: bool
-    afms_availability: bool
-    oat_availability: bool
-    ias_availability: bool
-    tas_availability: bool
-    mach_availability: bool
-    agps_availability: bool
-    agpsdiff_availability: bool
-    apflags_availability: bool
-    wind_dir_availability: bool
-    wind_speed_availability: bool
-    rs_availability: bool
+    QNH_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AMCP_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AFMS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    OAT_AVAILABILITY_FIELD_NUMBER: builtins.int
+    IAS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    TAS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    MACH_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AGPS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AGPSDIFF_AVAILABILITY_FIELD_NUMBER: builtins.int
+    APFLAGS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    WIND_DIR_AVAILABILITY_FIELD_NUMBER: builtins.int
+    WIND_SPEED_AVAILABILITY_FIELD_NUMBER: builtins.int
+    RS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    qnh_availability: builtins.bool
+    amcp_availability: builtins.bool
+    afms_availability: builtins.bool
+    oat_availability: builtins.bool
+    ias_availability: builtins.bool
+    tas_availability: builtins.bool
+    mach_availability: builtins.bool
+    agps_availability: builtins.bool
+    agpsdiff_availability: builtins.bool
+    apflags_availability: builtins.bool
+    wind_dir_availability: builtins.bool
+    wind_speed_availability: builtins.bool
+    rs_availability: builtins.bool
     def __init__(
         self,
         *,
-        qnh_availability: bool = ...,
-        amcp_availability: bool = ...,
-        afms_availability: bool = ...,
-        oat_availability: bool = ...,
-        ias_availability: bool = ...,
-        tas_availability: bool = ...,
-        mach_availability: bool = ...,
-        agps_availability: bool = ...,
-        agpsdiff_availability: bool = ...,
-        apflags_availability: bool = ...,
-        wind_dir_availability: bool = ...,
-        wind_speed_availability: bool = ...,
-        rs_availability: bool = ...,
+        qnh_availability: builtins.bool = ...,
+        amcp_availability: builtins.bool = ...,
+        afms_availability: builtins.bool = ...,
+        oat_availability: builtins.bool = ...,
+        ias_availability: builtins.bool = ...,
+        tas_availability: builtins.bool = ...,
+        mach_availability: builtins.bool = ...,
+        agps_availability: builtins.bool = ...,
+        agpsdiff_availability: builtins.bool = ...,
+        apflags_availability: builtins.bool = ...,
+        wind_dir_availability: builtins.bool = ...,
+        wind_speed_availability: builtins.bool = ...,
+        rs_availability: builtins.bool = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["afms_availability", b"afms_availability", "agps_availability", b"agps_availability", "agpsdiff_availability", b"agpsdiff_availability", "amcp_availability", b"amcp_availability", "apflags_availability", b"apflags_availability", "ias_availability", b"ias_availability", "mach_availability", b"mach_availability", "oat_availability", b"oat_availability", "qnh_availability", b"qnh_availability", "rs_availability", b"rs_availability", "tas_availability", b"tas_availability", "wind_dir_availability", b"wind_dir_availability", "wind_speed_availability", b"wind_speed_availability"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["afms_availability", b"afms_availability", "agps_availability", b"agps_availability", "agpsdiff_availability", b"agpsdiff_availability", "amcp_availability", b"amcp_availability", "apflags_availability", b"apflags_availability", "ias_availability", b"ias_availability", "mach_availability", b"mach_availability", "oat_availability", b"oat_availability", "qnh_availability", b"qnh_availability", "rs_availability", b"rs_availability", "tas_availability", b"tas_availability", "wind_dir_availability", b"wind_dir_availability", "wind_speed_availability", b"wind_speed_availability"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Schedule(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Schedule(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    STD_FIELD_NUMBER: int
-    ETD_FIELD_NUMBER: int
-    ATD_FIELD_NUMBER: int
-    STA_FIELD_NUMBER: int
-    ETA_FIELD_NUMBER: int
-    ATA_FIELD_NUMBER: int
-    PROGRESS_PCT_FIELD_NUMBER: int
-    std: int
+    STD_FIELD_NUMBER: builtins.int
+    ETD_FIELD_NUMBER: builtins.int
+    ATD_FIELD_NUMBER: builtins.int
+    STA_FIELD_NUMBER: builtins.int
+    ETA_FIELD_NUMBER: builtins.int
+    ATA_FIELD_NUMBER: builtins.int
+    PROGRESS_PCT_FIELD_NUMBER: builtins.int
+    std: builtins.int
     """Scheduled Time of Departure, Unix timestamp in seconds"""
-    etd: int
+    etd: builtins.int
     """Estimated Time of Departure, Unix timestamp in seconds"""
-    atd: int
+    atd: builtins.int
     """Actual Time of Departure, Unix timestamp in seconds"""
-    sta: int
+    sta: builtins.int
     """Scheduled Time of Arrival, Unix timestamp in seconds"""
-    eta: int
+    eta: builtins.int
     """Estimated Time of Arrival, Unix timestamp in seconds"""
-    ata: int
+    ata: builtins.int
     """Actual Time of Arrival, Unix timestamp in seconds"""
-    progress_pct: int
+    progress_pct: builtins.int
     """Progress percentage of the flight"""
     def __init__(
         self,
         *,
-        std: int = ...,
-        etd: int = ...,
-        atd: int = ...,
-        sta: int = ...,
-        eta: int = ...,
-        ata: int = ...,
-        progress_pct: int = ...,
+        std: builtins.int = ...,
+        etd: builtins.int = ...,
+        atd: builtins.int = ...,
+        sta: builtins.int = ...,
+        eta: builtins.int = ...,
+        ata: builtins.int = ...,
+        progress_pct: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["ata", b"ata", "atd", b"atd", "eta", b"eta", "etd", b"etd", "progress_pct", b"progress_pct", "sta", b"sta", "std", b"std"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["ata", b"ata", "atd", b"atd", "eta", b"eta", "etd", b"etd", "progress_pct", b"progress_pct", "sta", b"sta", "std", b"std"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Route(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Route(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FROM_FIELD_NUMBER: int
-    TO_FIELD_NUMBER: int
-    DIVERTED_TO_FIELD_NUMBER: int
-    to: str
-    diverted_to: str
+    FROM_FIELD_NUMBER: builtins.int
+    TO_FIELD_NUMBER: builtins.int
+    DIVERTED_TO_FIELD_NUMBER: builtins.int
+    to: builtins.str
+    diverted_to: builtins.str
     def __init__(
         self,
         *,
-        to: str = ...,
-        diverted_to: str = ...,
+        to: builtins.str = ...,
+        diverted_to: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["diverted_to", b"diverted_to", "from", b"from", "to", b"to"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["diverted_to", b"diverted_to", "from", b"from", "to", b"to"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class ExtraFlightInfo(Message):
+@typing.final
+class ExtraFlightInfo(message.Message):
     """NOTE: Attributes `operated_by_id` (15), `squawk_availability` (16),
     `vspeed_availability` (17), `airspace_availability` (18),
     `airspace_id` (19), `server_time_ms` (21)
     only available when the flight is selected.
     """
 
-    DESCRIPTOR: Descriptor
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHT_FIELD_NUMBER: int
-    REG_FIELD_NUMBER: int
-    ROUTE_FIELD_NUMBER: int
-    TYPE_FIELD_NUMBER: int
-    SQUAWK_FIELD_NUMBER: int
-    VSPEED_FIELD_NUMBER: int
-    AGE_FIELD_NUMBER: int
-    COUNTRY_OF_REG_FIELD_NUMBER: int
-    SCHEDULE_FIELD_NUMBER: int
-    LOGO_ID_FIELD_NUMBER: int
-    AIRSPACE_FIELD_NUMBER: int
-    EMS_INFO_FIELD_NUMBER: int
-    EMS_AVAILABILITY_FIELD_NUMBER: int
-    ICAO_ADDRESS_FIELD_NUMBER: int
-    OPERATED_BY_ID_FIELD_NUMBER: int
-    SQUAWK_AVAILABILITY_FIELD_NUMBER: int
-    VSPEED_AVAILABILITY_FIELD_NUMBER: int
-    AIRSPACE_AVAILABILITY_FIELD_NUMBER: int
-    AIRSPACE_ID_FIELD_NUMBER: int
-    flight: str
+    FLIGHT_FIELD_NUMBER: builtins.int
+    REG_FIELD_NUMBER: builtins.int
+    ROUTE_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    SQUAWK_FIELD_NUMBER: builtins.int
+    VSPEED_FIELD_NUMBER: builtins.int
+    AGE_FIELD_NUMBER: builtins.int
+    COUNTRY_OF_REG_FIELD_NUMBER: builtins.int
+    SCHEDULE_FIELD_NUMBER: builtins.int
+    LOGO_ID_FIELD_NUMBER: builtins.int
+    AIRSPACE_FIELD_NUMBER: builtins.int
+    EMS_INFO_FIELD_NUMBER: builtins.int
+    EMS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    ICAO_ADDRESS_FIELD_NUMBER: builtins.int
+    OPERATED_BY_ID_FIELD_NUMBER: builtins.int
+    SQUAWK_AVAILABILITY_FIELD_NUMBER: builtins.int
+    VSPEED_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AIRSPACE_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AIRSPACE_ID_FIELD_NUMBER: builtins.int
+    flight: builtins.str
     """IATA Flight number, e.g. `CX8747`"""
-    reg: str
+    reg: builtins.str
     """Aircraft registration, e.g. `B-HUJ`"""
-    type: str
+    type: builtins.str
     """Aircraft type code, e.g. `B744`"""
-    squawk: int
+    squawk: builtins.int
     """Squawk code, in base-10. e.g., `20852` (converted from octal)"""
-    vspeed: int
+    vspeed: builtins.int
     """Vertical speed, feet per minute"""
-    age: str
+    age: builtins.str
     """Aircraft age, years in string format, e.g., `"17 years"`"""
-    country_of_reg: int
+    country_of_reg: builtins.int
     """Country code of registration"""
-    logo_id: int
+    logo_id: builtins.int
     """Airline logo ID"""
-    airspace: int
+    airspace: builtins.int
     """FIR airspace ID"""
-    icao_address: int
+    icao_address: builtins.int
     """ICAO 24-bit address of the aircraft (hex)"""
-    operated_by_id: int
+    operated_by_id: builtins.int
     """Airline ID of the operator"""
-    squawk_availability: bool
-    vspeed_availability: bool
-    airspace_availability: bool
-    airspace_id: str
+    squawk_availability: builtins.bool
+    vspeed_availability: builtins.bool
+    airspace_availability: builtins.bool
+    airspace_id: builtins.str
     """Airspace ID"""
-    @property
+    @builtins.property
     def route(self) -> Route: ...
-    @property
+    @builtins.property
     def schedule(self) -> Schedule: ...
-    @property
+    @builtins.property
     def ems_info(self) -> EMSInfo: ...
-    @property
+    @builtins.property
     def ems_availability(self) -> EMSAvailability: ...
     def __init__(
         self,
         *,
-        flight: str = ...,
-        reg: str = ...,
+        flight: builtins.str = ...,
+        reg: builtins.str = ...,
         route: Route | None = ...,
-        type: str = ...,
-        squawk: int = ...,
-        vspeed: int = ...,
-        age: str = ...,
-        country_of_reg: int = ...,
+        type: builtins.str = ...,
+        squawk: builtins.int = ...,
+        vspeed: builtins.int = ...,
+        age: builtins.str = ...,
+        country_of_reg: builtins.int = ...,
         schedule: Schedule | None = ...,
-        logo_id: int = ...,
-        airspace: int = ...,
+        logo_id: builtins.int = ...,
+        airspace: builtins.int = ...,
         ems_info: EMSInfo | None = ...,
         ems_availability: EMSAvailability | None = ...,
-        icao_address: int = ...,
-        operated_by_id: int = ...,
-        squawk_availability: bool = ...,
-        vspeed_availability: bool = ...,
-        airspace_availability: bool = ...,
-        airspace_id: str = ...,
+        icao_address: builtins.int = ...,
+        operated_by_id: builtins.int = ...,
+        squawk_availability: builtins.bool = ...,
+        vspeed_availability: builtins.bool = ...,
+        airspace_availability: builtins.bool = ...,
+        airspace_id: builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["ems_availability", b"ems_availability", "ems_info", b"ems_info", "route", b"route", "schedule", b"schedule"]) -> bool: ...
-    def ClearField(self, field_name: Literal["age", b"age", "airspace", b"airspace", "airspace_availability", b"airspace_availability", "airspace_id", b"airspace_id", "country_of_reg", b"country_of_reg", "ems_availability", b"ems_availability", "ems_info", b"ems_info", "flight", b"flight", "icao_address", b"icao_address", "logo_id", b"logo_id", "operated_by_id", b"operated_by_id", "reg", b"reg", "route", b"route", "schedule", b"schedule", "squawk", b"squawk", "squawk_availability", b"squawk_availability", "type", b"type", "vspeed", b"vspeed", "vspeed_availability", b"vspeed_availability"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["ems_availability", b"ems_availability", "ems_info", b"ems_info", "route", b"route", "schedule", b"schedule"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["age", b"age", "airspace", b"airspace", "airspace_availability", b"airspace_availability", "airspace_id", b"airspace_id", "country_of_reg", b"country_of_reg", "ems_availability", b"ems_availability", "ems_info", b"ems_info", "flight", b"flight", "icao_address", b"icao_address", "logo_id", b"logo_id", "operated_by_id", b"operated_by_id", "reg", b"reg", "route", b"route", "schedule", b"schedule", "squawk", b"squawk", "squawk_availability", b"squawk_availability", "type", b"type", "vspeed", b"vspeed", "vspeed_availability", b"vspeed_availability"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class SourceStats(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class SourceStats(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    SOURCE_FIELD_NUMBER: int
-    COUNT_FIELD_NUMBER: int
+    SOURCE_FIELD_NUMBER: builtins.int
+    COUNT_FIELD_NUMBER: builtins.int
     source: DataSource.ValueType
-    count: int
+    count: builtins.int
     """Number of flights recorded with this source"""
     def __init__(
         self,
         *,
         source: DataSource.ValueType = ...,
-        count: int = ...,
+        count: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["count", b"count", "source", b"source"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["count", b"count", "source", b"source"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Stats(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Stats(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    TOTAL_LIST_FIELD_NUMBER: int
-    @property
-    def total_list(self) -> RepeatedCompositeFieldContainer[SourceStats]: ...
+    TOTAL_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def total_list(self) -> containers.RepeatedCompositeFieldContainer[SourceStats]: ...
     def __init__(
         self,
         *,
-        total_list: Iterable[SourceStats] | None = ...,
+        total_list: abc.Iterable[SourceStats] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["total_list", b"total_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["total_list", b"total_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class RecentPosition(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class RecentPosition(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    DELTA_LAT_FIELD_NUMBER: int
-    DELTA_LON_FIELD_NUMBER: int
-    DELTA_MS_FIELD_NUMBER: int
-    delta_lat: int
+    DELTA_LAT_FIELD_NUMBER: builtins.int
+    DELTA_LON_FIELD_NUMBER: builtins.int
+    DELTA_MS_FIELD_NUMBER: builtins.int
+    delta_lat: builtins.int
     """Offset from the current latitude, 1e5 degrees"""
-    delta_lon: int
+    delta_lon: builtins.int
     """Offset from the current longitude, 1e5 degrees"""
-    delta_ms: int
+    delta_ms: builtins.int
     """Delta time, milliseconds"""
     def __init__(
         self,
         *,
-        delta_lat: int = ...,
-        delta_lon: int = ...,
-        delta_ms: int = ...,
+        delta_lat: builtins.int = ...,
+        delta_lon: builtins.int = ...,
+        delta_ms: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["delta_lat", b"delta_lat", "delta_lon", b"delta_lon", "delta_ms", b"delta_ms"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["delta_lat", b"delta_lat", "delta_lon", b"delta_lon", "delta_ms", b"delta_ms"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class PositionBuffer(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class PositionBuffer(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    RECENT_POSITIONS_LIST_FIELD_NUMBER: int
-    @property
-    def recent_positions_list(self) -> RepeatedCompositeFieldContainer[RecentPosition]:
+    RECENT_POSITIONS_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def recent_positions_list(self) -> containers.RepeatedCompositeFieldContainer[RecentPosition]:
         """List of recent positions"""
 
     def __init__(
         self,
         *,
-        recent_positions_list: Iterable[RecentPosition] | None = ...,
+        recent_positions_list: abc.Iterable[RecentPosition] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["recent_positions_list", b"recent_positions_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["recent_positions_list", b"recent_positions_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Flight(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Flight(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHTID_FIELD_NUMBER: int
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    TRACK_FIELD_NUMBER: int
-    ALT_FIELD_NUMBER: int
-    SPEED_FIELD_NUMBER: int
-    ICON_FIELD_NUMBER: int
-    STATUS_FIELD_NUMBER: int
-    TIMESTAMP_FIELD_NUMBER: int
-    ON_GROUND_FIELD_NUMBER: int
-    CALLSIGN_FIELD_NUMBER: int
-    SOURCE_FIELD_NUMBER: int
-    EXTRA_INFO_FIELD_NUMBER: int
-    POSITION_BUFFER_FIELD_NUMBER: int
-    TIMESTAMP_MS_FIELD_NUMBER: int
-    flightid: int
+    FLIGHTID_FIELD_NUMBER: builtins.int
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    TRACK_FIELD_NUMBER: builtins.int
+    ALT_FIELD_NUMBER: builtins.int
+    SPEED_FIELD_NUMBER: builtins.int
+    ICON_FIELD_NUMBER: builtins.int
+    STATUS_FIELD_NUMBER: builtins.int
+    TIMESTAMP_FIELD_NUMBER: builtins.int
+    ON_GROUND_FIELD_NUMBER: builtins.int
+    CALLSIGN_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
+    EXTRA_INFO_FIELD_NUMBER: builtins.int
+    POSITION_BUFFER_FIELD_NUMBER: builtins.int
+    TIMESTAMP_MS_FIELD_NUMBER: builtins.int
+    flightid: builtins.int
     """FR24 flight id, in base-10 integer. Convert to hex for use in URLs."""
-    lat: float
+    lat: builtins.float
     """Latitude, degrees, -90 to 90"""
-    lon: float
+    lon: builtins.float
     """Longitude, degrees, -180 to 180"""
-    track: int
+    track: builtins.int
     """True track angle, degrees clockwise from North"""
-    alt: int
+    alt: builtins.int
     """Barometric altitude, feet"""
-    speed: int
+    speed: builtins.int
     """Ground speed, knots"""
     icon: Icon.ValueType
     status: Status.ValueType
-    timestamp: int
+    timestamp: builtins.int
     """Last update timestamp, Unix timestamp in seconds"""
-    on_ground: bool
-    callsign: str
+    on_ground: builtins.bool
+    callsign: builtins.str
     """Callsign, e.g. `CPA8747`"""
     source: DataSource.ValueType
-    timestamp_ms: int
+    timestamp_ms: builtins.int
     """Last update timestamp, milliseconds"""
-    @property
+    @builtins.property
     def extra_info(self) -> ExtraFlightInfo: ...
-    @property
+    @builtins.property
     def position_buffer(self) -> PositionBuffer: ...
     def __init__(
         self,
         *,
-        flightid: int = ...,
-        lat: float = ...,
-        lon: float = ...,
-        track: int = ...,
-        alt: int = ...,
-        speed: int = ...,
+        flightid: builtins.int = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
+        track: builtins.int = ...,
+        alt: builtins.int = ...,
+        speed: builtins.int = ...,
         icon: Icon.ValueType = ...,
         status: Status.ValueType = ...,
-        timestamp: int = ...,
-        on_ground: bool = ...,
-        callsign: str = ...,
+        timestamp: builtins.int = ...,
+        on_ground: builtins.bool = ...,
+        callsign: builtins.str = ...,
         source: DataSource.ValueType = ...,
         extra_info: ExtraFlightInfo | None = ...,
         position_buffer: PositionBuffer | None = ...,
-        timestamp_ms: int = ...,
+        timestamp_ms: builtins.int = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["extra_info", b"extra_info", "position_buffer", b"position_buffer"]) -> bool: ...
-    def ClearField(self, field_name: Literal["alt", b"alt", "callsign", b"callsign", "extra_info", b"extra_info", "flightid", b"flightid", "icon", b"icon", "lat", b"lat", "lon", b"lon", "on_ground", b"on_ground", "position_buffer", b"position_buffer", "source", b"source", "speed", b"speed", "status", b"status", "timestamp", b"timestamp", "timestamp_ms", b"timestamp_ms", "track", b"track"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["extra_info", b"extra_info", "position_buffer", b"position_buffer"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["alt", b"alt", "callsign", b"callsign", "extra_info", b"extra_info", "flightid", b"flightid", "icon", b"icon", "lat", b"lat", "lon", b"lon", "on_ground", b"on_ground", "position_buffer", b"position_buffer", "source", b"source", "speed", b"speed", "status", b"status", "timestamp", b"timestamp", "timestamp_ms", b"timestamp_ms", "track", b"track"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class FlightProgress(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class FlightProgress(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    TRAVERSED_DISTANCE_FIELD_NUMBER: int
-    REMAINING_DISTANCE_FIELD_NUMBER: int
-    ELAPSED_TIME_FIELD_NUMBER: int
-    REMAINING_TIME_FIELD_NUMBER: int
-    ETA_FIELD_NUMBER: int
-    GREAT_CIRCLE_DISTANCE_FIELD_NUMBER: int
-    MEAN_FLIGHT_TIME_FIELD_NUMBER: int
-    FLIGHT_STAGE_FIELD_NUMBER: int
-    DELAY_STATUS_FIELD_NUMBER: int
-    PROGRESS_PCT_FIELD_NUMBER: int
-    traversed_distance: int
+    TRAVERSED_DISTANCE_FIELD_NUMBER: builtins.int
+    REMAINING_DISTANCE_FIELD_NUMBER: builtins.int
+    ELAPSED_TIME_FIELD_NUMBER: builtins.int
+    REMAINING_TIME_FIELD_NUMBER: builtins.int
+    ETA_FIELD_NUMBER: builtins.int
+    GREAT_CIRCLE_DISTANCE_FIELD_NUMBER: builtins.int
+    MEAN_FLIGHT_TIME_FIELD_NUMBER: builtins.int
+    FLIGHT_STAGE_FIELD_NUMBER: builtins.int
+    DELAY_STATUS_FIELD_NUMBER: builtins.int
+    PROGRESS_PCT_FIELD_NUMBER: builtins.int
+    traversed_distance: builtins.int
     """Distance traversed in the flight, meters"""
-    remaining_distance: int
+    remaining_distance: builtins.int
     """Remaining distance to destination, meters"""
-    elapsed_time: int
+    elapsed_time: builtins.int
     """Elapsed flight time, seconds"""
-    remaining_time: int
+    remaining_time: builtins.int
     """Remaining flight time, seconds"""
-    eta: int
+    eta: builtins.int
     """Estimated Time of Arrival, Unix timestamp in seconds"""
-    great_circle_distance: int
+    great_circle_distance: builtins.int
     """Great circle distance of the first, meters"""
-    mean_flight_time: int
+    mean_flight_time: builtins.int
     """Mean flight time for this route, seconds"""
     flight_stage: FlightStage.ValueType
     delay_status: DelayStatus.ValueType
-    progress_pct: int
+    progress_pct: builtins.int
     """Flight progress percentage (e.g. `82`)"""
     def __init__(
         self,
         *,
-        traversed_distance: int = ...,
-        remaining_distance: int = ...,
-        elapsed_time: int = ...,
-        remaining_time: int = ...,
-        eta: int = ...,
-        great_circle_distance: int = ...,
-        mean_flight_time: int = ...,
+        traversed_distance: builtins.int = ...,
+        remaining_distance: builtins.int = ...,
+        elapsed_time: builtins.int = ...,
+        remaining_time: builtins.int = ...,
+        eta: builtins.int = ...,
+        great_circle_distance: builtins.int = ...,
+        mean_flight_time: builtins.int = ...,
         flight_stage: FlightStage.ValueType = ...,
         delay_status: DelayStatus.ValueType = ...,
-        progress_pct: int = ...,
+        progress_pct: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["delay_status", b"delay_status", "elapsed_time", b"elapsed_time", "eta", b"eta", "flight_stage", b"flight_stage", "great_circle_distance", b"great_circle_distance", "mean_flight_time", b"mean_flight_time", "progress_pct", b"progress_pct", "remaining_distance", b"remaining_distance", "remaining_time", b"remaining_time", "traversed_distance", b"traversed_distance"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["delay_status", b"delay_status", "elapsed_time", b"elapsed_time", "eta", b"eta", "flight_stage", b"flight_stage", "great_circle_distance", b"great_circle_distance", "mean_flight_time", b"mean_flight_time", "progress_pct", b"progress_pct", "remaining_distance", b"remaining_distance", "remaining_time", b"remaining_time", "traversed_distance", b"traversed_distance"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class ImageInfo(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class ImageInfo(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    URL_FIELD_NUMBER: int
-    COPYRIGHT_FIELD_NUMBER: int
-    THUMBNAIL_FIELD_NUMBER: int
-    MEDIUM_FIELD_NUMBER: int
-    LARGE_FIELD_NUMBER: int
-    SIDEVIEW_FIELD_NUMBER: int
-    url: str
+    URL_FIELD_NUMBER: builtins.int
+    COPYRIGHT_FIELD_NUMBER: builtins.int
+    THUMBNAIL_FIELD_NUMBER: builtins.int
+    MEDIUM_FIELD_NUMBER: builtins.int
+    LARGE_FIELD_NUMBER: builtins.int
+    SIDEVIEW_FIELD_NUMBER: builtins.int
+    url: builtins.str
     """Image URL"""
-    copyright: str
+    copyright: builtins.str
     """Copyright information (e.g. `"R Skywalker"`)"""
-    thumbnail: str
+    thumbnail: builtins.str
     """URL for thumbnail image (e.g. `"https://cdn.jetphotos.com/200/5/459674_1738674373_tb.jpg"`)"""
-    medium: str
+    medium: builtins.str
     """URL for medium-sized image (e.g. `"https://cdn.jetphotos.com/400/5/459674_1738674373.jpg"`)"""
-    large: str
+    large: builtins.str
     """URL for large-sized image (e.g. `"https://cdn.jetphotos.com/640/5/459674_1738674373.jpg"`)"""
-    sideview: str
+    sideview: builtins.str
     def __init__(
         self,
         *,
-        url: str = ...,
-        copyright: str = ...,
-        thumbnail: str = ...,
-        medium: str = ...,
-        large: str = ...,
-        sideview: str = ...,
+        url: builtins.str = ...,
+        copyright: builtins.str = ...,
+        thumbnail: builtins.str = ...,
+        medium: builtins.str = ...,
+        large: builtins.str = ...,
+        sideview: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["copyright", b"copyright", "large", b"large", "medium", b"medium", "sideview", b"sideview", "thumbnail", b"thumbnail", "url", b"url"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["copyright", b"copyright", "large", b"large", "medium", b"medium", "sideview", b"sideview", "thumbnail", b"thumbnail", "url", b"url"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class AircraftInfo(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class AircraftInfo(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    ICAO_ADDRESS_FIELD_NUMBER: int
-    REG_FIELD_NUMBER: int
-    COUNTRY_OF_REG_FIELD_NUMBER: int
-    TYPE_FIELD_NUMBER: int
-    ICON_FIELD_NUMBER: int
-    FULL_DESCRIPTION_FIELD_NUMBER: int
-    MSN_FIELD_NUMBER: int
-    SERVICE_FIELD_NUMBER: int
-    AC_BIRTH_DATE_FIELD_NUMBER: int
-    AC_AGE_FIELD_NUMBER: int
-    IMAGES_LIST_FIELD_NUMBER: int
-    IS_TEST_FLIGHT_FIELD_NUMBER: int
-    MSN_AVAILABLE_FIELD_NUMBER: int
-    AGE_AVAILABLE_FIELD_NUMBER: int
-    REGISTERED_OWNERS_FIELD_NUMBER: int
-    IS_COUNTRY_OF_REG_AVAILABLE_FIELD_NUMBER: int
-    icao_address: int
+    ICAO_ADDRESS_FIELD_NUMBER: builtins.int
+    REG_FIELD_NUMBER: builtins.int
+    COUNTRY_OF_REG_FIELD_NUMBER: builtins.int
+    TYPE_FIELD_NUMBER: builtins.int
+    ICON_FIELD_NUMBER: builtins.int
+    FULL_DESCRIPTION_FIELD_NUMBER: builtins.int
+    MSN_FIELD_NUMBER: builtins.int
+    SERVICE_FIELD_NUMBER: builtins.int
+    AC_BIRTH_DATE_FIELD_NUMBER: builtins.int
+    AC_AGE_FIELD_NUMBER: builtins.int
+    IMAGES_LIST_FIELD_NUMBER: builtins.int
+    IS_TEST_FLIGHT_FIELD_NUMBER: builtins.int
+    MSN_AVAILABLE_FIELD_NUMBER: builtins.int
+    AGE_AVAILABLE_FIELD_NUMBER: builtins.int
+    REGISTERED_OWNERS_FIELD_NUMBER: builtins.int
+    IS_COUNTRY_OF_REG_AVAILABLE_FIELD_NUMBER: builtins.int
+    icao_address: builtins.int
     """ICAO 24-bit address of the aircraft"""
-    reg: str
+    reg: builtins.str
     """Registration number"""
-    country_of_reg: int
+    country_of_reg: builtins.int
     """Country of registration code (e.g. `3`)"""
-    type: str
+    type: builtins.str
     """Aircraft type code (e.g. `"A359"`)"""
     icon: Icon.ValueType
-    full_description: str
+    full_description: builtins.str
     """Full aircraft description (e.g. `"Airbus A350-941"`)"""
-    msn: str
+    msn: builtins.str
     service: Service.ValueType
-    ac_birth_date: str
+    ac_birth_date: builtins.str
     """Aircraft birth date string (e.g. `"2017-06-28"`)"""
-    ac_age: int
+    ac_age: builtins.int
     """Aircraft age"""
-    is_test_flight: bool
-    msn_available: bool
-    age_available: bool
-    registered_owners: str
+    is_test_flight: builtins.bool
+    msn_available: builtins.bool
+    age_available: builtins.bool
+    registered_owners: builtins.str
     """Aircraft owner name (e.g. `"Air France"`)"""
-    is_country_of_reg_available: bool
-    @property
-    def images_list(self) -> RepeatedCompositeFieldContainer[ImageInfo]: ...
+    is_country_of_reg_available: builtins.bool
+    @builtins.property
+    def images_list(self) -> containers.RepeatedCompositeFieldContainer[ImageInfo]: ...
     def __init__(
         self,
         *,
-        icao_address: int = ...,
-        reg: str = ...,
-        country_of_reg: int = ...,
-        type: str = ...,
+        icao_address: builtins.int = ...,
+        reg: builtins.str = ...,
+        country_of_reg: builtins.int = ...,
+        type: builtins.str = ...,
         icon: Icon.ValueType = ...,
-        full_description: str = ...,
-        msn: str = ...,
+        full_description: builtins.str = ...,
+        msn: builtins.str = ...,
         service: Service.ValueType = ...,
-        ac_birth_date: str = ...,
-        ac_age: int = ...,
-        images_list: Iterable[ImageInfo] | None = ...,
-        is_test_flight: bool = ...,
-        msn_available: bool = ...,
-        age_available: bool = ...,
-        registered_owners: str = ...,
-        is_country_of_reg_available: bool = ...,
+        ac_birth_date: builtins.str = ...,
+        ac_age: builtins.int = ...,
+        images_list: abc.Iterable[ImageInfo] | None = ...,
+        is_test_flight: builtins.bool = ...,
+        msn_available: builtins.bool = ...,
+        age_available: builtins.bool = ...,
+        registered_owners: builtins.str = ...,
+        is_country_of_reg_available: builtins.bool = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["ac_age", b"ac_age", "ac_birth_date", b"ac_birth_date", "age_available", b"age_available", "country_of_reg", b"country_of_reg", "full_description", b"full_description", "icao_address", b"icao_address", "icon", b"icon", "images_list", b"images_list", "is_country_of_reg_available", b"is_country_of_reg_available", "is_test_flight", b"is_test_flight", "msn", b"msn", "msn_available", b"msn_available", "reg", b"reg", "registered_owners", b"registered_owners", "service", b"service", "type", b"type"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["ac_age", b"ac_age", "ac_birth_date", b"ac_birth_date", "age_available", b"age_available", "country_of_reg", b"country_of_reg", "full_description", b"full_description", "icao_address", b"icao_address", "icon", b"icon", "images_list", b"images_list", "is_country_of_reg_available", b"is_country_of_reg_available", "is_test_flight", b"is_test_flight", "msn", b"msn", "msn_available", b"msn_available", "reg", b"reg", "registered_owners", b"registered_owners", "service", b"service", "type", b"type"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Point(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Point(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    LATITUDE_FIELD_NUMBER: int
-    LONGITUDE_FIELD_NUMBER: int
-    latitude: int
+    LATITUDE_FIELD_NUMBER: builtins.int
+    LONGITUDE_FIELD_NUMBER: builtins.int
+    latitude: builtins.int
     """Latitude, degrees, -90 to 90"""
-    longitude: int
+    longitude: builtins.int
     """Longitude, degrees, -180 to 180"""
     def __init__(
         self,
         *,
-        latitude: int = ...,
-        longitude: int = ...,
+        latitude: builtins.int = ...,
+        longitude: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["latitude", b"latitude", "longitude", b"longitude"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["latitude", b"latitude", "longitude", b"longitude"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Coordinate(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Coordinate(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    CODE_FIELD_NUMBER: int
-    POINT_FIELD_NUMBER: int
-    code: str
-    @property
+    CODE_FIELD_NUMBER: builtins.int
+    POINT_FIELD_NUMBER: builtins.int
+    code: builtins.str
+    @builtins.property
     def point(self) -> Point: ...
     def __init__(
         self,
         *,
-        code: str = ...,
+        code: builtins.str = ...,
         point: Point | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["point", b"point"]) -> bool: ...
-    def ClearField(self, field_name: Literal["code", b"code", "point", b"point"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["point", b"point"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["code", b"code", "point", b"point"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Fix(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Fix(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    AIRPORT_FIELD_NUMBER: int
-    AREA_FIELD_NUMBER: int
-    COORDINATE_FIELD_NUMBER: int
-    airport: str
-    area: str
-    @property
+    AIRPORT_FIELD_NUMBER: builtins.int
+    AREA_FIELD_NUMBER: builtins.int
+    COORDINATE_FIELD_NUMBER: builtins.int
+    airport: builtins.str
+    area: builtins.str
+    @builtins.property
     def coordinate(self) -> Coordinate: ...
     def __init__(
         self,
         *,
-        airport: str = ...,
-        area: str = ...,
+        airport: builtins.str = ...,
+        area: builtins.str = ...,
         coordinate: Coordinate | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["coordinate", b"coordinate"]) -> bool: ...
-    def ClearField(self, field_name: Literal["airport", b"airport", "area", b"area", "coordinate", b"coordinate"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["coordinate", b"coordinate"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["airport", b"airport", "area", b"area", "coordinate", b"coordinate"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class AltArrival(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class AltArrival(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    ARRIVAL_FIELD_NUMBER: int
-    LENGTH_FIELD_NUMBER: int
-    length: float
-    @property
+    ARRIVAL_FIELD_NUMBER: builtins.int
+    LENGTH_FIELD_NUMBER: builtins.int
+    length: builtins.float
+    @builtins.property
     def arrival(self) -> Fix: ...
     def __init__(
         self,
         *,
         arrival: Fix | None = ...,
-        length: float = ...,
+        length: builtins.float = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["arrival", b"arrival"]) -> bool: ...
-    def ClearField(self, field_name: Literal["arrival", b"arrival", "length", b"length"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["arrival", b"arrival"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["arrival", b"arrival", "length", b"length"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class FlightPlan(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class FlightPlan(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    DEPARTURE_FIELD_NUMBER: int
-    DESTINATION_FIELD_NUMBER: int
-    FLIGHT_PLAN_ICAO_FIELD_NUMBER: int
-    LENGTH_FIELD_NUMBER: int
-    ALT_ARRIVAL_1_FIELD_NUMBER: int
-    ALT_ARRIVAL_2_FIELD_NUMBER: int
-    WAYPOINTS_LIST_FIELD_NUMBER: int
-    departure: str
-    destination: str
-    flight_plan_icao: str
-    length: float
-    @property
+    DEPARTURE_FIELD_NUMBER: builtins.int
+    DESTINATION_FIELD_NUMBER: builtins.int
+    FLIGHT_PLAN_ICAO_FIELD_NUMBER: builtins.int
+    LENGTH_FIELD_NUMBER: builtins.int
+    ALT_ARRIVAL_1_FIELD_NUMBER: builtins.int
+    ALT_ARRIVAL_2_FIELD_NUMBER: builtins.int
+    WAYPOINTS_LIST_FIELD_NUMBER: builtins.int
+    departure: builtins.str
+    destination: builtins.str
+    flight_plan_icao: builtins.str
+    length: builtins.float
+    @builtins.property
     def alt_arrival_1(self) -> AltArrival: ...
-    @property
+    @builtins.property
     def alt_arrival_2(self) -> AltArrival: ...
-    @property
-    def waypoints_list(self) -> RepeatedCompositeFieldContainer[Point]: ...
+    @builtins.property
+    def waypoints_list(self) -> containers.RepeatedCompositeFieldContainer[Point]: ...
     def __init__(
         self,
         *,
-        departure: str = ...,
-        destination: str = ...,
-        flight_plan_icao: str = ...,
-        length: float = ...,
+        departure: builtins.str = ...,
+        destination: builtins.str = ...,
+        flight_plan_icao: builtins.str = ...,
+        length: builtins.float = ...,
         alt_arrival_1: AltArrival | None = ...,
         alt_arrival_2: AltArrival | None = ...,
-        waypoints_list: Iterable[Point] | None = ...,
+        waypoints_list: abc.Iterable[Point] | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["alt_arrival_1", b"alt_arrival_1", "alt_arrival_2", b"alt_arrival_2"]) -> bool: ...
-    def ClearField(self, field_name: Literal["alt_arrival_1", b"alt_arrival_1", "alt_arrival_2", b"alt_arrival_2", "departure", b"departure", "destination", b"destination", "flight_plan_icao", b"flight_plan_icao", "length", b"length", "waypoints_list", b"waypoints_list"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["alt_arrival_1", b"alt_arrival_1", "alt_arrival_2", b"alt_arrival_2"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["alt_arrival_1", b"alt_arrival_1", "alt_arrival_2", b"alt_arrival_2", "departure", b"departure", "destination", b"destination", "flight_plan_icao", b"flight_plan_icao", "length", b"length", "waypoints_list", b"waypoints_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class ScheduleInfo(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class ScheduleInfo(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHT_NUMBER_FIELD_NUMBER: int
-    OPERATED_BY_ID_FIELD_NUMBER: int
-    PAINTED_AS_ID_FIELD_NUMBER: int
-    ORIGIN_ID_FIELD_NUMBER: int
-    DESTINATION_ID_FIELD_NUMBER: int
-    DIVERTED_TO_ID_FIELD_NUMBER: int
-    SCHEDULED_DEPARTURE_FIELD_NUMBER: int
-    SCHEDULED_ARRIVAL_FIELD_NUMBER: int
-    ACTUAL_DEPARTURE_FIELD_NUMBER: int
-    ACTUAL_ARRIVAL_FIELD_NUMBER: int
-    ARR_TERMINAL_FIELD_NUMBER: int
-    ARR_GATE_FIELD_NUMBER: int
-    BAGGAGE_BELT_FIELD_NUMBER: int
-    flight_number: str
+    FLIGHT_NUMBER_FIELD_NUMBER: builtins.int
+    OPERATED_BY_ID_FIELD_NUMBER: builtins.int
+    PAINTED_AS_ID_FIELD_NUMBER: builtins.int
+    ORIGIN_ID_FIELD_NUMBER: builtins.int
+    DESTINATION_ID_FIELD_NUMBER: builtins.int
+    DIVERTED_TO_ID_FIELD_NUMBER: builtins.int
+    SCHEDULED_DEPARTURE_FIELD_NUMBER: builtins.int
+    SCHEDULED_ARRIVAL_FIELD_NUMBER: builtins.int
+    ACTUAL_DEPARTURE_FIELD_NUMBER: builtins.int
+    ACTUAL_ARRIVAL_FIELD_NUMBER: builtins.int
+    ARR_TERMINAL_FIELD_NUMBER: builtins.int
+    ARR_GATE_FIELD_NUMBER: builtins.int
+    BAGGAGE_BELT_FIELD_NUMBER: builtins.int
+    flight_number: builtins.str
     """Flight number with airline prefix (e.g. `"AF334"`)"""
-    operated_by_id: int
+    operated_by_id: builtins.int
     """ID of the operating airline (e.g. `15`)"""
-    painted_as_id: int
+    painted_as_id: builtins.int
     """ID of the airline the aircraft is painted as (e.g. `15`)"""
-    origin_id: int
+    origin_id: builtins.int
     """Origin airport ID (e.g. `598`)"""
-    destination_id: int
+    destination_id: builtins.int
     """Destination airport ID (e.g. `451`)"""
-    diverted_to_id: int
+    diverted_to_id: builtins.int
     """Diverted to airport ID"""
-    scheduled_departure: int
+    scheduled_departure: builtins.int
     """Scheduled Time of Departure, Unix timestamp in seconds"""
-    scheduled_arrival: int
+    scheduled_arrival: builtins.int
     """Scheduled Time of Arrival, Unix timestamp in seconds"""
-    actual_departure: int
+    actual_departure: builtins.int
     """Actual Time of Departure, Unix timestamp in seconds"""
-    actual_arrival: int
+    actual_arrival: builtins.int
     """Actual Time of Arrival, Unix timestamp in seconds"""
-    arr_terminal: str
+    arr_terminal: builtins.str
     """Arrival terminal (e.g. `"E"`)"""
-    arr_gate: str
+    arr_gate: builtins.str
     """Arrival gate (e.g. `"E6"`)"""
-    baggage_belt: str
+    baggage_belt: builtins.str
     """Baggage belt (e.g. `"4"`)"""
     def __init__(
         self,
         *,
-        flight_number: str = ...,
-        operated_by_id: int = ...,
-        painted_as_id: int = ...,
-        origin_id: int = ...,
-        destination_id: int = ...,
-        diverted_to_id: int = ...,
-        scheduled_departure: int = ...,
-        scheduled_arrival: int = ...,
-        actual_departure: int = ...,
-        actual_arrival: int = ...,
-        arr_terminal: str = ...,
-        arr_gate: str = ...,
-        baggage_belt: str = ...,
+        flight_number: builtins.str = ...,
+        operated_by_id: builtins.int = ...,
+        painted_as_id: builtins.int = ...,
+        origin_id: builtins.int = ...,
+        destination_id: builtins.int = ...,
+        diverted_to_id: builtins.int = ...,
+        scheduled_departure: builtins.int = ...,
+        scheduled_arrival: builtins.int = ...,
+        actual_departure: builtins.int = ...,
+        actual_arrival: builtins.int = ...,
+        arr_terminal: builtins.str = ...,
+        arr_gate: builtins.str = ...,
+        baggage_belt: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["actual_arrival", b"actual_arrival", "actual_departure", b"actual_departure", "arr_gate", b"arr_gate", "arr_terminal", b"arr_terminal", "baggage_belt", b"baggage_belt", "destination_id", b"destination_id", "diverted_to_id", b"diverted_to_id", "flight_number", b"flight_number", "operated_by_id", b"operated_by_id", "origin_id", b"origin_id", "painted_as_id", b"painted_as_id", "scheduled_arrival", b"scheduled_arrival", "scheduled_departure", b"scheduled_departure"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["actual_arrival", b"actual_arrival", "actual_departure", b"actual_departure", "arr_gate", b"arr_gate", "arr_terminal", b"arr_terminal", "baggage_belt", b"baggage_belt", "destination_id", b"destination_id", "diverted_to_id", b"diverted_to_id", "flight_number", b"flight_number", "operated_by_id", b"operated_by_id", "origin_id", b"origin_id", "painted_as_id", b"painted_as_id", "scheduled_arrival", b"scheduled_arrival", "scheduled_departure", b"scheduled_departure"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class ExtendedFlightInfo(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class ExtendedFlightInfo(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHTID_FIELD_NUMBER: int
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    TRACK_FIELD_NUMBER: int
-    ALT_FIELD_NUMBER: int
-    SPEED_FIELD_NUMBER: int
-    STATUS_FIELD_NUMBER: int
-    TIMESTAMP_MS_FIELD_NUMBER: int
-    ON_GROUND_FIELD_NUMBER: int
-    CALLSIGN_FIELD_NUMBER: int
-    SOURCE_FIELD_NUMBER: int
-    EMS_AVAILABILITY_FIELD_NUMBER: int
-    EMS_INFO_FIELD_NUMBER: int
-    SQUAWK_AVAILABILITY_FIELD_NUMBER: int
-    SQUAWK_FIELD_NUMBER: int
-    VSPEED_AVAILABILITY_FIELD_NUMBER: int
-    VSPEED_FIELD_NUMBER: int
-    AIRSPACE_AVAILABILITY_FIELD_NUMBER: int
-    AIRSPACE_FIELD_NUMBER: int
-    AIRSPACE_ID_FIELD_NUMBER: int
-    SERVER_TIME_MS_FIELD_NUMBER: int
-    flightid: int
+    FLIGHTID_FIELD_NUMBER: builtins.int
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    TRACK_FIELD_NUMBER: builtins.int
+    ALT_FIELD_NUMBER: builtins.int
+    SPEED_FIELD_NUMBER: builtins.int
+    STATUS_FIELD_NUMBER: builtins.int
+    TIMESTAMP_MS_FIELD_NUMBER: builtins.int
+    ON_GROUND_FIELD_NUMBER: builtins.int
+    CALLSIGN_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
+    EMS_AVAILABILITY_FIELD_NUMBER: builtins.int
+    EMS_INFO_FIELD_NUMBER: builtins.int
+    SQUAWK_AVAILABILITY_FIELD_NUMBER: builtins.int
+    SQUAWK_FIELD_NUMBER: builtins.int
+    VSPEED_AVAILABILITY_FIELD_NUMBER: builtins.int
+    VSPEED_FIELD_NUMBER: builtins.int
+    AIRSPACE_AVAILABILITY_FIELD_NUMBER: builtins.int
+    AIRSPACE_FIELD_NUMBER: builtins.int
+    AIRSPACE_ID_FIELD_NUMBER: builtins.int
+    SERVER_TIME_MS_FIELD_NUMBER: builtins.int
+    flightid: builtins.int
     """Flight ID (e.g. `962788562` = `0x3962fcd2`)"""
-    lat: float
+    lat: builtins.float
     """Latitude, degrees, -90 to 90"""
-    lon: float
+    lon: builtins.float
     """Longitude, degrees, -180 to 180"""
-    track: int
+    track: builtins.int
     """True track angle, degrees clockwise from North"""
-    alt: int
+    alt: builtins.int
     """Altitude, feet"""
-    speed: int
+    speed: builtins.int
     """Ground Speed, knots"""
     status: Status.ValueType
-    timestamp_ms: int
+    timestamp_ms: builtins.int
     """Unix timestamp of message, milliseconds (e.g. `1741377144019`)"""
-    on_ground: bool
-    callsign: str
+    on_ground: builtins.bool
+    callsign: builtins.str
     """Callsign (e.g. `"AFR334"`)"""
     source: DataSource.ValueType
-    squawk_availability: bool
-    squawk: int
+    squawk_availability: builtins.bool
+    squawk: builtins.int
     """Squawk code, in base-10 (e.g. `3041` = 0o5741)"""
-    vspeed_availability: bool
-    vspeed: int
+    vspeed_availability: builtins.bool
+    vspeed: builtins.int
     """Vertical speed (e.g. `3328`)"""
-    airspace_availability: bool
-    airspace: str
+    airspace_availability: builtins.bool
+    airspace: builtins.str
     """Airspace, free-form text (e.g. `"Shannon UIR"`)"""
-    airspace_id: str
+    airspace_id: builtins.str
     """Airspace ID (e.g. `"FIR_EINN_U"`)"""
-    server_time_ms: int
+    server_time_ms: builtins.int
     """Server timestamp, Unix timestamp in milliseconds (e.g. `1741377145974`)"""
-    @property
+    @builtins.property
     def ems_availability(self) -> EMSAvailability: ...
-    @property
+    @builtins.property
     def ems_info(self) -> EMSInfo: ...
     def __init__(
         self,
         *,
-        flightid: int = ...,
-        lat: float = ...,
-        lon: float = ...,
-        track: int = ...,
-        alt: int = ...,
-        speed: int = ...,
+        flightid: builtins.int = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
+        track: builtins.int = ...,
+        alt: builtins.int = ...,
+        speed: builtins.int = ...,
         status: Status.ValueType = ...,
-        timestamp_ms: int = ...,
-        on_ground: bool = ...,
-        callsign: str = ...,
+        timestamp_ms: builtins.int = ...,
+        on_ground: builtins.bool = ...,
+        callsign: builtins.str = ...,
         source: DataSource.ValueType = ...,
         ems_availability: EMSAvailability | None = ...,
         ems_info: EMSInfo | None = ...,
-        squawk_availability: bool = ...,
-        squawk: int = ...,
-        vspeed_availability: bool = ...,
-        vspeed: int = ...,
-        airspace_availability: bool = ...,
-        airspace: str = ...,
-        airspace_id: str = ...,
-        server_time_ms: int = ...,
+        squawk_availability: builtins.bool = ...,
+        squawk: builtins.int = ...,
+        vspeed_availability: builtins.bool = ...,
+        vspeed: builtins.int = ...,
+        airspace_availability: builtins.bool = ...,
+        airspace: builtins.str = ...,
+        airspace_id: builtins.str = ...,
+        server_time_ms: builtins.int = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["ems_availability", b"ems_availability", "ems_info", b"ems_info"]) -> bool: ...
-    def ClearField(self, field_name: Literal["airspace", b"airspace", "airspace_availability", b"airspace_availability", "airspace_id", b"airspace_id", "alt", b"alt", "callsign", b"callsign", "ems_availability", b"ems_availability", "ems_info", b"ems_info", "flightid", b"flightid", "lat", b"lat", "lon", b"lon", "on_ground", b"on_ground", "server_time_ms", b"server_time_ms", "source", b"source", "speed", b"speed", "squawk", b"squawk", "squawk_availability", b"squawk_availability", "status", b"status", "timestamp_ms", b"timestamp_ms", "track", b"track", "vspeed", b"vspeed", "vspeed_availability", b"vspeed_availability"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["ems_availability", b"ems_availability", "ems_info", b"ems_info"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["airspace", b"airspace", "airspace_availability", b"airspace_availability", "airspace_id", b"airspace_id", "alt", b"alt", "callsign", b"callsign", "ems_availability", b"ems_availability", "ems_info", b"ems_info", "flightid", b"flightid", "lat", b"lat", "lon", b"lon", "on_ground", b"on_ground", "server_time_ms", b"server_time_ms", "source", b"source", "speed", b"speed", "squawk", b"squawk", "squawk_availability", b"squawk_availability", "status", b"status", "timestamp_ms", b"timestamp_ms", "track", b"track", "vspeed", b"vspeed", "vspeed_availability", b"vspeed_availability"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class TrailPoint(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class TrailPoint(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    SNAPSHOT_ID_FIELD_NUMBER: int
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    ALTITUDE_FIELD_NUMBER: int
-    SPD_FIELD_NUMBER: int
-    HEADING_FIELD_NUMBER: int
-    VSPD_FIELD_NUMBER: int
-    SOURCE_FIELD_NUMBER: int
-    snapshot_id: int
+    SNAPSHOT_ID_FIELD_NUMBER: builtins.int
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    ALTITUDE_FIELD_NUMBER: builtins.int
+    SPD_FIELD_NUMBER: builtins.int
+    HEADING_FIELD_NUMBER: builtins.int
+    VSPD_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
+    snapshot_id: builtins.int
     """Snapshot ID, likely Unix timestamp in seconds (e.g. `1741356300`)"""
-    lat: float
+    lat: builtins.float
     """Latitude, degrees, -90 to 90"""
-    lon: float
+    lon: builtins.float
     """Longitude, degrees, -180 to 180"""
-    altitude: int
+    altitude: builtins.int
     """Altitude, feet"""
-    spd: int
+    spd: builtins.int
     """Ground speed, knots"""
-    heading: int
+    heading: builtins.int
     """True track angle, degrees clockwise from North.
     Note: despite the name, heading is not transmitted in ADS-B.
     """
-    vspd: int
+    vspd: builtins.int
     """Vertical Speed, feet per minute"""
     source: DataSource.ValueType
     def __init__(
         self,
         *,
-        snapshot_id: int = ...,
-        lat: float = ...,
-        lon: float = ...,
-        altitude: int = ...,
-        spd: int = ...,
-        heading: int = ...,
-        vspd: int = ...,
+        snapshot_id: builtins.int = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
+        altitude: builtins.int = ...,
+        spd: builtins.int = ...,
+        heading: builtins.int = ...,
+        vspd: builtins.int = ...,
         source: DataSource.ValueType = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["altitude", b"altitude", "heading", b"heading", "lat", b"lat", "lon", b"lon", "snapshot_id", b"snapshot_id", "source", b"source", "spd", b"spd", "vspd", b"vspd"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["altitude", b"altitude", "heading", b"heading", "lat", b"lat", "lon", b"lon", "snapshot_id", b"snapshot_id", "source", b"source", "spd", b"spd", "vspd", b"vspd"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Duration(Message):
+@typing.final
+class Duration(message.Message):
     """used in CountDown service"""
 
-    DESCRIPTOR: Descriptor
+    DESCRIPTOR: descriptor.Descriptor
 
-    COUNT_FIELD_NUMBER: int
-    count: int
+    COUNT_FIELD_NUMBER: builtins.int
+    count: builtins.int
     def __init__(
         self,
         *,
-        count: int = ...,
+        count: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["count", b"count"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["count", b"count"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Tick(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Tick(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    COUNT_FIELD_NUMBER: int
-    count: int
+    COUNT_FIELD_NUMBER: builtins.int
+    count: builtins.int
     def __init__(
         self,
         *,
-        count: int = ...,
+        count: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["count", b"count"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["count", b"count"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class RadarHistoryRecord(Message):
+@typing.final
+class RadarHistoryRecord(message.Message):
     """used in *trail services"""
 
-    DESCRIPTOR: Descriptor
+    DESCRIPTOR: descriptor.Descriptor
 
-    TIMESTAMP_FIELD_NUMBER: int
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    ALTITUDE_FIELD_NUMBER: int
-    SPD_FIELD_NUMBER: int
-    HEADING_FIELD_NUMBER: int
-    VSPD_FIELD_NUMBER: int
-    SQUAWK_FIELD_NUMBER: int
-    SOURCE_FIELD_NUMBER: int
-    CALLSIGN_FIELD_NUMBER: int
-    timestamp: int
+    TIMESTAMP_FIELD_NUMBER: builtins.int
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    ALTITUDE_FIELD_NUMBER: builtins.int
+    SPD_FIELD_NUMBER: builtins.int
+    HEADING_FIELD_NUMBER: builtins.int
+    VSPD_FIELD_NUMBER: builtins.int
+    SQUAWK_FIELD_NUMBER: builtins.int
+    SOURCE_FIELD_NUMBER: builtins.int
+    CALLSIGN_FIELD_NUMBER: builtins.int
+    timestamp: builtins.int
     """Observation timestamp, Unix timestamp in seconds"""
-    lat: float
+    lat: builtins.float
     """Latitude, degrees, -90 to 90"""
-    lon: float
+    lon: builtins.float
     """Longitude, degrees, -180 to 180"""
-    altitude: int
+    altitude: builtins.int
     """Altitude, feet"""
-    spd: int
+    spd: builtins.int
     """Ground Speed, knots"""
-    heading: int
+    heading: builtins.int
     """True track angle, degrees clockwise from North.
     Note: despite the name, heading is not transmitted in ADS-B.
     """
-    vspd: int
+    vspd: builtins.int
     """Vertical speed, feet per minute"""
-    squawk: int
+    squawk: builtins.int
     source: DataSource.ValueType
-    callsign: str
+    callsign: builtins.str
     """Callsign, e.g. `CPA959`"""
     def __init__(
         self,
         *,
-        timestamp: int = ...,
-        lat: float = ...,
-        lon: float = ...,
-        altitude: int = ...,
-        spd: int = ...,
-        heading: int = ...,
-        vspd: int = ...,
-        squawk: int = ...,
+        timestamp: builtins.int = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
+        altitude: builtins.int = ...,
+        spd: builtins.int = ...,
+        heading: builtins.int = ...,
+        vspd: builtins.int = ...,
+        squawk: builtins.int = ...,
         source: DataSource.ValueType = ...,
-        callsign: str = ...,
+        callsign: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["altitude", b"altitude", "callsign", b"callsign", "heading", b"heading", "lat", b"lat", "lon", b"lon", "source", b"source", "spd", b"spd", "squawk", b"squawk", "timestamp", b"timestamp", "vspd", b"vspd"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["altitude", b"altitude", "callsign", b"callsign", "heading", b"heading", "lat", b"lat", "lon", b"lon", "source", b"source", "spd", b"spd", "squawk", b"squawk", "timestamp", b"timestamp", "vspd", b"vspd"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

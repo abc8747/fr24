@@ -3,88 +3,75 @@
 isort:skip_file
 """
 
-from builtins import (
-    bool,
-    int,
-)
-from collections.abc import (
-    Iterable,
-)
-from fr24.proto._common_pb2 import (
-    AircraftInfo,
-    ExtendedFlightInfo,
-    FlightProgress,
-    RestrictionVisibility,
-    ScheduleInfo,
-    TrailPoint,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from fr24.proto import _common_pb2 as _common_pb2
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class PlaybackFlightRequest(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    FLIGHT_ID_FIELD_NUMBER: int
-    TIMESTAMP_FIELD_NUMBER: int
-    RESTRICTION_MODE_FIELD_NUMBER: int
-    flight_id: int
+@typing.final
+class PlaybackFlightRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    FLIGHT_ID_FIELD_NUMBER: builtins.int
+    TIMESTAMP_FIELD_NUMBER: builtins.int
+    RESTRICTION_MODE_FIELD_NUMBER: builtins.int
+    flight_id: builtins.int
     """FR24 Flight ID (e.g. `962788562` = `0x3962fcd2`)"""
-    timestamp: int
+    timestamp: builtins.int
     """Actual time of departure (ATD) of the historic flight,
     Unix timestamp in seconds.
     """
-    restriction_mode: RestrictionVisibility.ValueType
+    restriction_mode: _common_pb2.RestrictionVisibility.ValueType
     def __init__(
         self,
         *,
-        flight_id: int = ...,
-        timestamp: int = ...,
-        restriction_mode: RestrictionVisibility.ValueType = ...,
+        flight_id: builtins.int = ...,
+        timestamp: builtins.int = ...,
+        restriction_mode: _common_pb2.RestrictionVisibility.ValueType = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flight_id", b"flight_id", "restriction_mode", b"restriction_mode", "timestamp", b"timestamp"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flight_id", b"flight_id", "restriction_mode", b"restriction_mode", "timestamp", b"timestamp"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class PlaybackFlightResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class PlaybackFlightResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    AIRCRAFT_INFO_FIELD_NUMBER: int
-    SCHEDULE_INFO_FIELD_NUMBER: int
-    FLIGHT_INFO_FIELD_NUMBER: int
-    FLIGHT_TRAIL_LIST_FIELD_NUMBER: int
-    FLIGHT_PROGRESS_FIELD_NUMBER: int
-    @property
-    def aircraft_info(self) -> AircraftInfo: ...
-    @property
-    def schedule_info(self) -> ScheduleInfo: ...
-    @property
-    def flight_info(self) -> ExtendedFlightInfo: ...
-    @property
-    def flight_trail_list(self) -> RepeatedCompositeFieldContainer[TrailPoint]: ...
-    @property
-    def flight_progress(self) -> FlightProgress: ...
+    AIRCRAFT_INFO_FIELD_NUMBER: builtins.int
+    SCHEDULE_INFO_FIELD_NUMBER: builtins.int
+    FLIGHT_INFO_FIELD_NUMBER: builtins.int
+    FLIGHT_TRAIL_LIST_FIELD_NUMBER: builtins.int
+    FLIGHT_PROGRESS_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def aircraft_info(self) -> _common_pb2.AircraftInfo: ...
+    @builtins.property
+    def schedule_info(self) -> _common_pb2.ScheduleInfo: ...
+    @builtins.property
+    def flight_info(self) -> _common_pb2.ExtendedFlightInfo: ...
+    @builtins.property
+    def flight_trail_list(self) -> containers.RepeatedCompositeFieldContainer[_common_pb2.TrailPoint]: ...
+    @builtins.property
+    def flight_progress(self) -> _common_pb2.FlightProgress: ...
     def __init__(
         self,
         *,
-        aircraft_info: AircraftInfo | None = ...,
-        schedule_info: ScheduleInfo | None = ...,
-        flight_info: ExtendedFlightInfo | None = ...,
-        flight_trail_list: Iterable[TrailPoint] | None = ...,
-        flight_progress: FlightProgress | None = ...,
+        aircraft_info: _common_pb2.AircraftInfo | None = ...,
+        schedule_info: _common_pb2.ScheduleInfo | None = ...,
+        flight_info: _common_pb2.ExtendedFlightInfo | None = ...,
+        flight_trail_list: abc.Iterable[_common_pb2.TrailPoint] | None = ...,
+        flight_progress: _common_pb2.FlightProgress | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_progress", b"flight_progress", "schedule_info", b"schedule_info"]) -> bool: ...
-    def ClearField(self, field_name: Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "schedule_info", b"schedule_info"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_progress", b"flight_progress", "schedule_info", b"schedule_info"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["aircraft_info", b"aircraft_info", "flight_info", b"flight_info", "flight_progress", b"flight_progress", "flight_trail_list", b"flight_trail_list", "schedule_info", b"schedule_info"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

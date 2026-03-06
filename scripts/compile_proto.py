@@ -28,7 +28,7 @@ def main() -> None:
         ["protoc", "--version"], capture_output=True, text=True, check=True
     )
     protoc_version = result.stdout.strip()
-    expected_version = "libprotoc 28.2"
+    expected_version = "libprotoc 33.0"
     if protoc_version != expected_version:
         logger.error(
             f"expected `protoc=={expected_version}`, got {protoc_version}"

@@ -3,48 +3,46 @@
 isort:skip_file
 """
 
-from builtins import (
-    int,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class Ping(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    A_FIELD_NUMBER: int
-    B_FIELD_NUMBER: int
-    a: int
-    b: int
+@typing.final
+class Ping(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    A_FIELD_NUMBER: builtins.int
+    B_FIELD_NUMBER: builtins.int
+    a: builtins.int
+    b: builtins.int
     def __init__(
         self,
         *,
-        a: int = ...,
-        b: int = ...,
+        a: builtins.int = ...,
+        b: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["a", b"a", "b", b"b"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["a", b"a", "b", b"b"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class Pong(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class Pong(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    C_FIELD_NUMBER: int
-    c: int
+    C_FIELD_NUMBER: builtins.int
+    c: builtins.int
     def __init__(
         self,
         *,
-        c: int = ...,
+        c: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["c", b"c"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["c", b"c"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...

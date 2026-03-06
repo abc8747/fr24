@@ -3,193 +3,167 @@
 isort:skip_file
 """
 
-from fr24.proto._common_pb2 import (
-    A225 as A225,
-    A320 as A320,
-    A330 as A330,
-    A343 as A343,
-    A346 as A346,
-    A380 as A380,
-    A3ST as A3ST,
-    ADSB as ADSB,
-    AIERON as AIERON,
-    AIRBORNE as AIRBORNE,
-    AIRBORNE_ONLY as AIRBORNE_ONLY,
-    ALL as ALL,
-    ASCENDING as ASCENDING,
-    ASW20 as ASW20,
-    AUS as AUS,
-    AircraftInfo as AircraftInfo,
-    AltArrival as AltArrival,
-    B736 as B736,
-    B738 as B738,
-    B747 as B747,
-    B757 as B757,
-    B767 as B767,
-    B777 as B777,
-    BACKGROUND as BACKGROUND,
-    BALL as BALL,
-    BUSINESS_JETS as BUSINESS_JETS,
-    C206 as C206,
-    C303 as C303,
-    CARGO as CARGO,
-    CONC as CONC,
-    Coordinate as Coordinate,
-    DESCENDING as DESCENDING,
-    DIVERSION as DIVERSION,
-    DOWNED_AIRCRAFT as DOWNED_AIRCRAFT,
-    DRON as DRON,
-    DRONES as DRONES,
-    DataSource as DataSource,
-    DelayStatus as DelayStatus,
-    Duration as Duration,
-    EC as EC,
-    EMERGENCY as EMERGENCY,
-    EMSAvailability as EMSAvailability,
-    EMSInfo as EMSInfo,
-    ESTIMATED as ESTIMATED,
-    EmergencyStatus as EmergencyStatus,
-    ExtendedFlightInfo as ExtendedFlightInfo,
-    ExtraFlightInfo as ExtraFlightInfo,
-    FAA as FAA,
-    FGTR as FGTR,
-    FLARM as FLARM,
-    FOKKER100 as FOKKER100,
-    FULLY_VISIBLE as FULLY_VISIBLE,
-    Fix as Fix,
-    Flight as Flight,
-    FlightPlan as FlightPlan,
-    FlightProgress as FlightProgress,
-    FlightStage as FlightStage,
-    GENERAL_AVIATION as GENERAL_AVIATION,
-    GENERAL_EMERGENCY as GENERAL_EMERGENCY,
-    GLIDERS as GLIDERS,
-    GRAY as GRAY,
-    GREEN as GREEN,
-    GRND as GRND,
-    GROUND_ONLY as GROUND_ONLY,
-    GROUND_VEHICLES as GROUND_VEHICLES,
-    HELICOPTERS as HELICOPTERS,
-    ISS as ISS,
-    Icon as Icon,
-    ImageInfo as ImageInfo,
-    LIFEGUARD_MEDICAL_EMERGENCY as LIFEGUARD_MEDICAL_EMERGENCY,
-    LIGHTER_THAN_AIR as LIGHTER_THAN_AIR,
-    LIVE as LIVE,
-    LJ60 as LJ60,
-    MD11 as MD11,
-    MILITARY_AND_GOVERNMENT as MILITARY_AND_GOVERNMENT,
-    MINIMUM_FUEL as MINIMUM_FUEL,
-    MLAT as MLAT,
-    NONE as NONE,
-    NON_CATEGORIZED as NON_CATEGORIZED,
-    NORMAL as NORMAL,
-    NOT_AVAILABLE as NOT_AVAILABLE,
-    NOT_VISIBLE as NOT_VISIBLE,
-    NO_COMMUNICATIONS as NO_COMMUNICATIONS,
-    NO_EMERGENCY as NO_EMERGENCY,
-    ON_GROUND as ON_GROUND,
-    OTHER_DATA_SOURCE as OTHER_DATA_SOURCE,
-    OTHER_SERVICE as OTHER_SERVICE,
-    PARTIALLY_VISIBLE as PARTIALLY_VISIBLE,
-    PASSENGER as PASSENGER,
-    Point as Point,
-    PositionBuffer as PositionBuffer,
-    Q300 as Q300,
-    RED as RED,
-    RESERVED as RESERVED,
-    RJ85 as RJ85,
-    RadarHistoryRecord as RadarHistoryRecord,
-    RecentPosition as RecentPosition,
-    RestrictionVisibility as RestrictionVisibility,
-    Route as Route,
-    SAT as SAT,
-    SATELLITE as SATELLITE,
-    SI2 as SI2,
-    SLEI as SLEI,
-    SPIDERTRACKS as SPIDERTRACKS,
-    Schedule as Schedule,
-    ScheduleInfo as ScheduleInfo,
-    Service as Service,
-    SourceStats as SourceStats,
-    Stats as Stats,
-    Status as Status,
-    Tick as Tick,
-    TrafficType as TrafficType,
-    TrailPoint as TrailPoint,
-    UAT as UAT,
-    UNKNOWN as UNKNOWN,
-    UNLAWFUL_INTERFERENCE as UNLAWFUL_INTERFERENCE,
-    YELLOW as YELLOW,
-)
-from fr24.proto._fetch_search_index_pb2 import (
-    FetchSearchIndexRequest as FetchSearchIndexRequest,
-    FetchSearchIndexResponse as FetchSearchIndexResponse,
-    FlightSearchData as FlightSearchData,
-)
-from fr24.proto._flight_details_pb2 import (
-    FlightDetailsRequest as FlightDetailsRequest,
-    FlightDetailsResponse as FlightDetailsResponse,
-    FlightProgress as FlightProgress,
-)
-from fr24.proto._follow_flight_pb2 import (
-    FollowFlightRequest as FollowFlightRequest,
-    FollowFlightResponse as FollowFlightResponse,
-)
-from fr24.proto._health_pb2 import (
-    Ping as Ping,
-    Pong as Pong,
-)
-from fr24.proto._historic_trail_pb2 import (
-    HistoricTrailRequest as HistoricTrailRequest,
-    HistoricTrailResponse as HistoricTrailResponse,
-)
-from fr24.proto._live_feed_pb2 import (
-    AirlineFilter as AirlineFilter,
-    AirlineFilterType as AirlineFilterType,
-    AirportFilter as AirportFilter,
-    AirportFilterType as AirportFilterType,
-    BOTH as BOTH,
-    Filter as Filter,
-    INBOUND as INBOUND,
-    Interval as Interval,
-    LiveFeedRequest as LiveFeedRequest,
-    LiveFeedResponse as LiveFeedResponse,
-    LocationBoundaries as LocationBoundaries,
-    OPERATED_BY as OPERATED_BY,
-    OUTBOUND as OUTBOUND,
-    PAINTED_AS as PAINTED_AS,
-    PlaybackRequest as PlaybackRequest,
-    PlaybackResponse as PlaybackResponse,
-    VisibilitySettings as VisibilitySettings,
-)
-from fr24.proto._live_flight_status_pb2 import (
-    LiveFlightStatus as LiveFlightStatus,
-    LiveFlightStatusData as LiveFlightStatusData,
-    LiveFlightsStatusRequest as LiveFlightsStatusRequest,
-    LiveFlightsStatusResponse as LiveFlightsStatusResponse,
-)
-from fr24.proto._live_trail_pb2 import (
-    LiveTrailRequest as LiveTrailRequest,
-    LiveTrailResponse as LiveTrailResponse,
-)
-from fr24.proto._nearest_flights_pb2 import (
-    Geolocation as Geolocation,
-    NearbyFlight as NearbyFlight,
-    NearestFlightsRequest as NearestFlightsRequest,
-    NearestFlightsResponse as NearestFlightsResponse,
-)
-from fr24.proto._playback_flight_pb2 import (
-    PlaybackFlightRequest as PlaybackFlightRequest,
-    PlaybackFlightResponse as PlaybackFlightResponse,
-)
-from fr24.proto._top_flights_pb2 import (
-    FollowedFlight as FollowedFlight,
-    TopFlightsRequest as TopFlightsRequest,
-    TopFlightsResponse as TopFlightsResponse,
-)
-from google.protobuf.descriptor import (
-    FileDescriptor,
-)
+from fr24.proto._common_pb2 import A225 as A225
+from fr24.proto._common_pb2 import A320 as A320
+from fr24.proto._common_pb2 import A330 as A330
+from fr24.proto._common_pb2 import A343 as A343
+from fr24.proto._common_pb2 import A346 as A346
+from fr24.proto._common_pb2 import A380 as A380
+from fr24.proto._common_pb2 import A3ST as A3ST
+from fr24.proto._common_pb2 import ADSB as ADSB
+from fr24.proto._common_pb2 import AIERON as AIERON
+from fr24.proto._common_pb2 import AIRBORNE as AIRBORNE
+from fr24.proto._common_pb2 import AIRBORNE_ONLY as AIRBORNE_ONLY
+from fr24.proto._common_pb2 import ALL as ALL
+from fr24.proto._common_pb2 import ASCENDING as ASCENDING
+from fr24.proto._common_pb2 import ASW20 as ASW20
+from fr24.proto._common_pb2 import AUS as AUS
+from fr24.proto._common_pb2 import AircraftInfo as AircraftInfo
+from fr24.proto._common_pb2 import AltArrival as AltArrival
+from fr24.proto._common_pb2 import B736 as B736
+from fr24.proto._common_pb2 import B738 as B738
+from fr24.proto._common_pb2 import B747 as B747
+from fr24.proto._common_pb2 import B757 as B757
+from fr24.proto._common_pb2 import B767 as B767
+from fr24.proto._common_pb2 import B777 as B777
+from fr24.proto._common_pb2 import BACKGROUND as BACKGROUND
+from fr24.proto._common_pb2 import BALL as BALL
+from fr24.proto._common_pb2 import BUSINESS_JETS as BUSINESS_JETS
+from fr24.proto._common_pb2 import C206 as C206
+from fr24.proto._common_pb2 import C303 as C303
+from fr24.proto._common_pb2 import CARGO as CARGO
+from fr24.proto._common_pb2 import CONC as CONC
+from fr24.proto._common_pb2 import Coordinate as Coordinate
+from fr24.proto._common_pb2 import DESCENDING as DESCENDING
+from fr24.proto._common_pb2 import DIVERSION as DIVERSION
+from fr24.proto._common_pb2 import DOWNED_AIRCRAFT as DOWNED_AIRCRAFT
+from fr24.proto._common_pb2 import DRON as DRON
+from fr24.proto._common_pb2 import DRONES as DRONES
+from fr24.proto._common_pb2 import DataSource as DataSource
+from fr24.proto._common_pb2 import DelayStatus as DelayStatus
+from fr24.proto._common_pb2 import Duration as Duration
+from fr24.proto._common_pb2 import EC as EC
+from fr24.proto._common_pb2 import EMERGENCY as EMERGENCY
+from fr24.proto._common_pb2 import EMSAvailability as EMSAvailability
+from fr24.proto._common_pb2 import EMSInfo as EMSInfo
+from fr24.proto._common_pb2 import ESTIMATED as ESTIMATED
+from fr24.proto._common_pb2 import EmergencyStatus as EmergencyStatus
+from fr24.proto._common_pb2 import ExtendedFlightInfo as ExtendedFlightInfo
+from fr24.proto._common_pb2 import ExtraFlightInfo as ExtraFlightInfo
+from fr24.proto._common_pb2 import FAA as FAA
+from fr24.proto._common_pb2 import FGTR as FGTR
+from fr24.proto._common_pb2 import FLARM as FLARM
+from fr24.proto._common_pb2 import FOKKER100 as FOKKER100
+from fr24.proto._common_pb2 import FULLY_VISIBLE as FULLY_VISIBLE
+from fr24.proto._common_pb2 import Fix as Fix
+from fr24.proto._common_pb2 import Flight as Flight
+from fr24.proto._common_pb2 import FlightPlan as FlightPlan
+from fr24.proto._common_pb2 import FlightProgress as FlightProgress
+from fr24.proto._common_pb2 import FlightStage as FlightStage
+from fr24.proto._common_pb2 import GENERAL_AVIATION as GENERAL_AVIATION
+from fr24.proto._common_pb2 import GENERAL_EMERGENCY as GENERAL_EMERGENCY
+from fr24.proto._common_pb2 import GLIDERS as GLIDERS
+from fr24.proto._common_pb2 import GRAY as GRAY
+from fr24.proto._common_pb2 import GREEN as GREEN
+from fr24.proto._common_pb2 import GRND as GRND
+from fr24.proto._common_pb2 import GROUND_ONLY as GROUND_ONLY
+from fr24.proto._common_pb2 import GROUND_VEHICLES as GROUND_VEHICLES
+from fr24.proto._common_pb2 import HELICOPTERS as HELICOPTERS
+from fr24.proto._common_pb2 import ISS as ISS
+from fr24.proto._common_pb2 import Icon as Icon
+from fr24.proto._common_pb2 import ImageInfo as ImageInfo
+from fr24.proto._common_pb2 import LIFEGUARD_MEDICAL_EMERGENCY as LIFEGUARD_MEDICAL_EMERGENCY
+from fr24.proto._common_pb2 import LIGHTER_THAN_AIR as LIGHTER_THAN_AIR
+from fr24.proto._common_pb2 import LIVE as LIVE
+from fr24.proto._common_pb2 import LJ60 as LJ60
+from fr24.proto._common_pb2 import MD11 as MD11
+from fr24.proto._common_pb2 import MILITARY_AND_GOVERNMENT as MILITARY_AND_GOVERNMENT
+from fr24.proto._common_pb2 import MINIMUM_FUEL as MINIMUM_FUEL
+from fr24.proto._common_pb2 import MLAT as MLAT
+from fr24.proto._common_pb2 import NONE as NONE
+from fr24.proto._common_pb2 import NON_CATEGORIZED as NON_CATEGORIZED
+from fr24.proto._common_pb2 import NORMAL as NORMAL
+from fr24.proto._common_pb2 import NOT_AVAILABLE as NOT_AVAILABLE
+from fr24.proto._common_pb2 import NOT_VISIBLE as NOT_VISIBLE
+from fr24.proto._common_pb2 import NO_COMMUNICATIONS as NO_COMMUNICATIONS
+from fr24.proto._common_pb2 import NO_EMERGENCY as NO_EMERGENCY
+from fr24.proto._common_pb2 import ON_GROUND as ON_GROUND
+from fr24.proto._common_pb2 import OTHER_DATA_SOURCE as OTHER_DATA_SOURCE
+from fr24.proto._common_pb2 import OTHER_SERVICE as OTHER_SERVICE
+from fr24.proto._common_pb2 import PARTIALLY_VISIBLE as PARTIALLY_VISIBLE
+from fr24.proto._common_pb2 import PASSENGER as PASSENGER
+from fr24.proto._common_pb2 import Point as Point
+from fr24.proto._common_pb2 import PositionBuffer as PositionBuffer
+from fr24.proto._common_pb2 import Q300 as Q300
+from fr24.proto._common_pb2 import RED as RED
+from fr24.proto._common_pb2 import RESERVED as RESERVED
+from fr24.proto._common_pb2 import RJ85 as RJ85
+from fr24.proto._common_pb2 import RadarHistoryRecord as RadarHistoryRecord
+from fr24.proto._common_pb2 import RecentPosition as RecentPosition
+from fr24.proto._common_pb2 import RestrictionVisibility as RestrictionVisibility
+from fr24.proto._common_pb2 import Route as Route
+from fr24.proto._common_pb2 import SAT as SAT
+from fr24.proto._common_pb2 import SATELLITE as SATELLITE
+from fr24.proto._common_pb2 import SI2 as SI2
+from fr24.proto._common_pb2 import SLEI as SLEI
+from fr24.proto._common_pb2 import SPIDERTRACKS as SPIDERTRACKS
+from fr24.proto._common_pb2 import Schedule as Schedule
+from fr24.proto._common_pb2 import ScheduleInfo as ScheduleInfo
+from fr24.proto._common_pb2 import Service as Service
+from fr24.proto._common_pb2 import SourceStats as SourceStats
+from fr24.proto._common_pb2 import Stats as Stats
+from fr24.proto._common_pb2 import Status as Status
+from fr24.proto._common_pb2 import Tick as Tick
+from fr24.proto._common_pb2 import TrafficType as TrafficType
+from fr24.proto._common_pb2 import TrailPoint as TrailPoint
+from fr24.proto._common_pb2 import UAT as UAT
+from fr24.proto._common_pb2 import UNKNOWN as UNKNOWN
+from fr24.proto._common_pb2 import UNLAWFUL_INTERFERENCE as UNLAWFUL_INTERFERENCE
+from fr24.proto._common_pb2 import YELLOW as YELLOW
+from fr24.proto._fetch_search_index_pb2 import FetchSearchIndexRequest as FetchSearchIndexRequest
+from fr24.proto._fetch_search_index_pb2 import FetchSearchIndexResponse as FetchSearchIndexResponse
+from fr24.proto._fetch_search_index_pb2 import FlightSearchData as FlightSearchData
+from fr24.proto._flight_details_pb2 import FlightDetailsRequest as FlightDetailsRequest
+from fr24.proto._flight_details_pb2 import FlightDetailsResponse as FlightDetailsResponse
+from fr24.proto._flight_details_pb2 import FlightProgress as FlightProgress_1
+from fr24.proto._follow_flight_pb2 import FollowFlightRequest as FollowFlightRequest
+from fr24.proto._follow_flight_pb2 import FollowFlightResponse as FollowFlightResponse
+from fr24.proto._health_pb2 import Ping as Ping
+from fr24.proto._health_pb2 import Pong as Pong
+from fr24.proto._historic_trail_pb2 import HistoricTrailRequest as HistoricTrailRequest
+from fr24.proto._historic_trail_pb2 import HistoricTrailResponse as HistoricTrailResponse
+from fr24.proto._live_feed_pb2 import AirlineFilter as AirlineFilter
+from fr24.proto._live_feed_pb2 import AirlineFilterType as AirlineFilterType
+from fr24.proto._live_feed_pb2 import AirportFilter as AirportFilter
+from fr24.proto._live_feed_pb2 import AirportFilterType as AirportFilterType
+from fr24.proto._live_feed_pb2 import BOTH as BOTH
+from fr24.proto._live_feed_pb2 import Filter as Filter
+from fr24.proto._live_feed_pb2 import INBOUND as INBOUND
+from fr24.proto._live_feed_pb2 import Interval as Interval
+from fr24.proto._live_feed_pb2 import LiveFeedRequest as LiveFeedRequest
+from fr24.proto._live_feed_pb2 import LiveFeedResponse as LiveFeedResponse
+from fr24.proto._live_feed_pb2 import LocationBoundaries as LocationBoundaries
+from fr24.proto._live_feed_pb2 import OPERATED_BY as OPERATED_BY
+from fr24.proto._live_feed_pb2 import OUTBOUND as OUTBOUND
+from fr24.proto._live_feed_pb2 import PAINTED_AS as PAINTED_AS
+from fr24.proto._live_feed_pb2 import PlaybackRequest as PlaybackRequest
+from fr24.proto._live_feed_pb2 import PlaybackResponse as PlaybackResponse
+from fr24.proto._live_feed_pb2 import VisibilitySettings as VisibilitySettings
+from fr24.proto._live_flight_status_pb2 import LiveFlightStatus as LiveFlightStatus
+from fr24.proto._live_flight_status_pb2 import LiveFlightStatusData as LiveFlightStatusData
+from fr24.proto._live_flight_status_pb2 import LiveFlightsStatusRequest as LiveFlightsStatusRequest
+from fr24.proto._live_flight_status_pb2 import LiveFlightsStatusResponse as LiveFlightsStatusResponse
+from fr24.proto._live_trail_pb2 import LiveTrailRequest as LiveTrailRequest
+from fr24.proto._live_trail_pb2 import LiveTrailResponse as LiveTrailResponse
+from fr24.proto._nearest_flights_pb2 import Geolocation as Geolocation
+from fr24.proto._nearest_flights_pb2 import NearbyFlight as NearbyFlight
+from fr24.proto._nearest_flights_pb2 import NearestFlightsRequest as NearestFlightsRequest
+from fr24.proto._nearest_flights_pb2 import NearestFlightsResponse as NearestFlightsResponse
+from fr24.proto._playback_flight_pb2 import PlaybackFlightRequest as PlaybackFlightRequest
+from fr24.proto._playback_flight_pb2 import PlaybackFlightResponse as PlaybackFlightResponse
+from fr24.proto._top_flights_pb2 import FollowedFlight as FollowedFlight
+from fr24.proto._top_flights_pb2 import TopFlightsRequest as TopFlightsRequest
+from fr24.proto._top_flights_pb2 import TopFlightsResponse as TopFlightsResponse
+from google.protobuf import descriptor as descriptor
 
-DESCRIPTOR: FileDescriptor
+DESCRIPTOR: descriptor.FileDescriptor

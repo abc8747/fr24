@@ -3,104 +3,98 @@
 isort:skip_file
 """
 
-from builtins import (
-    bool,
-    float,
-    int,
-)
-from collections.abc import (
-    Iterable,
-)
-from fr24.proto._common_pb2 import (
-    Flight,
-)
-from google.protobuf.descriptor import (
-    Descriptor,
-    FileDescriptor,
-)
-from google.protobuf.internal.containers import (
-    RepeatedCompositeFieldContainer,
-)
-from google.protobuf.message import (
-    Message,
-)
-from typing import (
-    Literal,
-    final,
-)
+from collections import abc as abc
+from fr24.proto import _common_pb2 as _common_pb2
+from google.protobuf import descriptor as descriptor
+from google.protobuf import message as message
+from google.protobuf.internal import containers as containers
+import builtins as builtins
+import sys
+import typing as typing
 
-DESCRIPTOR: FileDescriptor
+if sys.version_info >= (3, 10):
+    from typing import TypeAlias as _TypeAlias
+else:
+    from typing_extensions import TypeAlias as _TypeAlias
 
-@final
-class Geolocation(Message):
-    DESCRIPTOR: Descriptor
+DESCRIPTOR: descriptor.FileDescriptor
 
-    LAT_FIELD_NUMBER: int
-    LON_FIELD_NUMBER: int
-    lat: float
+@typing.final
+class Geolocation(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
+
+    LAT_FIELD_NUMBER: builtins.int
+    LON_FIELD_NUMBER: builtins.int
+    lat: builtins.float
     """Latitude, degrees, -90 to 90"""
-    lon: float
+    lon: builtins.float
     """Longitude, degrees, -180 to 180"""
     def __init__(
         self,
         *,
-        lat: float = ...,
-        lon: float = ...,
+        lat: builtins.float = ...,
+        lon: builtins.float = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["lat", b"lat", "lon", b"lon"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["lat", b"lat", "lon", b"lon"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class NearestFlightsRequest(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class NearestFlightsRequest(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    LOCATION_FIELD_NUMBER: int
-    RADIUS_FIELD_NUMBER: int
-    LIMIT_FIELD_NUMBER: int
-    radius: int
+    LOCATION_FIELD_NUMBER: builtins.int
+    RADIUS_FIELD_NUMBER: builtins.int
+    LIMIT_FIELD_NUMBER: builtins.int
+    radius: builtins.int
     """Radius, metres"""
-    limit: int
+    limit: builtins.int
     """Maximum number of aircraft to return"""
-    @property
+    @builtins.property
     def location(self) -> Geolocation: ...
     def __init__(
         self,
         *,
         location: Geolocation | None = ...,
-        radius: int = ...,
-        limit: int = ...,
+        radius: builtins.int = ...,
+        limit: builtins.int = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["location", b"location"]) -> bool: ...
-    def ClearField(self, field_name: Literal["limit", b"limit", "location", b"location", "radius", b"radius"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["location", b"location"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["limit", b"limit", "location", b"location", "radius", b"radius"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class NearbyFlight(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class NearbyFlight(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHT_FIELD_NUMBER: int
-    DISTANCE_FIELD_NUMBER: int
-    distance: int
+    FLIGHT_FIELD_NUMBER: builtins.int
+    DISTANCE_FIELD_NUMBER: builtins.int
+    distance: builtins.int
     """Distance from the location, metres"""
-    @property
-    def flight(self) -> Flight: ...
+    @builtins.property
+    def flight(self) -> _common_pb2.Flight: ...
     def __init__(
         self,
         *,
-        flight: Flight | None = ...,
-        distance: int = ...,
+        flight: _common_pb2.Flight | None = ...,
+        distance: builtins.int = ...,
     ) -> None: ...
-    def HasField(self, field_name: Literal["flight", b"flight"]) -> bool: ...
-    def ClearField(self, field_name: Literal["distance", b"distance", "flight", b"flight"]) -> None: ...
+    _HasFieldArgType: _TypeAlias = typing.Literal["flight", b"flight"]  # noqa: Y015
+    def HasField(self, field_name: _HasFieldArgType) -> builtins.bool: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["distance", b"distance", "flight", b"flight"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
 
-@final
-class NearestFlightsResponse(Message):
-    DESCRIPTOR: Descriptor
+@typing.final
+class NearestFlightsResponse(message.Message):
+    DESCRIPTOR: descriptor.Descriptor
 
-    FLIGHTS_LIST_FIELD_NUMBER: int
-    @property
-    def flights_list(self) -> RepeatedCompositeFieldContainer[NearbyFlight]: ...
+    FLIGHTS_LIST_FIELD_NUMBER: builtins.int
+    @builtins.property
+    def flights_list(self) -> containers.RepeatedCompositeFieldContainer[NearbyFlight]: ...
     def __init__(
         self,
         *,
-        flights_list: Iterable[NearbyFlight] | None = ...,
+        flights_list: abc.Iterable[NearbyFlight] | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: Literal["flights_list", b"flights_list"]) -> None: ...
+    _ClearFieldArgType: _TypeAlias = typing.Literal["flights_list", b"flights_list"]  # noqa: Y015
+    def ClearField(self, field_name: _ClearFieldArgType) -> None: ...
