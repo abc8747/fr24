@@ -70,7 +70,9 @@ test = [
     "fr24[polars]",
 ]
 docs = [
-    "mkdocs-material[imaging]>=9.5.43",
+    # zensical does not support py39 since v0.0.2, so fallback to mkdocs
+    "mkdocs-material[imaging]>=9.5.43 ; python_full_version == '3.9'",
+    "zensical>=0.0.24 ; python_full_version >= '3.11'",
     "mkdocstrings-python>=1.13.0",
     "griffe>=1.11.2",
 ]
