@@ -71,7 +71,7 @@ Downloads the flight trajectory for [UA1549](https://en.wikipedia.org/wiki/US_Ai
 
 === "Jupyter cell"
 
-    ```py hl_lines="7"
+    ```py hl_lines="6"
     --8<-- "docs/usage/scripts/11_playback.py:script0"
     ```
 
@@ -95,7 +95,7 @@ Saves trajectory data to disk, reads the track and metadata from it.
 
 === "Jupyter cell"
 
-    ```py hl_lines="10 12"
+    ```py hl_lines="9 11"
     --8<-- "docs/usage/scripts/11_playback.py:script1"
     ```
     
