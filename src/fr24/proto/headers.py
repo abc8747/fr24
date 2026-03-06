@@ -5,7 +5,7 @@ from ..utils import DEFAULT_HEADERS
 
 from ..types.json import Authentication
 
-PLATFORM_VERSION = "25.261.0637"
+PLATFORM_VERSION = "25.061.0929"
 # see ./README.md.
 
 
