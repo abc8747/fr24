@@ -31,6 +31,7 @@ if TYPE_CHECKING:
 
     from .types import IntoFlightId, IntoTimestamp
     from .types.cache import TabularFileFmt
+    from .types.isqx import LatitudeDeg, LongitudeDeg
 
 
 PATH_CACHE = Path(user_cache_dir("fr24"))
@@ -202,7 +203,10 @@ class NearestFlightsCache(GlobMixin):
     collection: Collection
 
     def get_path(
-        self, lon: float, lat: float, timestamp: IntoTimestamp | str
+        self,
+        lon: LongitudeDeg[float],
+        lat: LatitudeDeg[float],
+        timestamp: IntoTimestamp | str,
     ) -> BarePath:
         lon6 = int(lon * 1e6)
         lat6 = int(lat * 1e6)
@@ -213,8 +217,8 @@ class NearestFlightsCache(GlobMixin):
 
     def scan_table(
         self,
-        lon: float,
-        lat: float,
+        lon: LongitudeDeg[float],
+        lat: LatitudeDeg[float],
         timestamp: IntoTimestamp | str,
         *,
         format: TabularFileFmt = "parquet",

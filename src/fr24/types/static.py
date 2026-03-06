@@ -4,7 +4,13 @@ from typing import Literal, Union
 
 from typing_extensions import TypedDict
 
-from . import IntTimestampS
+from .isqx import (
+    AltitudeFt,
+    LatitudeDeg,
+    LongitudeDeg,
+    TimestampS,
+    UtcOffsetS,
+)
 
 
 class Model(TypedDict):
@@ -41,7 +47,7 @@ class Airlines(TypedDict):
 
 class Timezone(TypedDict):
     name: str
-    offset: int | None
+    offset: UtcOffsetS[int] | None
     offsetHours: str
     abbr: str
     abbrName: str | None
@@ -54,10 +60,10 @@ class Airport(TypedDict):
     iata: str
     icao: str
     city: str
-    lat: float
-    lon: float
+    lat: LatitudeDeg[float]
+    lon: LongitudeDeg[float]
     country: str
-    alt: int | Literal["-1"]
+    alt: AltitudeFt[int] | Literal["-1"]
     size: int
     timezone: Timezone
     countryId: int
@@ -88,7 +94,7 @@ class Country(TypedDict):
 
 
 class Metadata(TypedDict):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
     count: int
 
 

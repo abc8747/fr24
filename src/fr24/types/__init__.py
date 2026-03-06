@@ -3,15 +3,13 @@ from typing import TypeVar, Union
 
 from typing_extensions import TypeAlias
 
+from .isqx import TimestampS
+
 M = TypeVar("M")
 """Method"""
 
 
-IntTimestampS: TypeAlias = int
-"""Unix timestamp in integer seconds."""
-IntTimestampMs: TypeAlias = int
-"""Unix timestamp in integer milliseconds."""
-IntoTimestamp: TypeAlias = Union[IntTimestampS, datetime]
+IntoTimestamp: TypeAlias = Union[TimestampS[int], datetime]
 """A type that can be converted to a timestamp (in seconds)."""
 
 

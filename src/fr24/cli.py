@@ -34,9 +34,10 @@ from . import BBOX_FRANCE_UIR, FR24, BoundingBox, FR24Cache, service
 from .cache import PATH_CACHE
 from .configuration import FP_CONFIG_FILE, PATH_CONFIG
 from .service import LiveFeedPlaybackResult, LiveFeedResult, SupportsWriteTable
-from .types import IntFlightId, IntoFlightId, IntoTimestamp, IntTimestampS
+from .types import IntFlightId, IntoFlightId, IntoTimestamp
 from .types.cache import TabularFileFmt
 from .types.grpc import LiveFeedField
+from .types.isqx import TimestampS
 from .utils import (
     FileExistsBehaviour,
     ParamDetail,
@@ -320,7 +321,7 @@ class TimestampSParser(click.ParamType):
         value: Any,
         param: click.Parameter | None,
         ctx: click.Context | None,
-    ) -> IntTimestampS | Literal["now"]:
+    ) -> TimestampS[int] | Literal["now"]:
         if (
             isinstance(value, str)
             and value.lower() == "now"
@@ -406,7 +407,7 @@ def get_typer_parameter_override(type_: type) -> TyperParamOverride:
     if _IntoTimestampArgs.issubset(type_args):
         allow_now = Literal["now"] in type_args
         return {
-            "hint": IntTimestampS,
+            "hint": int,
             "kwargs": {"click_type": TimestampSParser(allow_now=allow_now)},
         }
     if type_args == _IntoFlightIdArgs:
