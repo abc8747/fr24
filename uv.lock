@@ -649,24 +649,25 @@ wheels = [
 
 [[package]]
 name = "fr24"
-version = "0.2.4"
+version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "httpx", extra = ["http2", "zstd"] },
     { name = "orjson" },
     { name = "platformdirs" },
-    { name = "polars" },
     { name = "protobuf" },
 ]
 
 [package.optional-dependencies]
 cli = [
+    { name = "polars" },
     { name = "typer" },
 ]
-rich = [
-    { name = "rich" },
+polars = [
+    { name = "polars" },
 ]
 tui = [
+    { name = "polars" },
     { name = "textual" },
     { name = "typer" },
 ]
@@ -675,7 +676,7 @@ tui = [
 dev = [
     { name = "anyio" },
     { name = "eval-type-backport" },
-    { name = "fr24", extra = ["rich"] },
+    { name = "fr24", extra = ["polars"] },
     { name = "griffe" },
     { name = "ipykernel" },
     { name = "mkdocs-material", extra = ["imaging"] },
@@ -699,7 +700,7 @@ lint = [
 test = [
     { name = "anyio" },
     { name = "eval-type-backport" },
-    { name = "fr24", extra = ["rich"] },
+    { name = "fr24", extra = ["polars"] },
     { name = "pydantic" },
     { name = "pytest" },
 ]
@@ -712,22 +713,22 @@ typing = [
 [package.metadata]
 requires-dist = [
     { name = "fr24", extras = ["cli"], marker = "extra == 'tui'" },
+    { name = "fr24", extras = ["polars"], marker = "extra == 'cli'" },
     { name = "httpx", extras = ["zstd", "http2"], specifier = ">=0.28.1" },
     { name = "orjson", specifier = ">=3.11.0" },
     { name = "platformdirs", specifier = ">=4.3.8" },
-    { name = "polars", specifier = ">=1.19.0" },
+    { name = "polars", marker = "extra == 'polars'", specifier = ">=1.19.0" },
     { name = "protobuf", specifier = "==5.28.*" },
-    { name = "rich", marker = "extra == 'rich'" },
     { name = "textual", marker = "extra == 'tui'", specifier = ">=1.0.0" },
     { name = "typer", marker = "extra == 'cli'", specifier = ">=0.19" },
 ]
-provides-extras = ["rich", "cli", "tui"]
+provides-extras = ["polars", "cli", "tui"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "anyio", specifier = ">=4.8.0" },
     { name = "eval-type-backport", specifier = ">=0.2.0" },
-    { name = "fr24", extras = ["rich"] },
+    { name = "fr24", extras = ["polars"] },
     { name = "griffe", specifier = ">=1.11.2" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "mkdocs-material", extras = ["imaging"], specifier = ">=9.5.43" },
@@ -750,7 +751,7 @@ lint = [{ name = "ruff", specifier = ">=0.7.2" }]
 test = [
     { name = "anyio", specifier = ">=4.8.0" },
     { name = "eval-type-backport", specifier = ">=0.2.0" },
-    { name = "fr24", extras = ["rich"] },
+    { name = "fr24", extras = ["polars"] },
     { name = "pydantic", specifier = ">=2.12.0" },
     { name = "pytest", specifier = ">=8.3.3" },
     { name = "pytest", marker = "python_full_version == '3.9.*'", specifier = "<9" },

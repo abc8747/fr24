@@ -72,6 +72,7 @@ from .proto.v1_pb2 import (
 from .utils import (
     dataclass_opts,
     get_current_timestamp,
+    raise_missing_polars,
     to_flight_id,
     to_unix_timestamp,
 )
@@ -238,7 +239,10 @@ def live_feed_flightdata_dict(lfr: Flight) -> FlightRecord:
 def live_feed_df(
     data: LiveFeedResponse,
 ) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import live_feed_schema
 
@@ -317,7 +321,10 @@ async def live_feed_playback(
 def live_feed_playback_df(
     data: PlaybackResponse,
 ) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import live_feed_schema
 
@@ -378,7 +385,10 @@ def nearest_flights_nearbyflight_dict(nf: NearbyFlight) -> NearbyFlightRecord:
 def nearest_flights_df(
     data: NearestFlightsResponse,
 ) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import nearest_flights_schema
 
@@ -425,7 +435,10 @@ def live_flights_status_flightstatusdata_dict(
 def live_flights_status_df(
     data: LiveFlightsStatusResponse,
 ) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import live_flights_status_schema
 
@@ -532,7 +545,10 @@ def top_flights_dict(ff: FollowedFlight) -> TopFlightRecord:
 
 
 def top_flights_df(data: TopFlightsResponse) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import top_flights_schema
 
@@ -716,7 +732,10 @@ def ems_dict(ems: EMSInfo) -> EMSRecord:
 def flight_details_df(
     data: FlightDetailsResponse,
 ) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import flight_details_schema
 
@@ -803,7 +822,10 @@ def playback_flight_dict(
 def playback_flight_df(
     data: PlaybackFlightResponse,
 ) -> pl.DataFrame:
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     from .types.cache import playback_flight_schema
 

@@ -3,7 +3,6 @@
 # %%
 # --8<-- [start:script]
 from fr24 import FR24, FR24Cache
-from rich import print
 
 
 async def my_top_flights() -> None:

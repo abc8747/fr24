@@ -57,6 +57,18 @@ if TYPE_CHECKING:
 else:
     dataclass_frozen = dataclass(**dataclass_opts)
 
+
+class OptionalDependencyError(ImportError):
+    """Raised when an optional dependency is required but unavailable."""
+
+
+def raise_missing_polars(exc: ImportError) -> NoReturn:
+    raise OptionalDependencyError(
+        "polars is required for dataframe and table features. "
+        "Install it with `pip install fr24[polars]` or `pip install polars`."
+    ) from exc
+
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_HEADERS = {
@@ -119,7 +131,10 @@ def to_unix_timestamp(
         except ValueError:
             pass
         # otherwise assume it's a format that `polars` understands
-        import polars as pl
+        try:
+            import polars as pl
+        except ImportError as exc:
+            raise_missing_polars(exc)
 
         try:
             dt: datetime = (
@@ -265,7 +280,10 @@ def scan_table(
     :param schema: The schema to enforce when reading the table. For CSV files,
         this should be specified to properly parse datetimes from strings.
     """
-    import polars as pl
+    try:
+        import polars as pl
+    except ImportError as exc:
+        raise_missing_polars(exc)
 
     if isinstance(file, BarePath):
         file = format_bare_path(file, format)

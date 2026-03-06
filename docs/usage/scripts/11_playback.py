@@ -2,7 +2,6 @@
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
-import rich
 from fr24 import FR24, FR24Cache
 
 
@@ -11,7 +10,7 @@ async def my_playback() -> None:
         result = await fr24.playback.fetch(0x2FB3041)  # (1)!
         df = result.to_polars()
         print(df)
-        rich.print(result.metadata())
+        print(result.metadata())
         result.write_table(FR24Cache.default())
 
 
@@ -65,7 +64,6 @@ shape: (363, 9)
 
 # %%
 # --8<-- [start:script1]
-import rich
 from fr24 import FR24, FR24Cache
 
 cache = FR24Cache.default()

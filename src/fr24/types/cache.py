@@ -1,11 +1,21 @@
 from __future__ import annotations
 
+import importlib.util
 from dataclasses import dataclass
-from typing import Annotated, Any, Literal, TypedDict, Union, get_type_hints
+from typing import (
+    TYPE_CHECKING,
+    Annotated,
+    Any,
+    Literal,
+    TypedDict,
+    # NOTE: using `Union[X, Y]` instead of X | Y because get_type_hints
+    # with extras on py39 fails
+    Union,
+    get_type_hints,
+)
 
-# NOTE: using `Union[X, Y]` instead of X | Y because get_type_hints with extras
-# on py39 fails
-import polars as pl
+if TYPE_CHECKING:
+    import polars as pl
 
 from . import IntFlightId, IntTimestampMs, IntTimestampS
 
@@ -21,18 +31,27 @@ class DType:
     type_: pl.DataType
 
     def __post_init__(self) -> None:
+        if importlib.util.find_spec("polars") is None:
+            return
+        import polars as pl
+
         assert isinstance(self.type_, pl.DataType), (
             f"found `{type(self.type_)=}`"
         )
 
 
-def to_schema(obj: type[Any]) -> dict[str, pl.DataType]:
+def to_schema(obj: type[Any]) -> dict[str, pl.DataType] | None:
     """Generate a polars schema from a TypedDict.
 
     :param obj: A TypedDict with types annotated with `DType`.
+    :returns: None if polars is not installed
     """
+    if importlib.util.find_spec("polars") is None:
+        return None
+    import polars as pl
+
     schema = {}
-    hints = get_type_hints(obj, include_extras=True)
+    hints = get_type_hints(obj, include_extras=True, localns={"pl": pl})
     for field_name, type_ in hints.items():
         metadata_list = getattr(type_, "__metadata__", None)
         assert metadata_list is not None, (
@@ -52,6 +71,8 @@ def to_schema(obj: type[Any]) -> dict[str, pl.DataType]:
     return schema
 
 
+# NOTE: using `Union[X, Y]` instead of X | Y because get_type_hints with extras
+# on py39 fails
 class FlightListRecord(TypedDict):
     flight_id: Annotated[Union[IntFlightId, None], DType(pl.UInt64())]
     number: Annotated[Union[str, None], DType(pl.String())]
