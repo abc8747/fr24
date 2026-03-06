@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from rich.text import Text
 
-from fr24.types import IntTimestampS
+from fr24.types.isqx import TimestampS
 from fr24.types.json import AircraftInfo
 from fr24.types.json import CommonAirport as AirportJSON
 from fr24.utils import dataclass_frozen
@@ -12,7 +12,7 @@ from fr24.utils import dataclass_frozen
 
 @dataclass_frozen
 class Time:
-    timestamp: None | IntTimestampS
+    timestamp: None | TimestampS[int]
 
     def __format__(self, __format_spec: str) -> str:
         if self.timestamp is None:

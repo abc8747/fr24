@@ -10,7 +10,31 @@ from typing_extensions import (
     TypeGuard,
 )
 
-from . import IntTimestampS, StrFlightIdHex
+from . import StrFlightIdHex
+from .isqx import (
+    AltitudeFt,
+    AltitudeM,
+    BankAngleDeg,
+    BearingDeg,
+    DurationS,
+    GeometricAltitudeM,
+    GroundSpeedKmh,
+    GroundSpeedKt,
+    GroundSpeedMph,
+    GroundTrackDeg,
+    IndicatedAirSpeedKt,
+    LatitudeDeg,
+    LongitudeDeg,
+    MachTimes1K,
+    PressureAltimeterHpa,
+    StaticTemperatureC,
+    TimestampS,
+    TrueAirSpeedKt,
+    UtcOffsetS,
+    VerticalSpeedFpm,
+    VerticalSpeedMps,
+    WindSpeedKt,
+)
 
 #
 # authentication
@@ -30,7 +54,7 @@ class UserData(TypedDict, total=False):
     accessToken: None | str
     accountType: str
     countryCode: None | str
-    dateExpires: IntTimestampS
+    dateExpires: TimestampS[int]
     dateLastLogin: str
     features: Features
     hasConsented: bool
@@ -111,8 +135,8 @@ class _GenericStatus(TypedDict):
 
 
 class _GenericEventTime(TypedDict):
-    utc: int | None
-    local: int | None
+    utc: TimestampS[int] | None
+    local: TimestampS[int] | None
 
 
 class _StatusGeneric(TypedDict):
@@ -161,15 +185,15 @@ class _Region(TypedDict):
 
 
 class _AirportPosition(TypedDict):
-    latitude: float
-    longitude: float
+    latitude: LatitudeDeg[float]
+    longitude: LongitudeDeg[float]
     country: _Country
     region: _Region
 
 
 class _Timezone(TypedDict):
     name: str
-    offset: int
+    offset: UtcOffsetS[int]
     abbr: str
     abbrName: str | None
     isDst: bool
@@ -221,7 +245,7 @@ class FlightListRequest(TypedDict, total=False):
     page: int
     pk: None
     query: Required[str]
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
     token: None | str
 
 
@@ -268,14 +292,14 @@ class AircraftInfo(TypedDict):
 
 
 class Interval(TypedDict):
-    departure: None | IntTimestampS
-    arrival: None | IntTimestampS
+    departure: None | TimestampS[int]
+    arrival: None | TimestampS[int]
 
 
 class TimeOther(TypedDict):
-    eta: None | IntTimestampS
-    updated: None | IntTimestampS
-    duration: None | int
+    eta: None | TimestampS[int]
+    updated: None | TimestampS[int]
+    duration: None | DurationS[int]
 
 
 class FlightListTime(TypedDict):
@@ -303,7 +327,7 @@ class AircraftImage(TypedDict):
 class FlightListResponse(TypedDict):
     item: Item
     page: Page
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
     data: list[FlightListItem] | None
     # TODO: depending on whether the flight list was queried by reg or flight
     # this may change - check this again
@@ -364,7 +388,7 @@ class PlaybackRequest(TypedDict, total=False):
     flightId: Required[StrFlightIdHex]
     format: Literal["json"]
     pk: None
-    timestamp: IntTimestampS | None
+    timestamp: TimestampS[int] | None
     token: None | str
 
 
@@ -389,55 +413,55 @@ class AircraftData(TypedDict):
 
 
 class Median(TypedDict):
-    time: int | None
-    delay: int | None
-    timestamp: IntTimestampS | None
+    time: int | None  # TODO: unit?
+    delay: int | None  # TOD: unit?
+    timestamp: TimestampS[int] | None
 
 
 class Altitude(TypedDict):
-    feet: int
-    meters: int
+    feet: AltitudeFt[int]
+    meters: AltitudeM[int]
 
 
 class Speed(TypedDict):
-    kmh: float
-    kts: int
-    mph: float
+    kmh: GroundSpeedKmh[float]
+    kts: GroundSpeedKt[int]
+    mph: GroundSpeedMph[float]
 
 
 class VerticalSpeed(TypedDict):
-    fpm: int | None
-    ms: int | None
+    fpm: VerticalSpeedFpm[int] | None
+    ms: VerticalSpeedMps[int] | None
 
 
 class EMS(TypedDict):
-    ts: IntTimestampS
-    ias: int | None
-    tas: int | None
-    mach: int | None
-    mcp: int | None
-    fms: int | None
+    ts: TimestampS[int]
+    ias: IndicatedAirSpeedKt[int] | None
+    tas: TrueAirSpeedKt[int] | None
+    mach: MachTimes1K[int] | None
+    mcp: AltitudeFt[int] | None
+    fms: AltitudeFt[int] | None
     autopilot: None
-    oat: int | None
-    trueTrack: float | None
-    rollAngle: float | None
-    qnh: None
-    windDir: int | None
-    windSpd: int | None
+    oat: StaticTemperatureC[int] | None
+    trueTrack: GroundTrackDeg[float] | None
+    rollAngle: BankAngleDeg[float] | None
+    qnh: PressureAltimeterHpa[int] | None
+    windDir: BearingDeg[int] | None
+    windSpd: WindSpeedKt[int] | None
     precision: int | None
-    altGPS: int | None
+    altGPS: GeometricAltitudeM[int] | None
     emergencyStatus: int | None
     tcasAcasDtatus: int | None
-    heading: int | None
+    heading: BearingDeg[int] | None
 
 
 class TrackData(TypedDict):
-    latitude: float
-    longitude: float
+    latitude: LatitudeDeg[float]
+    longitude: LongitudeDeg[float]
     altitude: Altitude
     speed: Speed
     verticalSpeed: VerticalSpeed
-    heading: int
+    heading: GroundTrackDeg[int]
     """
     !!! warning
         The JSON response claims that `heading` is available, but ADS-B only
@@ -449,7 +473,7 @@ class TrackData(TypedDict):
         [fr24.json.playback_track_dict][].
     """
     squawk: str
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
     ems: None | EMS
 
 
@@ -475,7 +499,7 @@ class PlaybackData(TypedDict):
 
 
 class PlaybackResponse(TypedDict):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
     altitudeFiltered: bool
     data: PlaybackData
 
@@ -498,7 +522,7 @@ class Playback(TypedDict):
 # prior to v0.2.0 this was `airport_list.Schedule`
 class AirportListScheduleSetting(TypedDict):
     mode: Literal["departures", "arrivals"] | None
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
 
 
 Plugin = Literal[
@@ -531,7 +555,7 @@ AirportRequest = TypedDict(
         "plugin[]": list[Plugin],
         "plugin-setting": PluginSetting,
         "plugin-setting[schedule][mode]": str,
-        "plugin-setting[schedule][timestamp]": IntTimestampS,
+        "plugin-setting[schedule][timestamp]": TimestampS[int],
         "token": Union[str, None],
     },
     total=False,
@@ -572,12 +596,12 @@ class AirportList(TypedDict):
 
 class Live(TypedDict):
     operator_id: NotRequired[int]
-    lat: float
-    lon: float
-    schd_from: str
+    lat: LatitudeDeg[float]
+    lon: LongitudeDeg[float]
+    schd_from: NotRequired[str]
     schd_to: NotRequired[str]
     ac_type: str
-    route: str
+    route: NotRequired[str]
     logo: NotRequired[str]
     reg: str
     callsign: NotRequired[str]
@@ -586,9 +610,9 @@ class Live(TypedDict):
 
 
 class FindAirportDetail(TypedDict):
-    lat: float
-    lon: float
-    size: float
+    lat: LatitudeDeg[float]
+    lon: LongitudeDeg[float]
+    size: float  # TODO: unit?
 
 
 class Operator(TypedDict):

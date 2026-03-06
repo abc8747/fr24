@@ -16,7 +16,8 @@ from textual.widgets import DataTable, Footer, Header, Input, Label, Static
 from fr24 import FR24
 from fr24.tui.formatters import Time, fmt_aircraft, fmt_airport, fmt_status
 from fr24.tui.widgets import AircraftWidget, AirportWidget, FlightWidget
-from fr24.types import IntoTimestamp, IntTimestampS
+from fr24.types import IntoTimestamp
+from fr24.types.isqx import TimestampS
 from fr24.types.json import FlightList, FlightListItem, is_schedule
 from fr24.utils import UnwrapError, get_current_timestamp, to_unix_timestamp
 
@@ -218,7 +219,7 @@ class FR24Tui(App[None]):
             self.set_loading(False)
 
     async def lookup_city_pair(
-        self, departure: str, arrival: str, ts: IntTimestampS
+        self, departure: str, arrival: str, ts: TimestampS[int]
     ) -> None:
         try:
             result = await self.fr24.find.fetch(query=f"{departure}-{arrival}")

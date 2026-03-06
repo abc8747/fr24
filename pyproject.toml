@@ -32,6 +32,7 @@ dependencies = [
     "orjson>=3.11.0",
     "platformdirs>=4.3.8",
     "protobuf>=6.33,<7",
+    "isqx>=0.1.2",
 ]
 
 [project.optional-dependencies]

@@ -50,6 +50,7 @@ plugins:
           inventories:
             - https://docs.python.org/3/objects.inv
             - https://numpy.org/doc/stable/objects.inv
+            - https://abc8747.github.io/isqx/objects.inv
           options:
             inherited_members: true
             members_order: source

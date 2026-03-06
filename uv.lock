@@ -664,6 +664,7 @@ version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "httpx", extra = ["http2", "zstd"] },
+    { name = "isqx" },
     { name = "orjson" },
     { name = "platformdirs" },
     { name = "protobuf" },
@@ -728,6 +729,7 @@ requires-dist = [
     { name = "fr24", extras = ["cli"], marker = "extra == 'tui'" },
     { name = "fr24", extras = ["polars"], marker = "extra == 'cli'" },
     { name = "httpx", extras = ["zstd", "http2"], specifier = ">=0.28.1" },
+    { name = "isqx", specifier = ">=0.1.2" },
     { name = "orjson", specifier = ">=3.11.0" },
     { name = "platformdirs", specifier = ">=4.3.8" },
     { name = "polars", marker = "extra == 'polars'", specifier = ">=1.19.0" },
@@ -1088,6 +1090,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/b1/b9/3ba6c45a6df813c09a48bac313c22ff83efa26cbb55011218d925a46e2ad/ipython-8.18.1.tar.gz", hash = "sha256:ca6f079bb33457c66e233e4580ebfc4128855b4cf6370dddd73842a9563e8a27", size = 5486330, upload-time = "2023-11-27T09:58:34.596Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/47/6b/d9fdcdef2eb6a23f391251fde8781c38d42acd82abe84d054cb74f7863b0/ipython-8.18.1-py3-none-any.whl", hash = "sha256:e8267419d72d81955ec1177f8a29aaa90ac80ad647499201119e2f05e99aa397", size = 808161, upload-time = "2023-11-27T09:58:30.538Z" },
+]
+
+[[package]]
+name = "isqx"
+version = "0.1.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions", marker = "python_full_version < '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/05/24/7bf8af5502b5f6548778b72f888d41d95f6946a9bb718a35d0a74271eba8/isqx-0.1.2.tar.gz", hash = "sha256:341552103f34e66a6a17848170f14e8fc60406963f13b8705f32b8379a6f75ff", size = 482731, upload-time = "2025-12-16T20:46:50.595Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/30/31/0e5f1fce0346cace1769caf384b8e97b9ec4032a0f2c62a8fb93dc15ceb3/isqx-0.1.2-py3-none-any.whl", hash = "sha256:5a52a52610d42346fc19de5d00d35fe54cae223ddb09a90c4e75fc2af155f91f", size = 124024, upload-time = "2025-12-16T20:46:48.926Z" },
 ]
 
 [[package]]

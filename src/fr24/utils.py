@@ -45,10 +45,10 @@ if TYPE_CHECKING:
         IntFlightId,
         IntoFlightId,
         IntoTimestamp,
-        IntTimestampS,
         StrFlightIdHex,
     )
     from .types.cache import TabularFileFmt
+    from .types.isqx import TimestampS
 
     _D = TypeVar("_D")
 
@@ -95,7 +95,7 @@ def to_unix_timestamp(
     timestamp: IntoTimestamp | Literal["now"] | str,
     *,
     format: str | None = None,
-) -> IntTimestampS | Literal["now"]: ...
+) -> TimestampS[int] | Literal["now"]: ...
 
 
 @overload
@@ -108,7 +108,7 @@ def to_unix_timestamp(
     timestamp: IntoTimestamp | str | Literal["now"] | None,
     *,
     format: str | None = None,
-) -> IntTimestampS | Literal["now"] | None:
+) -> TimestampS[int] | Literal["now"] | None:
     """Casts datetime-like object to a Unix timestamp in **integer** seconds.
 
     :param timestamp: Datetime-like object, such as `2025-10-13T10:30:00+05:30`,
@@ -160,14 +160,14 @@ def to_unix_timestamp(
     return None
 
 
-def get_current_timestamp() -> IntTimestampS:
+def get_current_timestamp() -> TimestampS[int]:
     """Returns the current Unix timestamp in seconds."""
     return int(time.time())
 
 
 def parse_server_timestamp(
     response: httpx.Response,
-) -> IntTimestampS | None:
+) -> TimestampS[int] | None:
     server_date: str = response.headers.get("date")
     if server_date is not None:
         return int(email.utils.parsedate_to_datetime(server_date).timestamp())

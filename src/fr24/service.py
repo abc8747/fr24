@@ -75,9 +75,16 @@ from .proto.v1_pb2 import (
     RestrictionVisibility,
     TopFlightsResponse,
 )
-from .types import IntoFlightId, IntoTimestamp, IntTimestampS
+from .types import IntoFlightId, IntoTimestamp
 from .types.cache import TabularFileFmt
 from .types.grpc import LiveFeedField
+from .types.isqx import (
+    DistanceM,
+    DurationS,
+    LatitudeDeg,
+    LongitudeDeg,
+    TimestampS,
+)
 from .types.json import (
     FLIGHT_LIST_EMPTY,
     AirportList,
@@ -245,7 +252,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
     class FetchAllArgs(FlightListParams):
         """Arguments for fetching all pages of the flight list."""
 
-        delay: int = field(default=5)
+        delay: DurationS[int] = field(default=5)
         """Delay between requests in seconds."""
         max_pages: int | None = field(default=None)
         """Maximum number of pages to fetch."""
@@ -259,7 +266,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
         limit: int = 10,
         timestamp: IntoTimestamp | Literal["now"] | None = "now",
         filter_by: Literal["historic"] | None = None,
-        delay: int = 5,
+        delay: DurationS[int] = 5,
         max_pages: int | None = None,
     ) -> AsyncIterator[FlightListResult]:
         """Fetch all pages of the flight list.
@@ -498,7 +505,7 @@ class LiveFeedService(SupportsFetch[LiveFeedParams]):
         bounding_box: BoundingBox,
         stats: bool = False,
         limit: int = 1500,
-        maxage: int = 14400,
+        maxage: DurationS[int] = 14400,
         fields: set[LiveFeedField] = (
             lambda: {"flight", "reg", "route", "type"}
         )(),  # type: ignore
@@ -543,7 +550,7 @@ class LiveFeedResult(
     SupportsToPolars,
     SupportsWriteTable,
 ):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
 
     def to_proto(self) -> LiveFeedResponse:
         return parse_data(self.response.content, LiveFeedResponse).unwrap()
@@ -580,12 +587,12 @@ class LiveFeedPlaybackService(SupportsFetch[LiveFeedPlaybackParams]):
         bounding_box: BoundingBox,
         stats: bool = False,
         limit: int = 1500,
-        maxage: int = 14400,
+        maxage: DurationS[int] = 14400,
         fields: set[LiveFeedField] = (
             lambda: {"flight", "reg", "route", "type"}
         )(),  # type: ignore
         timestamp: IntoTimestamp | Literal["now"] = "now",
-        duration: int = 7,
+        duration: DurationS[int] = 7,
         hfreq: int | None = None,
     ) -> LiveFeedPlaybackResult:
         """Fetch a playback of the live feed.
@@ -753,7 +760,11 @@ class NearestFlightsService(SupportsFetch[NearestFlightsParams]):
 
     @static_check_signature(NearestFlightsParams)
     async def fetch(
-        self, lat: float, lon: float, radius: int = 10000, limit: int = 1500
+        self,
+        lat: LatitudeDeg[float],
+        lon: LongitudeDeg[float],
+        radius: DistanceM[int] = 10000,
+        limit: int = 1500,
     ) -> NearestFlightsResult:
         """Fetch the nearest flights.
 
@@ -789,7 +800,7 @@ class NearestFlightsResult(
     SupportsToPolars,
     SupportsWriteTable,
 ):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
 
     def to_proto(self) -> NearestFlightsResponse:
         return parse_data(
@@ -854,7 +865,7 @@ class LiveFlightsStatusResult(
     SupportsToPolars,
     SupportsWriteTable,
 ):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
 
     def to_proto(self) -> LiveFlightsStatusResponse:
         return parse_data(
@@ -965,7 +976,7 @@ class TopFlightsResult(
     SupportsToPolars,
     SupportsWriteTable,
 ):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
 
     def to_proto(self) -> TopFlightsResponse:
         return parse_data(self.response.content, TopFlightsResponse).unwrap()
@@ -1042,7 +1053,7 @@ class FlightDetailsResult(
     SupportsToPolars,
     SupportsWriteTable,
 ):
-    timestamp: IntTimestampS
+    timestamp: TimestampS[int]
 
     def to_proto(self) -> FlightDetailsResponse:
         return parse_data(self.response.content, FlightDetailsResponse).unwrap()

@@ -69,6 +69,7 @@ from .proto.v1_pb2 import (
     TrailPoint,
     VisibilitySettings,
 )
+from .types.isqx import DistanceM, DurationS, LatitudeDeg, LongitudeDeg
 from .utils import (
     dataclass_opts,
     get_current_timestamp,
@@ -137,13 +138,13 @@ IntoLiveFeedRequest: TypeAlias = Union[
 
 
 class BoundingBox(NamedTuple):
-    south: float
+    south: LatitudeDeg[float]
     """Latitude, minimum, degrees"""
-    north: float
+    north: LatitudeDeg[float]
     """Latitude, maximum, degrees"""
-    west: float
+    west: LongitudeDeg[float]
     """Longitude, minimum, degrees"""
-    east: float
+    east: LongitudeDeg[float]
     """Longitude, maximum, degrees"""
 
 
@@ -156,7 +157,7 @@ class LiveFeedParams(SupportsToProto[LiveFeedRequest]):
     """Maximum number of flights (should be set to 1500 for unauthorized users,
     2000 for authorized users).
     """
-    maxage: int = 14400
+    maxage: DurationS[int] = 14400
     """Maximum time since last message update, seconds."""
     fields: set[LiveFeedField] = field(
         default_factory=lambda: {"flight", "reg", "route", "type"}
@@ -266,7 +267,7 @@ class LiveFeedPlaybackParams(SupportsToProto[PlaybackRequest]):
     """Maximum number of flights (should be set to 1500 for unauthorized users,
     2000 for authorized users).
     """
-    maxage: int = 14400
+    maxage: DurationS[int] = 14400
     """Maximum time since last message update, seconds."""
     fields: set[LiveFeedField] = field(
         default_factory=lambda: {"flight", "reg", "route", "type"}
@@ -278,7 +279,7 @@ class LiveFeedPlaybackParams(SupportsToProto[PlaybackRequest]):
     """
     timestamp: IntoTimestamp | Literal["now"] = "now"
     """Start timestamp"""
-    duration: int = 7
+    duration: DurationS[int] = 7
     """Duration of prefetch, `floor(7.5*(multiplier))` seconds
 
     For 1x playback, this should be 7 seconds.
@@ -344,11 +345,11 @@ IntoNearestFlightsRequest: TypeAlias = Union[
 
 @dataclass(**dataclass_opts)
 class NearestFlightsParams(SupportsToProto[NearestFlightsRequest]):
-    lat: float
+    lat: LatitudeDeg[float]
     """Latitude, degrees, -90 to 90"""
-    lon: float
+    lon: LongitudeDeg[float]
     """Longitude, degrees, -180 to 180"""
-    radius: int = 10000
+    radius: DistanceM[int] = 10000
     """Radius, metres"""
     limit: int = 1500
     """Maximum number of aircraft to return"""
