@@ -39,7 +39,7 @@ dependencies = [
 polars = ["polars>=1.19.0"]
 cli = [
     "fr24[polars]", # almost all cli commands export to csv or parquet
-    "typer>=0.19",  # comes with rich
+    "typer>=0.19", # comes with rich
 ]
 tui = ["fr24[cli]", "textual>=1.0.0"]
 
@@ -64,10 +64,9 @@ typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf>=6,<7"]
 lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",
-    "eval-type-backport>=0.2.0",         # for pydantic, <3.10 syntax
-    "pydantic>=2.12.0",                  # >2.12 for extra="forbid", >3.14
-    "pytest>=8.3.3",
-    "pytest<9; python_version == '3.9'",
+    "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
+    "pydantic>=2.12.0", # >2.12 for extra="forbid", >3.14
+    "pytest>=8.3.3,<9", # pytest>=9 uses 3.10 syntax; mypy targets py39
     "fr24[polars]",
 ]
 docs = [
@@ -82,9 +81,9 @@ docs = [
 [tool.ruff]
 lint.select = [
     "E",
-    "W",   # pycodestyle
-    "F",   # pyflakes
-    "I",   # isort
+    "W", # pycodestyle
+    "F", # pyflakes
+    "I", # isort
     "NPY", # numpy
     "DTZ", # flake8-datetimez
     "RUF",
