@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import logging
-import secrets
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Generic, TypeVar, cast
 
 import httpx
 import orjson
 
+from .proto.headers import get_device_id
 from .types.cache import (
     flight_list_schema,
     playback_track_schema,
@@ -54,7 +54,7 @@ logger = logging.getLogger(__name__)
 
 def get_json_headers(*, device: str | None = None) -> dict[str, str]:
     headers = DEFAULT_HEADERS.copy()
-    headers["fr24-device-id"] = device or f"web-{secrets.token_urlsafe(32)}"
+    headers["fr24-device-id"] = device or get_device_id()
     return headers
 
 
@@ -72,7 +72,7 @@ def with_auth(
         mut_request_data["token"] = sub_key
     else:
         mut_request_data["device"] = headers.get(
-            "fr24-device-id", f"web-{secrets.token_urlsafe(32)}"
+            "fr24-device-id", get_device_id()
         )
 
     return mut_request_data
