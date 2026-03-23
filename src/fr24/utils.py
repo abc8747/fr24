@@ -289,9 +289,9 @@ def scan_table(
         file = format_bare_path(file, format)
 
     if format == "parquet":
-        return pl.scan_parquet(file, schema=schema)
+        return pl.scan_parquet(file, schema=schema)  # type: ignore[no-any-return]
     elif format == "csv":
-        return pl.scan_csv(file, schema=schema)
+        return pl.scan_csv(file, schema=schema)  # type: ignore[no-any-return]
     else:
         raise ValueError(f"unsupported format: `{format}`")
 
