@@ -60,7 +60,7 @@ dev = [
     { include-group = "test" },
     { include-group = "docs" },
 ]
-typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf>=6,<7"]
+typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf>=7,<8"]
 lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",
