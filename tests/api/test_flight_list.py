@@ -28,6 +28,8 @@ REG = "F-HEPK"
 FLIGHT = "AF7463"
 HEADERS = httpx.Headers(get_json_headers())
 
+pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
+
 
 def flight_identity(
     flight: FlightListItem,
@@ -38,7 +40,6 @@ def flight_identity(
     )
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_ll_flight_list(client: httpx.AsyncClient) -> None:
     list_ = flight_list_parse(
@@ -77,7 +78,6 @@ async def test_ll_flight_list(client: httpx.AsyncClient) -> None:
 # core
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_flight_list_reg(fr24: FR24) -> None:
     with pytest.raises(ValueError):  # missing reg/flight
@@ -92,7 +92,6 @@ async def test_flight_list_reg(fr24: FR24) -> None:
     assert 0 < df.height <= result.request.limit
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_flight_list_flight(fr24: FR24) -> None:
     result = await fr24.flight_list.fetch(flight=FLIGHT)
@@ -105,7 +104,6 @@ async def test_flight_list_flight(fr24: FR24) -> None:
     assert 0 < df.height <= result.request.limit
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_flight_list_reg_paginate(fr24: FR24) -> None:
     """
@@ -142,7 +140,6 @@ async def test_flight_list_reg_paginate(fr24: FR24) -> None:
     assert results.to_polars().height > 0
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_flight_list_reg_concat(fr24: FR24) -> None:
     """
@@ -175,7 +172,6 @@ async def test_flight_list_reg_concat(fr24: FR24) -> None:
     )
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_flight_list_reg_file_ops(fr24: FR24, cache: FR24Cache) -> None:
     """

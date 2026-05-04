@@ -20,8 +20,9 @@ from fr24.types.static import (
     StaticData,
 )
 
+pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
+
 @pytest.mark.parametrize(
     "fetch_data,static_data_type",
     [

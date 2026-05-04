@@ -14,7 +14,7 @@ For a detailed quickstart, examples and references, please refer to the [documen
 
 ## Features
 
-`fr24` supports the following endpoints:
+`fr24` supports the following gRPC endpoints:
 
 | Endpoint                      | Description                                                |
 | ----------------------------- | ---------------------------------------------------------- |

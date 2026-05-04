@@ -16,6 +16,8 @@ from fr24.types.json import (
 )
 from fr24.utils import get_current_timestamp
 
+pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
+
 
 # overwriting the original FindResult for now
 # https://github.com/python/typing/issues/1467
@@ -27,7 +29,6 @@ class FindResult(BaseModel):
     info: Info
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_find_airport(fr24: FR24) -> None:
     list_ = (await fr24.find.fetch("tou")).to_dict()
@@ -44,7 +45,6 @@ async def test_find_airport(fr24: FR24) -> None:
     FindResult.model_validate(list_)
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_find_aircraft(fr24: FR24) -> None:
     list_ = (await fr24.find.fetch("b-hp")).to_dict()
@@ -60,7 +60,6 @@ async def test_find_aircraft(fr24: FR24) -> None:
     FindResult.model_validate(list_)
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_find_operator(fr24: FR24) -> None:
     list_ = (await fr24.find.fetch("cat")).to_dict()
@@ -75,7 +74,6 @@ async def test_find_operator(fr24: FR24) -> None:
     FindResult.model_validate(list_)
 
 
-@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_find_schedule_and_live(fr24: FR24) -> None:
     # avoid deadzone in the middle of the night
