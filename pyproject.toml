@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fr24"
-version = "0.3.0"
-description = "Parse gRPC and JSON data from flightradar24"
+version = "0.3.1"
+description = "Retrieve Flightradar24 data over gRPC"
 authors = [
     { name = "Abraham Cheung", email = "abraham@ylcheung.com" },
     { name = "Xavier Olive", email = "git@xoolive.org" },
@@ -33,6 +33,7 @@ dependencies = [
     "platformdirs>=4.3.8",
     "protobuf>=6.33,<7",
     "isqx>=0.1.2",
+    "typing_extensions>=4.5.0; python_version < '3.13'", # for soft deprecating json apis
 ]
 
 [project.optional-dependencies]

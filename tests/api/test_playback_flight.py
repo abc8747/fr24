@@ -1,10 +1,12 @@
 import pytest
 
 from fr24 import FR24, FR24Cache
+from fr24._deprecated import JSON_API_DEPRECATION_NOTICE
 from fr24.service import FlightListResult, PlaybackFlightResult
 from fr24.utils import to_flight_id
 
 
+@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.fixture
 async def flight_list_result(
     fr24: FR24,

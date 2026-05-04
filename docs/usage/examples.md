@@ -1,22 +1,13 @@
 # Overview
 
-| Name                                                                                  | Low-level API                                                                           | Service and Cache Location                                                                                                                                                                                           |
-| ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Flight List](#flight-list)<br><span class="chip chip-json">JSON</span>               | [`flight_list`][fr24.json.flight_list]<br>[`flight_list_df`][fr24.json.flight_list_df]  | [`FlightListService`][fr24.service.FlightListService]<br><br>Cache Location:<br>`flight_list/`<br>`└── reg/`<br>`    └── {reg.upper()}.parquet`<br>`└── flight_list/`<br>`    └── {iata_flight_num.upper()}.parquet` |
-| [Playback](#playback)<br><span class="chip chip-json">JSON</span>                     | [`playback`][fr24.json.playback]<br>[`playback_df`][fr24.json.playback_df]              | [`PlaybackService`][fr24.service.PlaybackService]<br><br>Cache Location:<br>`playback/`<br>`└── {fr24_hex_id.upper()}.parquet`                                                                                       |
-| [Live Feed](#live-feed)<br><span class="chip chip-grpc">gRPC</span>                   | [`live_feed`][fr24.grpc.live_feed]<br>[`live_feed_df`][fr24.grpc.live_feed_df]          | [`LiveFeedService`][fr24.service.LiveFeedService]<br><br>Cache Location:<br>`feed/`<br>`└── {timestamp_s}.parquet`                                                                                                   |
-| [Live Feed Playback](#playback_1)<br><span class="chip chip-grpc">gRPC</span>         | [`live_feed_playback`][fr24.grpc.live_feed]<br>[`live_feed_df`][fr24.grpc.live_feed_df] | [`LiveFeedPlaybackService`][fr24.service.LiveFeedPlaybackService]<br><br>Cache Location:<br>`feed/`<br>`└── {timestamp_s}.parquet`                                                                                   |
-| [Airport List](#airport-list)<br><span class="chip chip-json">JSON</span>             | [`airport_list`][fr24.json.airport_list]                                                | [`AirportListService`][fr24.service.AirportListService]                                                                                                                                                              |
-| [Airport Search](#airport-search)<br><span class="chip chip-json">JSON</span>         | [`find`][fr24.json.find]                                                                | [`FindService`][fr24.service.FindService]                                                                                                                                                                            |
-| [Nearest Flights](#nearest-flights)<br><span class="chip chip-grpc">gRPC</span>       | [`nearest_flights`][fr24.grpc.nearest_flights]                                          | [`NearestFlightsService`][fr24.service.NearestFlightsService]<br><br>Cache Location:<br>`nearest_flights/`<br>`└── {lon_x1e6}_{lat_x1e6}_{timestamp_s}.parquet`                                                      |
-| [Live Flight Status](#live-flight-status)<br><span class="chip chip-grpc">gRPC</span> | [`live_flights_status`][fr24.grpc.live_flights_status]                                  | [`LiveFlightsStatusService`][fr24.service.LiveFlightsStatusService]<br><br>Cache Location:<br>`live_flights_status/`<br>`└── {timestamp_s}.parquet`                                                                  |
-| [~~Search Index~~](#search-index)<br><span class="chip chip-grpc">gRPC</span>         | [~~`search_index`~~][fr24.grpc.search_index]                                            | -                                                                                                                                                                                                                    |
-| [Follow Flight](#follow-flight)<br><span class="chip chip-grpc">gRPC</span>           | [`follow_flight_stream`][fr24.grpc.follow_flight_stream]                                | [`FollowFlightService`][fr24.service.FollowFlightService]                                                                                                                                                            |
-| [Top Flights](#top-flights)<br><span class="chip chip-grpc">gRPC</span>               | [`top_flights`][fr24.grpc.top_flights]                                                  | [`TopFlightsService`][fr24.service.TopFlightsService]<br><br>Cache Location:<br>`top_flights/`<br>`└── {timestamp_s}.parquet`                                                                                        |
-| [~~Live Trail~~](#live-trail)<br><span class="chip chip-grpc">gRPC</span>             | [~~`live_trail`~~][fr24.grpc.live_trail]                                                | -                                                                                                                                                                                                                    |
-| [~~Historic Trail~~](#historic-trail)<br><span class="chip chip-grpc">gRPC</span>     | [~~`historic_trail`~~][fr24.grpc.historic_trail]                                        | -                                                                                                                                                                                                                    |
-| [Flight Details](#flight-details)<br><span class="chip chip-grpc">gRPC</span>         | [`flight_details`][fr24.grpc.flight_details]                                            | [`FlightDetailsService`][fr24.service.FlightDetailsService]<br><br>Cache Location:<br>`flight_details/`<br>`└── {flight_id}_{timestamp_s}.parquet`                                                                   |
-| [Playback Flight](#playback-flight)<br><span class="chip chip-grpc">gRPC</span>       | [`playback_flight`][fr24.grpc.playback_flight]                                          | [`PlaybackFlightService`][fr24.service.PlaybackFlightService]<br><br>Cache Location:<br>`playback_flight/`<br>`└── {flight_id}_{timestamp_s}.parquet`                                                                |
+- Live Feed: low-level [`live_feed`][fr24.grpc.live_feed], service [`LiveFeedService`][fr24.service.LiveFeedService], cache `feed/{timestamp_s}.parquet`
+- Live Feed Playback: low-level [`live_feed_playback`][fr24.grpc.live_feed_playback], service [`LiveFeedPlaybackService`][fr24.service.LiveFeedPlaybackService], cache `feed/{timestamp_s}.parquet`
+- Nearest Flights: low-level [`nearest_flights`][fr24.grpc.nearest_flights], service [`NearestFlightsService`][fr24.service.NearestFlightsService], cache `nearest_flights/{lon_x1e6}_{lat_x1e6}_{timestamp_s}.parquet`
+- Live Flight Status: low-level [`live_flights_status`][fr24.grpc.live_flights_status], service [`LiveFlightsStatusService`][fr24.service.LiveFlightsStatusService], cache `live_flights_status/{timestamp_s}.parquet`
+- Follow Flight: low-level [`follow_flight_stream`][fr24.grpc.follow_flight_stream], service [`FollowFlightService`][fr24.service.FollowFlightService]
+- Top Flights: low-level [`top_flights`][fr24.grpc.top_flights], service [`TopFlightsService`][fr24.service.TopFlightsService], cache `top_flights/{timestamp_s}.parquet`
+- Flight Details: low-level [`flight_details`][fr24.grpc.flight_details], service [`FlightDetailsService`][fr24.service.FlightDetailsService], cache `flight_details/{flight_id}_{timestamp_s}.parquet`
+- Playback Flight: low-level [`playback_flight`][fr24.grpc.playback_flight], service [`PlaybackFlightService`][fr24.service.PlaybackFlightService], cache `playback_flight/{flight_id}_{timestamp_s}.parquet`
 
 You can find even more usage examples under [`tests/`](https://github.com/abc8747/fr24/tree/master/tests).
 
@@ -24,127 +15,7 @@ You can find even more usage examples under [`tests/`](https://github.com/abc874
 
 ## `FR24` services
 
-### Flight list
-
-#### Single page
-
-=== "Jupyter cell"
-
-    ```py
-    --8<-- "docs/usage/scripts/10_flight_list.py:script0"
-    ```
-
-=== "`result.to_polars()`"
-
-    ```
-    --8<-- "docs/usage/scripts/10_flight_list.py:df0"
-    ```
-
-#### Paginate all pages
-
-Queries for next page as long as user doesn't enter `x`, or if there are no pages left.
-In each iteration, rows are upserted and saved to the [cache](./directories.md).
-
-Note that pagination cannot be run in parallel: fetching page N requires information from page N-1.
-
-=== "Jupyter cell"
-
-    ```py hl_lines="8 10 14"
-    --8<-- "docs/usage/scripts/10_flight_list.py:script1"
-    ```
-
-    1. Create a new result collections, a list under the hood.
-    2. Appends the current flight list to the collection. Note that it does not remove duplicates.
-    3. Merges the collections into a single table. Removes duplicates (if any).
-
-=== "`results.to_polars()`"
-
-    ```
-    --8<-- "docs/usage/scripts/10_flight_list.py:df1"
-    ```
-
-### Playback
-
-#### Miracle on the Hudson
-
-Downloads the flight trajectory for [UA1549](https://en.wikipedia.org/wiki/US_Airways_Flight_1549)
-
-=== "Jupyter cell"
-
-    ```py hl_lines="6"
-    --8<-- "docs/usage/scripts/11_playback.py:script0"
-    ```
-
-    1. From https://www.flightradar24.com/data/pinned/ua1549-2fb3041#2fb3041.
-
-=== "`data.df`"
-
-    ```
-    --8<-- "docs/usage/scripts/11_playback.py:df0"
-    ```
-
-=== "`data.metadata`"
-
-    ```py
-    --8<-- "docs/usage/scripts/11_playback.py:metadata0"
-    ```
-
-#### File operations
-
-Saves trajectory data to disk, reads the track and metadata from it.
-
-=== "Jupyter cell"
-
-    ```py hl_lines="9 11"
-    --8<-- "docs/usage/scripts/11_playback.py:script1"
-    ```
-    
-    1. Saves the parquet to the [cache](./directories.md).
-    2. Load the parquet from the [cache](./directories.md).
-
-=== "`data_local.df`"
-
-    ```
-    --8<-- "docs/usage/scripts/11_playback.py:df0"
-    ```
-
-=== "`data_local.metadata`"
-
-    ```py
-    --8<-- "docs/usage/scripts/11_playback.py:metadata0"
-    ```
-
-### Airport List
-
-=== "Jupyter cell"
-
-    ```py
-    --8<-- "docs/usage/scripts/32_arrivals.py:script0"
-    ```
-
-=== "`df`"
-
-    ```
-    --8<-- "docs/usage/scripts/32_arrivals.py:df0"
-    ```
-
-### Airport Search
-
-=== "Jupyter cell"
-
-    ```py
-    --8<-- "docs/usage/scripts/33_find.py:script0"
-    ```
-
-=== "`df`"
-
-    ```
-    --8<-- "docs/usage/scripts/33_find.py:df0"
-    ```
-
-### Live Feed
-
-#### Live
+### Low-Level Live Feed
 
 This example is covered in detail in the [quickstart](./quickstart.md).
 
@@ -172,7 +43,7 @@ This example is covered in detail in the [quickstart](./quickstart.md).
     --8<-- "docs/usage/scripts/14_live_feed.py:polars"
     ```
 
-#### Playback
+### Live Feed Playback
 
 Fetches the live feed three days ago.
 
@@ -188,7 +59,7 @@ Fetches the live feed three days ago.
     --8<-- "docs/usage/scripts/14_live_feed.py:polars2"
     ```
 
-### Nearest Flights
+### Low-Level Nearest Flights
 
 === "Jupyter cell"
 
@@ -214,9 +85,9 @@ Fetches the live feed three days ago.
     --8<-- "docs/usage/scripts/15_nearest_flights.py:polars"
     ```
 
-### Live Flights Status
+### Low-Level Live Flight Status
 
-Retrieve the flight status for the closest flights from a location
+Retrieve the flight status for the closest flights from a location.
 
 === "Jupyter cell"
 
@@ -250,19 +121,18 @@ Stream real-time updates to the state vector of an aircraft.
 
     This is a streaming service which endlessly yields the latest updates.
 
-    Unlike other services, it does not offer a default serialisation strategy
-    (i.e. `result.write_parquet` does not exist). For a local setup, consider
-    inserting the updates to a SQLite database manually.
+    Unlike other services, it does not offer a default serialisation strategy.
+    For a local setup, consider inserting the updates into SQLite or another
+    sink manually.
 
-    The first packet of data contains useful initial metadata (`aircraft_info`,
-    `flight_plan` and `flight_trail_list`), which will **not** be re-transmitted
-    in the subsequent updates.
-    
+    The first packet contains useful initial metadata and will not be
+    re-transmitted in subsequent updates.
+
 !!! tip
 
-    The server often sends state vector packets every 1-60 seconds, but `httpx`
-    by default closes the stream after 5 seconds. We increase the timeout to 120
-    seconds to avoid premature closure.
+    The server often sends state vector packets every 1-60 seconds, but
+    `httpx` by default closes the stream after 5 seconds. The example below
+    increases the timeout to avoid premature closure.
 
 === "Jupyter cell"
 
@@ -304,7 +174,7 @@ Stream real-time updates to the state vector of an aircraft.
 
 ### Flight Details
 
-Retrieve detailed information about a flight
+Retrieve detailed information about a flight.
 
 === "Jupyter cell"
 
@@ -332,7 +202,7 @@ Retrieve detailed information about a flight
 
 ### Playback Flight
 
-Retrieve detailed historical flight information including complete trail
+Retrieve detailed historical flight information including complete trail.
 
 === "Jupyter cell"
 
@@ -360,67 +230,11 @@ Retrieve detailed historical flight information including complete trail
 
 ## Low Level API
 
-For maximum control, you can also use `fr24` in a procedural style. You will have to manage the headers, authentication yourself. It is highly recommended to use [services](#fr24-services) instead.
+For maximum control, you can also use `fr24` in a procedural style. You will
+have to manage the headers and authentication yourself. It is highly
+recommended to use [services](#fr24-services) instead.
 
-### Flight list
-
-=== "Jupyter cell"
-
-    ```py hl_lines="20"
-    --8<-- "docs/usage/scripts/30_flight_list.py:script0"
-    ```
-
-    1. Replace it with the current time.
-
-=== "`df`"
-
-    ```
-    --8<-- "docs/usage/scripts/30_flight_list.py:df0"
-    ```
-
-### Playback
-
-=== "Jupyter cell"
-
-    ```py
-    --8<-- "docs/usage/scripts/31_playback.py:script0"
-    ```
-
-=== "`df`"
-
-    ```
-    --8<-- "docs/usage/scripts/31_playback.py:df0"
-    ```
-
-### Airport List
-
-=== "Jupyter cell"
-
-    ```py
-    --8<-- "docs/usage/scripts/32_arrivals.py:script0"
-    ```
-
-=== "`df`"
-
-    ```
-    --8<-- "docs/usage/scripts/32_arrivals.py:df0"
-    ```
-
-### Airport Search
-
-=== "Jupyter cell"
-
-    ```py
-    --8<-- "docs/usage/scripts/33_find.py:script1"
-    ```
-
-=== "`df`"
-
-    ```
-    --8<-- "docs/usage/scripts/33_find.py:df0"
-    ```
-
-### Live feed
+### Live Feed
 
 Demonstrates custom bounding boxes.
 
@@ -430,7 +244,8 @@ Demonstrates custom bounding boxes.
     --8<-- "docs/usage/scripts/34_live_feed.py:script0"
     ```
 
-    1. The type is a `Result[LiveFeedResponse, ProtoError]`, calling the `.unwrap()` method raises an exception if there is an error.
+    1. The type is a `Result[LiveFeedResponse, ProtoError]`, and `.unwrap()`
+       raises an exception on error.
 
 === "Protobuf Output"
 
@@ -438,18 +253,10 @@ Demonstrates custom bounding boxes.
     --8<-- "docs/usage/scripts/34_live_feed.py:output0"
     ```
 
-In JSON format:
-
-=== "Jupyter cell"
+=== "Dictionary Output"
 
     ```py
     --8<-- "docs/usage/scripts/34_live_feed.py:script1"
-    ```
-
-=== "Output"
-
-    ```py
-    --8<-- "docs/usage/scripts/34_live_feed.py:output1"
     ```
 
 ### Nearest Flights
@@ -496,7 +303,7 @@ In JSON format:
     --8<-- "docs/usage/scripts/37_search_index.py:output0"
     ```
 
-### Follow Flight
+### Low-Level Follow Flight
 
 See [above](#follow-flight) for more information.
 
@@ -512,7 +319,7 @@ See [above](#follow-flight) for more information.
     --8<-- "docs/usage/scripts/38_follow_flight.py:output0"
     ```
 
-### Top Flights
+### Low-Level Top Flights
 
 === "Jupyter cell"
 
@@ -572,7 +379,7 @@ See [above](#follow-flight) for more information.
     --8<-- "docs/usage/scripts/42_flight_details.py:output0"
     ```
 
-### Playback Flight
+### Low-Level Playback Flight
 
 === "Jupyter cell"
 

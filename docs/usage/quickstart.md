@@ -2,6 +2,13 @@
 
 Most code is developed using asynchronous programming, enabling parallel execution of multiple queries and achieve high performance.
 
+!!! warning
+
+    Flightradar24 JSON APIs are no longer supported as of 2026-05-01 because
+    Cloudflare TLS fingerprinting blocks them. The legacy `flight_list`,
+    `playback`, `airport_list`, `find`, and current TUI are
+    deprecated and unsupported.
+
 Here is a quick example in case you are not familiar with this code style:
 
 === "Python Script"
@@ -113,7 +120,6 @@ A further decoding step is needed.
 
     - `fr24[polars]`: dataframe and table I/O support via Polars
     - `fr24[cli]`: command-line interface dependencies
-    - `fr24[tui]`: terminal UI dependencies, including `cli`
 
 The `result` implements:
 
@@ -193,20 +199,13 @@ You can also write the table into a [cache][fr24.cache.FR24Cache]:
 
 Files will be organised in the cache, with the structure shown [here](./examples.md#overview):
 
-It should resemble the following on Linux:
+It should resemble the following on Linux for the live feed example above:
 
 ```
 $ tree $HOME/.cache/fr24/feed
 /home/user/.cache/fr24
 ├── feed
 │   └── 1711911907.parquet
-├── flight_list
-│   ├── flight
-│   │   └── CX8747.parquet
-│   └── reg
-│       └── B-HUJ.parquet
-└── playback
-    └── 2d81a27.parquet
 ```
 
 These directories are created automatically when `FR24Cache` is initialised.

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import sys
 from dataclasses import dataclass, field
 from typing import (
     TYPE_CHECKING,
@@ -14,11 +15,17 @@ from typing import (
     Sequence,
     TypeVar,
     Union,
+    runtime_checkable,
 )
 
 from google.protobuf.json_format import MessageToDict
-from typing_extensions import runtime_checkable
 
+if sys.version_info >= (3, 13):
+    from warnings import deprecated
+else:
+    from typing_extensions import deprecated
+
+from ._deprecated import JSON_API_DEPRECATION_NOTICE
 from .cache import FR24Cache
 from .grpc import (
     BoundingBox,
@@ -211,6 +218,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
     _factory: ServiceFactory
 
     @static_check_signature(FlightListParams)
+    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(
         self,
         reg: str | None = None,
@@ -258,6 +266,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
         """Maximum number of pages to fetch."""
 
     @static_check_signature(FetchAllArgs)
+    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch_all(
         self,
         reg: str | None = None,
@@ -437,6 +446,7 @@ class PlaybackService(SupportsFetch[PlaybackParams]):
     _factory: ServiceFactory
 
     @static_check_signature(PlaybackParams)
+    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(
         self, flight_id: IntoFlightId, timestamp: IntoTimestamp | None = None
     ) -> PlaybackResult:
@@ -670,6 +680,7 @@ class AirportListService(SupportsFetch[AirportListParams]):
     _factory: ServiceFactory
 
     @static_check_signature(AirportListParams)
+    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(
         self,
         airport: str,
@@ -722,6 +733,7 @@ class FindService(SupportsFetch[FindParams]):
     _factory: ServiceFactory
 
     @static_check_signature(FindParams)
+    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(self, query: str, limit: int = 50) -> FindResult:
         """Fetch the find results.
 

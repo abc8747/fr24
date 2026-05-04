@@ -1,5 +1,10 @@
 # CLI
 
+!!! warning
+
+    The legacy JSON-backed commands `flight-list`, `flight-list-all`,
+    `playback`, and the current `tui` are deprecated and unsupported.
+
 List all commands and show help:
 
 ```console
@@ -169,12 +174,4 @@ fr24 playback-flight --flight-id 3963916d --timestamp "2025-07-24T00:00:00"
 
 ```console
 --8<-- "docs/usage/cli_output.txt:fr24_playback-flight"
-```
-
-### `tui`
-
-Start the Text User Interface.
-
-```sh
-fr24 tui
 ```

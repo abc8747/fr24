@@ -2,10 +2,12 @@ import pytest
 from pydantic import TypeAdapter
 
 from fr24 import FR24, FR24Cache
+from fr24._deprecated import JSON_API_DEPRECATION_NOTICE
 
 FLIGHT_ID = 0x2D81A27
 
 
+@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_playback_simple(fr24: FR24) -> None:
     result = await fr24.playback.fetch(flight_id=FLIGHT_ID)
@@ -22,6 +24,7 @@ async def test_playback_simple(fr24: FR24) -> None:
     ta.validate_python(result.to_dict(), extra="forbid", strict=True)
 
 
+@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.anyio
 async def test_playback_file_ops(fr24: FR24, cache: FR24Cache) -> None:
     """

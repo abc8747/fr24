@@ -5,6 +5,7 @@ import httpx
 import pytest
 from pydantic import TypeAdapter
 
+from fr24._deprecated import JSON_API_DEPRECATION_NOTICE
 from fr24.static import (
     fetch_aircraft_family,
     fetch_airlines,
@@ -20,6 +21,7 @@ from fr24.types.static import (
 )
 
 
+@pytest.skip(reason=JSON_API_DEPRECATION_NOTICE)
 @pytest.mark.parametrize(
     "fetch_data,static_data_type",
     [

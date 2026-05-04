@@ -1,5 +1,13 @@
+import sys
+
 import httpx
 
+if sys.version_info >= (3, 13):
+    from warnings import deprecated
+else:
+    from typing_extensions import deprecated
+
+from .._deprecated import JSON_API_DEPRECATION_NOTICE
 from ..types.static import AircraftFamily, Airlines, Airports, Countries
 from ..utils import DEFAULT_HEADERS
 
@@ -9,6 +17,7 @@ DEFAULT_HEADERS_STATIC = {
 }
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def fetch_aircraft_family(client: httpx.AsyncClient) -> AircraftFamily:
     request = httpx.Request(
         "GET",
@@ -20,6 +29,7 @@ async def fetch_aircraft_family(client: httpx.AsyncClient) -> AircraftFamily:
     return data.json()  # type: ignore[no-any-return]
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def fetch_airlines(client: httpx.AsyncClient) -> Airlines:
     request = httpx.Request(
         "GET",
@@ -31,6 +41,7 @@ async def fetch_airlines(client: httpx.AsyncClient) -> Airlines:
     return data.json()  # type: ignore[no-any-return]
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def fetch_airports(
     client: httpx.AsyncClient, major_version: int = 4, minor_version: int = 0
 ) -> Airports:
@@ -45,6 +56,7 @@ async def fetch_airports(
     return data.json()  # type: ignore[no-any-return]
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def fetch_countries(client: httpx.AsyncClient) -> Countries:
     request = httpx.Request(
         "GET",

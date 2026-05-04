@@ -1,5 +1,5 @@
 site_name: fr24
-site_description: A library for downloading data from flightradar24.com with gRPC/JSON.
+site_description: A library for downloading data from flightradar24.com with gRPC.
 repo_name: abc8747/fr24
 repo_url: https://github.com/abc8747/fr24
 site_url: https://abc8747.github.io/fr24/

@@ -1,12 +1,19 @@
 from __future__ import annotations
 
 import logging
+import sys
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Generic, TypeVar, cast
 
 import httpx
 import orjson
 
+if sys.version_info >= (3, 13):
+    from warnings import deprecated
+else:
+    from typing_extensions import deprecated
+
+from ._deprecated import JSON_API_DEPRECATION_NOTICE
 from .proto.headers import get_device_id
 from .types.cache import (
     flight_list_schema,
@@ -124,6 +131,7 @@ class FlightListParams:
         return self.reg if self.reg is not None else self.flight  # type: ignore
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def flight_list(
     client: httpx.AsyncClient,
     params: FlightListParams,
@@ -188,6 +196,7 @@ class AirportListParams:
     """Show flights with STA before this timestamp"""
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def airport_list(
     client: httpx.AsyncClient,
     params: AirportListParams,
@@ -245,6 +254,7 @@ class PlaybackParams:
     """
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def playback(
     client: httpx.AsyncClient,
     params: PlaybackParams,
@@ -285,6 +295,7 @@ class FindParams:
     limit: int = 50
 
 
+@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def find(
     client: httpx.AsyncClient,
     params: FindParams,
