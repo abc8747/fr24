@@ -603,7 +603,7 @@ class Live(TypedDict):
     ac_type: str
     route: NotRequired[str]
     logo: NotRequired[str]
-    reg: str
+    reg: NotRequired[str]
     callsign: NotRequired[str]
     flight: NotRequired[str]
     operator: NotRequired[str]

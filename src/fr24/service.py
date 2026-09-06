@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import sys
 from dataclasses import dataclass, field
 from typing import (
     TYPE_CHECKING,
@@ -20,13 +19,8 @@ from typing import (
 
 from google.protobuf.json_format import MessageToDict
 
-if sys.version_info >= (3, 13):
-    from warnings import deprecated
-else:
-    from typing_extensions import deprecated
-
-from ._deprecated import JSON_API_DEPRECATION_NOTICE
 from .cache import FR24Cache
+from .clients import ResponseLike
 from .grpc import (
     BoundingBox,
     FlightDetailsParams,
@@ -113,7 +107,6 @@ from .utils import (
 )
 
 if TYPE_CHECKING:
-    import httpx
     import polars as pl
     from typing_extensions import TypeAlias
 
@@ -167,19 +160,19 @@ class ServiceFactory:
         return PlaybackFlightService(self)
 
 
-RequestT = TypeVar("RequestT")
+ParamsT = TypeVar("ParamsT")
 """Arguments for the request"""
 
 
 @runtime_checkable
-class SupportsFetch(Protocol[RequestT]):
-    async def fetch(self, *args: Any, **kwargs: Any) -> APIResult[RequestT]:
+class SupportsFetch(Protocol[ParamsT]):
+    async def fetch(self, *args: Any, **kwargs: Any) -> APIResult[ParamsT]:
         """Fetches data from the API."""
         ...
 
 
 @dataclass_frozen
-class APIResult(Generic[RequestT]):
+class APIResult(Generic[ParamsT]):
     """Wraps the raw `Response` with request context.
 
     Note that at this stage, the response holds the *raw* bytes, possibly
@@ -187,8 +180,8 @@ class APIResult(Generic[RequestT]):
     parse it into json with `response.json()`.
     """
 
-    request: RequestT
-    response: httpx.Response
+    request: ParamsT
+    response: ResponseLike
 
 
 WriteLocation: TypeAlias = Union[FileLike, FR24Cache]
@@ -218,7 +211,6 @@ class FlightListService(SupportsFetch[FlightListParams]):
     _factory: ServiceFactory
 
     @static_check_signature(FlightListParams)
-    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(
         self,
         reg: str | None = None,
@@ -266,7 +258,6 @@ class FlightListService(SupportsFetch[FlightListParams]):
         """Maximum number of pages to fetch."""
 
     @static_check_signature(FetchAllArgs)
-    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch_all(
         self,
         reg: str | None = None,
@@ -289,8 +280,6 @@ class FlightListService(SupportsFetch[FlightListParams]):
         :param delay: Delay between requests in seconds.
         :param max_pages: Maximum number of pages to fetch.
         """
-        # TODO: something nasty with async generators is happening here
-        # (httpx leak)
         more = True
         current_timestamp = timestamp
         while more:
@@ -446,7 +435,6 @@ class PlaybackService(SupportsFetch[PlaybackParams]):
     _factory: ServiceFactory
 
     @static_check_signature(PlaybackParams)
-    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(
         self, flight_id: IntoFlightId, timestamp: IntoTimestamp | None = None
     ) -> PlaybackResult:
@@ -680,7 +668,6 @@ class AirportListService(SupportsFetch[AirportListParams]):
     _factory: ServiceFactory
 
     @static_check_signature(AirportListParams)
-    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(
         self,
         airport: str,
@@ -733,7 +720,6 @@ class FindService(SupportsFetch[FindParams]):
     _factory: ServiceFactory
 
     @static_check_signature(FindParams)
-    @deprecated(JSON_API_DEPRECATION_NOTICE)
     async def fetch(self, query: str, limit: int = 50) -> FindResult:
         """Fetch the find results.
 

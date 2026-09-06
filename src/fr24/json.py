@@ -1,19 +1,18 @@
+"""
+!!! note
+
+    JSON endpoints require `fr24[curl]`. Use [`fr24.clients.curl`][].
+"""
+
 from __future__ import annotations
 
 import logging
-import sys
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Generic, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Generic, Mapping, TypeVar, cast
 
-import httpx
 import orjson
 
-if sys.version_info >= (3, 13):
-    from warnings import deprecated
-else:
-    from typing_extensions import deprecated
-
-from ._deprecated import JSON_API_DEPRECATION_NOTICE
+from .clients import AsyncClientLike, HTTPStatusError, ResponseLike
 from .proto.headers import get_device_id
 from .types.cache import (
     flight_list_schema,
@@ -68,7 +67,7 @@ def get_json_headers(*, device: str | None = None) -> dict[str, str]:
 def with_auth(
     mut_request_data: dict[str, Any],
     auth: Authentication | None,
-    headers: httpx.Headers,
+    headers: Mapping[str, str],
 ) -> dict[str, Any]:
     """Adds authentication details to a request data dictionary."""
     if (
@@ -131,13 +130,12 @@ class FlightListParams:
         return self.reg if self.reg is not None else self.flight  # type: ignore
 
 
-@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def flight_list(
-    client: httpx.AsyncClient,
+    client: AsyncClientLike,
     params: FlightListParams,
-    headers: httpx.Headers,
+    headers: Mapping[str, str],
     auth: None | Authentication,
-) -> Annotated[httpx.Response, FlightList]:
+) -> Annotated[ResponseLike, FlightList]:
     """
     Query flight list data.
 
@@ -147,7 +145,7 @@ async def flight_list(
     Includes basic information such as status, O/D, scheduled/estimated/real
     times: see [fr24.types.json.FlightList][] for more details.
 
-    :param client: HTTPX async client
+    :param client: async HTTP client
     :param auth: Authentication data
     """
     timestamp = to_unix_timestamp(params.timestamp)
@@ -167,7 +165,7 @@ async def flight_list(
     if timestamp is not None:
         request_data["timestamp"] = timestamp
 
-    request = httpx.Request(
+    request = client.build_request(
         "GET",
         "https://api.flightradar24.com/common/v1/flight/list.json",
         headers=headers,
@@ -196,20 +194,19 @@ class AirportListParams:
     """Show flights with STA before this timestamp"""
 
 
-@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def airport_list(
-    client: httpx.AsyncClient,
+    client: AsyncClientLike,
     params: AirportListParams,
-    headers: httpx.Headers,
+    headers: Mapping[str, str],
     auth: None | Authentication,
-) -> Annotated[httpx.Response, AirportList]:
+) -> Annotated[ResponseLike, AirportList]:
     """
     Fetch aircraft arriving, departing or on ground at a given airport.
 
     Returns on ground/scheduled/estimated/real times: see
     [fr24.types.json.FlightListItem][] for more details.
 
-    :param client: HTTPX async client
+    :param client: async HTTP client
     :param auth: Authentication data
     :returns: the raw binary response, representing a JSON-encoded
         [fr24.types.json.FlightList][].
@@ -229,7 +226,7 @@ async def airport_list(
     if timestamp is not None:
         request_data["plugin-setting[schedule][timestamp]"] = timestamp
 
-    request = httpx.Request(
+    request = client.build_request(
         "GET",
         "https://api.flightradar24.com/common/v1/airport.json",
         headers=headers,
@@ -254,17 +251,16 @@ class PlaybackParams:
     """
 
 
-@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def playback(
-    client: httpx.AsyncClient,
+    client: AsyncClientLike,
     params: PlaybackParams,
-    headers: httpx.Headers,
+    headers: Mapping[str, str],
     auth: None | Authentication,
-) -> Annotated[httpx.Response, Playback]:
+) -> Annotated[ResponseLike, Playback]:
     """
     Fetch historical track playback data for a given flight.
 
-    :param client: HTTPX async client
+    :param client: async HTTP client
     :param auth: Authentication data
     """
     timestamp = to_unix_timestamp(params.timestamp)
@@ -277,7 +273,7 @@ async def playback(
     if timestamp is not None:
         request_data["timestamp"] = timestamp
 
-    request = httpx.Request(
+    request = client.build_request(
         "GET",
         "https://api.flightradar24.com/common/v1/flight-playback.json",
         headers=headers,
@@ -295,19 +291,18 @@ class FindParams:
     limit: int = 50
 
 
-@deprecated(JSON_API_DEPRECATION_NOTICE)
 async def find(
-    client: httpx.AsyncClient,
+    client: AsyncClientLike,
     params: FindParams,
-    headers: httpx.Headers,
+    headers: Mapping[str, str],
     auth: None | Authentication,
-) -> Annotated[httpx.Response, Find]:
+) -> Annotated[ResponseLike, Find]:
     """General search."""
     request_data = {
         "query": params.query,
         "limit": params.limit,
     }
-    request = httpx.Request(
+    request = client.build_request(
         "GET",
         url="https://www.flightradar24.com/v1/search/web/find",
         headers=headers,
@@ -329,19 +324,12 @@ _TypedDictT = TypeVar("_TypedDictT")
 class _Parser(Generic[_TypedDictT]):
     @staticmethod
     def parse_json(
-        response: Annotated[httpx.Response, _TypedDictT],
-    ) -> Result[_TypedDictT, httpx.HTTPStatusError]:
+        response: Annotated[ResponseLike, _TypedDictT],
+    ) -> Result[_TypedDictT, HTTPStatusError]:
         """Parses binary representation into a python object (typed dict)."""
-        if response.is_success:
+        if 200 <= response.status_code < 300:
             return Ok(cast(_TypedDictT, orjson.loads(response.content)))
-        try:
-            response.raise_for_status()
-        except httpx.HTTPStatusError as e:
-            return Err(e)
-        else:
-            raise RuntimeError(
-                "unexpected code path: response did not raise an error!"
-            )
+        return Err(HTTPStatusError(response.status_code))
 
 
 flight_list_parse = _Parser[FlightList].parse_json

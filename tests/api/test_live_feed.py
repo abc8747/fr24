@@ -17,13 +17,13 @@ from fr24.proto import parse_data
 from fr24.proto.headers import get_grpc_headers
 from fr24.proto.v1_pb2 import Flight, LiveFeedResponse, PlaybackResponse
 
-HEADERS = httpx.Headers(get_grpc_headers(auth=None))
+HEADERS = get_grpc_headers(auth=None)
 
 
 @pytest.mark.anyio
-async def test_ll_live_feed_france(client: httpx.AsyncClient) -> None:
+async def test_ll_live_feed_france(httpx_aclient: httpx.AsyncClient) -> None:
     params = LiveFeedParams(bounding_box=BBOX_FRANCE_UIR)
-    response = await live_feed(client, params, HEADERS)
+    response = await live_feed(httpx_aclient, params, HEADERS)
     result = parse_data(response.content, LiveFeedResponse)
 
     json_output = MessageToDict(
@@ -33,10 +33,10 @@ async def test_ll_live_feed_france(client: httpx.AsyncClient) -> None:
 
 
 @pytest.mark.anyio
-async def test_ll_live_feed_world(client: httpx.AsyncClient) -> None:
+async def test_ll_live_feed_world(httpx_aclient: httpx.AsyncClient) -> None:
     async def get_data(bbox: BoundingBox) -> list[Flight]:
         params = LiveFeedParams(bounding_box=bbox)
-        response = await live_feed(client, params, HEADERS)
+        response = await live_feed(httpx_aclient, params, HEADERS)
         result = parse_data(response.content, LiveFeedResponse)
         return list(result.unwrap().flights_list)
 
@@ -47,12 +47,14 @@ async def test_ll_live_feed_world(client: httpx.AsyncClient) -> None:
 
 
 @pytest.mark.anyio
-async def test_ll_live_feed_playback_world(client: httpx.AsyncClient) -> None:
+async def test_ll_live_feed_playback_world(
+    httpx_aclient: httpx.AsyncClient,
+) -> None:
     timestamp = int(time.time() - 86400)
 
     async def get_data(bbox: BoundingBox) -> list[Flight]:
         params = LiveFeedPlaybackParams(bounding_box=bbox, timestamp=timestamp)
-        response = await live_feed_playback(client, params, HEADERS)
+        response = await live_feed_playback(httpx_aclient, params, HEADERS)
         result = parse_data(response.content, PlaybackResponse)
         return list(result.unwrap().live_feed_response.flights_list)
 

@@ -3,16 +3,16 @@ from __future__ import annotations
 import asyncio
 from copy import deepcopy
 from pathlib import Path
-from typing import Callable
+from typing import Callable, cast
 
-import httpx
 import orjson
 import polars as pl
 import pytest
+from curl_cffi.requests import Response as CurlCFFIResponse
 from pydantic import TypeAdapter
 
 from fr24 import FR24, FR24Cache
-from fr24._deprecated import JSON_API_DEPRECATION_NOTICE
+from fr24.clients.curl import CurlAsyncClient
 from fr24.json import (
     FlightListParams,
     PlaybackParams,
@@ -26,9 +26,7 @@ from fr24.types.json import FlightList, FlightListItem
 
 REG = "F-HEPK"
 FLIGHT = "AF7463"
-HEADERS = httpx.Headers(get_json_headers())
-
-pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
+HEADERS = get_json_headers()
 
 
 def flight_identity(
@@ -41,9 +39,11 @@ def flight_identity(
 
 
 @pytest.mark.anyio
-async def test_ll_flight_list(client: httpx.AsyncClient) -> None:
+async def test_ll_flight_list(curl_client: CurlAsyncClient) -> None:
     list_ = flight_list_parse(
-        await flight_list(client, FlightListParams(reg=REG), HEADERS, auth=None)
+        await flight_list(
+            curl_client, FlightListParams(reg=REG), HEADERS, auth=None
+        )
     ).unwrap()
     df = flight_list_df(list_)
     assert df.shape[0] > 0
@@ -53,7 +53,7 @@ async def test_ll_flight_list(client: httpx.AsyncClient) -> None:
     result = await asyncio.gather(
         *[
             playback(
-                client,
+                curl_client,
                 PlaybackParams(
                     flight_id=flight_id,
                     timestamp=entry["time"]["scheduled"]["arrival"],
@@ -158,15 +158,17 @@ async def test_flight_list_reg_concat(fr24: FR24) -> None:
     results = fr24.flight_list.new_result_collection()
 
     data["result"]["response"]["data"] = left
-    result.response._content = orjson.dumps(data)
-    results.append(deepcopy(result))
+    left_result = deepcopy(result)
+    cast(CurlCFFIResponse, left_result.response).content = orjson.dumps(data)
+    results.append(left_result)
     assert results.to_polars().height == len(
         {flight_identity(flight) for flight in left}
     )
 
     data["result"]["response"]["data"] = right
-    result.response._content = orjson.dumps(data)
-    results.append(deepcopy(result))
+    right_result = deepcopy(result)
+    cast(CurlCFFIResponse, right_result.response).content = orjson.dumps(data)
+    results.append(right_result)
     assert results.to_polars().height == len(
         {flight_identity(flight) for flight in [*left, *right]}
     )

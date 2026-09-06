@@ -2,17 +2,17 @@
 # mypy: disable-error-code="top-level-await, no-redef"
 # %%
 # --8<-- [start:script0]
-import httpx
+from fr24.clients.curl import CurlAsyncClient
 
 from fr24.authentication import login
 from fr24.json import playback, playback_df, PlaybackParams
 from fr24.types.json import Playback
-from fr24.proto.headers import get_grpc_headers
+from fr24.json import get_json_headers
 
 
 async def my_playback() -> Playback:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_json_headers()
+    async with CurlAsyncClient() as client:
         auth = await login(client)
         if auth is not None:
             print(auth.get("message"))

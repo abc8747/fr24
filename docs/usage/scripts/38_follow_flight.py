@@ -11,7 +11,7 @@ from fr24.proto.headers import get_grpc_headers
 
 async def follow_flight_data() -> None:
     timeout = httpx.Timeout(5, read=120)
-    headers = httpx.Headers(get_grpc_headers(auth=None))
+    headers = get_grpc_headers(auth=None)
     async with httpx.AsyncClient(timeout=timeout) as client:
         message = FollowFlightRequest(flight_id=0x3C500FDB)
         i = 0

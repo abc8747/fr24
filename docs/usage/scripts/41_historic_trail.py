@@ -10,8 +10,8 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def historic_trail_data() -> HistoricTrailResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_grpc_headers(auth=None)
+    async with httpx.AsyncClient(http2=True) as client:
         message = HistoricTrailRequest(flight_id=0x395C43CF)
         response = await historic_trail(client, message, headers)
         return parse_data(response.content, HistoricTrailResponse).unwrap()

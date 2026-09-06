@@ -33,8 +33,6 @@ Once compiled, all protobuf constructors can be accessed via [`fr24.proto.v1`](.
 
 Since the gRPC protocol is remarkably simple, we construct and parse [length-prefixed messages](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md) [manually](./__init__.py).
 
-Requests are made with a common [`httpx.AsyncClient`](https://www.python-httpx.org/api/#asyncclient) shared by JSON and gRPC requests.
-
 ## Todo
 
 - [ ] handle streaming responses with multiple `DATA` frames

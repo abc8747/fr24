@@ -12,21 +12,21 @@ from fr24.proto.v1_pb2 import (
     NearestFlightsResponse,
 )
 
-HEADERS = httpx.Headers(get_grpc_headers(auth=None))
+HEADERS = get_grpc_headers(auth=None)
 
 
 # NOTE: this fixture already exists in `tests/api/conftest.py`
 # TODO: remove once services are implemented
 @pytest.fixture
 async def nearest_flights_response(
-    client: httpx.AsyncClient,
+    httpx_aclient: httpx.AsyncClient,
 ) -> NearestFlightsResponse:
     message = NearestFlightsRequest(
         location=Geolocation(lat=22.31257, lon=113.92708),
         radius=10000,
         limit=1500,
     )
-    response = await nearest_flights(client, message, HEADERS)
+    response = await nearest_flights(httpx_aclient, message, HEADERS)
     return parse_data(response.content, NearestFlightsResponse).unwrap()
 
 
@@ -35,14 +35,15 @@ async def nearest_flights_response(
 )
 @pytest.mark.anyio
 async def test_live_trail(
-    nearest_flights_response: NearestFlightsResponse, client: httpx.AsyncClient
+    nearest_flights_response: NearestFlightsResponse,
+    httpx_aclient: httpx.AsyncClient,
 ) -> None:
     from fr24.grpc import live_trail
     from fr24.proto.v1_pb2 import LiveTrailRequest, LiveTrailResponse
 
     flight_id = nearest_flights_response.flights_list[0].flight.flightid
     message = LiveTrailRequest(flight_id=flight_id)
-    response = await live_trail(client, message, HEADERS)
+    response = await live_trail(httpx_aclient, message, HEADERS)
     result = parse_data(response.content, LiveTrailResponse)
     data = result.unwrap()
     assert len(data.radar_records_list)
@@ -50,7 +51,7 @@ async def test_live_trail(
 
 @pytest.mark.skip(reason="Private API, does not return data.")
 @pytest.mark.anyio
-async def test_search_index(client: httpx.AsyncClient) -> None:
+async def test_search_index(httpx_aclient: httpx.AsyncClient) -> None:
     from fr24.grpc import search_index
     from fr24.proto.v1_pb2 import (
         FetchSearchIndexRequest,
@@ -58,7 +59,7 @@ async def test_search_index(client: httpx.AsyncClient) -> None:
     )
 
     message = FetchSearchIndexRequest()
-    response = await search_index(client, message, HEADERS)
+    response = await search_index(httpx_aclient, message, HEADERS)
     result = parse_data(response.content, FetchSearchIndexResponse)
     assert result.is_ok()  # fails, empty data frame
     data = result.unwrap()
@@ -68,14 +69,15 @@ async def test_search_index(client: httpx.AsyncClient) -> None:
 @pytest.mark.skip(reason="Private API, does not return data.")
 @pytest.mark.anyio
 async def test_historic_trail(
-    nearest_flights_response: NearestFlightsResponse, client: httpx.AsyncClient
+    nearest_flights_response: NearestFlightsResponse,
+    httpx_aclient: httpx.AsyncClient,
 ) -> None:
     from fr24.grpc import historic_trail
     from fr24.proto.v1_pb2 import HistoricTrailRequest, HistoricTrailResponse
 
     flight_id = nearest_flights_response.flights_list[0].flight.flightid
     message = HistoricTrailRequest(flight_id=flight_id)
-    response = await historic_trail(client, message, HEADERS)
+    response = await historic_trail(httpx_aclient, message, HEADERS)
     result = parse_data(response.content, HistoricTrailResponse)
 
     assert result.is_ok()  # read timeout

@@ -2,12 +2,9 @@
 
 Most code is developed using asynchronous programming, enabling parallel execution of multiple queries and achieve high performance.
 
-!!! warning
+!!! note
 
-    Flightradar24 JSON APIs are no longer supported as of 2026-05-01 because
-    Cloudflare TLS fingerprinting blocks them. The legacy `flight_list`,
-    `playback`, `airport_list`, `find`, and current TUI are
-    deprecated and unsupported.
+    For JSON endpoints (`flight_list`, `playback`, `airport_list`, `find` and the TUI), install `fr24[curl]`.
 
 Here is a quick example in case you are not familiar with this code style:
 
@@ -55,7 +52,7 @@ The following sections will break down what each line does under the hood.
     --8<-- "docs/usage/scripts/00_introduction.py:script-1"
     ```
 
-When `FR24()` is first initialised, it creates an unauthenticated [HTTPX client](https://www.python-httpx.org/async/) under the hood. It also manages authentication (subscription key and tokens).
+When `FR24()` is first initialised, it creates an unauthenticated HTTP client under the hood ([HTTPX](https://www.python-httpx.org/async/) when `fr24[httpx]` is installed, or [`curl`](https://github.com/lexiforest/curl_cffi) when `fr24[curl]` is installed). It also manages authentication (subscription key and tokens).
 
 !!! question "How to authenticate?"
 
@@ -65,9 +62,9 @@ When `FR24()` is first initialised, it creates an unauthenticated [HTTPX client]
 
     See [authentication](./authentication.md) for more details.
 
-!!! question "How to pass in my own HTTPX client?"
+!!! question "How to pass my own HTTP client?"
 
-    To share clients across code, pass it into the [fr24.FR24][] constructor.
+    To share clients across code, pass an `httpx.AsyncClient` directly to [`fr24.FR24`][]. Any async client implementing the same `build_request()`, `send()`, and `aclose()` surface is accepted. For `curl-cffi`, use the [`fr24.clients.curl.CurlAsyncClient`][] wrapper.
 
     ```py
     --8<-- "docs/usage/scripts/00_introduction.py:client-sharing"
@@ -100,7 +97,7 @@ Next, `fr24` contains multiple *services*, each of which [implements the `fetch`
 It returns a [wrapped context and response][fr24.service.LiveFeedResult], which contains:
 
 - the [context related to the request][fr24.grpc.LiveFeedParams] under `result.request`;
-- the raw [HTTPX response](https://www.python-httpx.org/api/#response) under `result.response`:
+- the HTTP client response under `result.response`:
     - the **raw bytes under `result.response.content`**
     - the HTTP status under `result.response.status_code`
     - the response headers under `result.response.headers`
@@ -114,12 +111,13 @@ A further decoding step is needed.
 !!! important
 
     `fr24` comes with minimal dependencies.
-    If you need `to_polars()`, `write_table()`, `scan_table()`, or CSV/Parquet (de)serialisation, install the `fr24[polars]`.
+    If you need `to_polars()`, `write_table()`, `scan_table()`, or CSV/Parquet (de)serialisation, install `fr24[polars]`.
 
-    Feature flags:
+    Other feature flags:
 
     - `fr24[polars]`: dataframe and table I/O support via Polars
     - `fr24[cli]`: command-line interface dependencies
+    - `fr24[tui]`: terminal UI dependencies, including `cli`
 
 The `result` implements:
 
@@ -199,13 +197,20 @@ You can also write the table into a [cache][fr24.cache.FR24Cache]:
 
 Files will be organised in the cache, with the structure shown [here](./examples.md#overview):
 
-It should resemble the following on Linux for the live feed example above:
+It should resemble the following on Linux:
 
 ```
-$ tree $HOME/.cache/fr24/feed
+$ tree $HOME/.cache/fr24
 /home/user/.cache/fr24
 ├── feed
 │   └── 1711911907.parquet
+├── flight_list
+│   ├── flight
+│   │   └── CX8747.parquet
+│   └── reg
+│       └── B-HUJ.parquet
+└── playback
+    └── 2d81a27.parquet
 ```
 
 These directories are created automatically when `FR24Cache` is initialised.

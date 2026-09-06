@@ -4,10 +4,9 @@ import logging
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
-import httpx
-
 from .authentication import login
 from .cache import PATH_CACHE, FR24Cache
+from .clients import AsyncClientLike, default_client
 from .configuration import FP_CONFIG_FILE, PATH_CONFIG
 from .grpc import BoundingBox
 from .json import get_json_headers
@@ -33,22 +32,20 @@ logger = logging.getLogger(__name__)
 class FR24:
     def __init__(
         self,
-        client: httpx.AsyncClient | None = None,
+        client: AsyncClientLike | None = None,
     ) -> None:
         """See docs [quickstart](../usage/quickstart.md#initialisation).
 
-        :param client: The `httpx` client to use. If not provided, a
-            new one will be created with HTTP/2 enabled by default. It is
-            highly recommended to use `http2=True` to avoid
-            [464 errors](https://github.com/abc8747/fr24/issues/23#issuecomment-2125624974)
-            and to be consistent with the browser.
+        :param client: Async HTTP client to use. If omitted, an installed
+            optional client backend is selected automatically.
         """
         auth = None
+        resolved_client = default_client() if client is None else client
         self.http = HTTPClient(
-            httpx.AsyncClient(http2=True) if client is None else client,
+            client=resolved_client,
             auth=auth,
-            grpc_headers=httpx.Headers(get_grpc_headers(auth=auth)),
-            json_headers=httpx.Headers(get_json_headers()),
+            grpc_headers=get_grpc_headers(auth=auth),
+            json_headers=get_json_headers(),
         )
         """The HTTP client for use in requests"""
         self._build_factory(self.http)
@@ -109,12 +106,12 @@ class FR24:
 
 @dataclass_frozen
 class HTTPClient:
-    """An HTTPX client for making requests to the API."""
+    """HTTP client and request metadata shared by API services."""
 
-    client: httpx.AsyncClient
+    client: AsyncClientLike
     auth: Authentication | None
-    grpc_headers: httpx.Headers
-    json_headers: httpx.Headers
+    grpc_headers: dict[str, str]
+    json_headers: dict[str, str]
 
     async def with_login(
         self,
@@ -126,16 +123,15 @@ class HTTPClient:
         return replace(
             self,
             auth=auth,
-            grpc_headers=httpx.Headers(get_grpc_headers(auth=auth)),
-            json_headers=httpx.Headers(get_json_headers()),
+            grpc_headers=get_grpc_headers(auth=auth),
+            json_headers=get_json_headers(),
         )
 
     async def __aenter__(self) -> HTTPClient:
         return self
 
     async def __aexit__(self, *args: Any) -> None:
-        if self.client is not None:
-            await self.client.aclose()
+        await self.client.aclose()
 
 
 BBOX_FRANCE_UIR = BoundingBox(42.0, 52.0, -8.0, 10.0)

@@ -67,6 +67,7 @@ class Airport(TypedDict):
     size: int
     timezone: Timezone
     countryId: int
+    videoStream: str | None
 
 
 class Airports(TypedDict):

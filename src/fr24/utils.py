@@ -37,10 +37,10 @@ if sys.version_info >= (3, 10):
 if TYPE_CHECKING:
     from typing import NoReturn
 
-    import httpx
     import polars as pl
     from typing_extensions import TypeAlias
 
+    from .clients import ResponseLike
     from .types import (
         IntFlightId,
         IntoFlightId,
@@ -166,9 +166,9 @@ def get_current_timestamp() -> TimestampS[int]:
 
 
 def parse_server_timestamp(
-    response: httpx.Response,
+    response: ResponseLike,
 ) -> TimestampS[int] | None:
-    server_date: str = response.headers.get("date")
+    server_date = response.headers.get("date")
     if server_date is not None:
         return int(email.utils.parsedate_to_datetime(server_date).timestamp())
     return None

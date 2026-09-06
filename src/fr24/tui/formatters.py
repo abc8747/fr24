@@ -56,13 +56,14 @@ def fmt_aircraft(aircraft: AircraftInfo | None) -> Text:
         return Text("")
 
     registration = aircraft.get("registration")
-    typecode = aircraft.get("model", {}).get("code", "")
+    typecode = aircraft.get("model", {}).get("code") or ""
 
     if registration:
         text = Text(registration)
-        text.append(" (", style="dim")
-        text.append(typecode, style="dim")
-        text.append(")", style="dim")
+        if typecode:
+            text.append(" (", style="dim")
+            text.append(typecode, style="dim")
+            text.append(")", style="dim")
         return text
     return Text(typecode, style="dim")
 

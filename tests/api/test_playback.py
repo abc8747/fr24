@@ -2,11 +2,8 @@ import pytest
 from pydantic import TypeAdapter
 
 from fr24 import FR24, FR24Cache
-from fr24._deprecated import JSON_API_DEPRECATION_NOTICE
 
 FLIGHT_ID = 0x2D81A27
-
-pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
 
 
 @pytest.mark.anyio
