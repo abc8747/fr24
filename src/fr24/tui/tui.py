@@ -6,7 +6,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterator, Literal, TypeVar
 
-import httpx
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
@@ -14,6 +13,7 @@ from textual.containers import ScrollableContainer
 from textual.widgets import DataTable, Footer, Header, Input, Label, Static
 
 from fr24 import FR24
+from fr24.clients import HTTPStatusError
 from fr24.tui.formatters import Time, fmt_aircraft, fmt_airport, fmt_status
 from fr24.tui.widgets import AircraftWidget, AirportWidget, FlightWidget
 from fr24.types import IntoTimestamp
@@ -109,9 +109,9 @@ class FR24Tui(App[None]):
         await self.fr24.login()
         if self.fr24.http.auth is not None:
             auth = self.fr24.http.auth
-            identity = auth.get("user", {}).get("identity") or auth.get(
-                "userData", {}
-            ).get("identity")
+            identity = auth.get("user", {}).get("identity") or auth[
+                "userData"
+            ].get("identity")
             self.sub_title = (
                 f"(authenticated: {identity})"
                 if identity
@@ -119,12 +119,6 @@ class FR24Tui(App[None]):
             )
             self.query_one(Header).add_class("authenticated")
             self.query_one(Footer).add_class("authenticated")
-        else:
-            self.notify(
-                "Login failed; check your credentials and try again.",
-                severity="error",
-                title="Login Error",
-            )
 
     async def on_data_table_row_selected(
         self, event: DataTable.RowSelected
@@ -247,8 +241,8 @@ class FR24Tui(App[None]):
                 except UnwrapError as exc:
                     err = exc.err
                     if (
-                        isinstance(err, httpx.HTTPStatusError)
-                        and err.response.status_code == 402
+                        isinstance(err, HTTPStatusError)
+                        and err.status_code == 402
                     ):
                         await asyncio.sleep(10)
                         res_obj = await self.fr24.flight_list.fetch(

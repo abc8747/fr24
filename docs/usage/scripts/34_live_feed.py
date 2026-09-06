@@ -10,7 +10,7 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def france_data() -> LiveFeedResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
+    headers = get_grpc_headers(auth=None)
     async with httpx.AsyncClient() as client:
         params = LiveFeedParams(
             bounding_box=BoundingBox(north=50, west=-7, south=40, east=10)

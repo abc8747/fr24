@@ -10,8 +10,8 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def search_index_data() -> FetchSearchIndexResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_grpc_headers(auth=None)
+    async with httpx.AsyncClient(http2=True) as client:
         message = FetchSearchIndexRequest()
         response = await search_index(client, message, headers)
         return parse_data(response.content, FetchSearchIndexResponse).unwrap()

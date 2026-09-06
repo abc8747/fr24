@@ -25,18 +25,18 @@ df = pl.json_normalize(arrivals)
 print(df)
 # %%
 # --8<-- [start:script0]
-import httpx
+from fr24.clients.curl import CurlAsyncClient
 
 from fr24.types.json import AirportList
 from fr24.json import airport_list, AirportListParams
-from fr24.proto.headers import get_grpc_headers
+from fr24.json import get_json_headers
 
 import polars as pl
 
 
 async def my_arrivals() -> AirportList:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_json_headers()
+    async with CurlAsyncClient() as client:
         response = await airport_list(
             client,
             AirportListParams(airport="tls", mode="arrivals"),

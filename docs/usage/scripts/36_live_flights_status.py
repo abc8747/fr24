@@ -13,8 +13,8 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def live_flights_status_data() -> LiveFlightsStatusResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_grpc_headers(auth=None)
+    async with httpx.AsyncClient(http2=True) as client:
         message = LiveFlightsStatusRequest(
             flight_ids_list=[0x35FBC363, 0x35FBF180]
         )

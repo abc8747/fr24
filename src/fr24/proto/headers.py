@@ -63,8 +63,6 @@ def get_grpc_headers(*, auth: Authentication | None, device_id: None | str = Non
     if device_id is None:
         device_id = get_device_id()
     headers["fr24-device-id"] = device_id
-    if auth is not None and (
-        token := auth.get("userData", {}).get("accessToken")
-    ) is not None:
+    if auth is not None and (token := auth["userData"].get("accessToken")) is not None:
         headers["authorization"] = f"Bearer {token}"
     return headers

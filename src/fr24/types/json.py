@@ -84,7 +84,7 @@ class Authentication(TypedDict, total=False):
     token: str
     user: User
     features: Features
-    userData: NotRequired[UserData]
+    userData: Required[UserData]
 
 
 class UsernamePassword(TypedDict):
@@ -603,7 +603,7 @@ class Live(TypedDict):
     ac_type: str
     route: NotRequired[str]
     logo: NotRequired[str]
-    reg: str
+    reg: NotRequired[str]
     callsign: NotRequired[str]
     flight: NotRequired[str]
     operator: NotRequired[str]

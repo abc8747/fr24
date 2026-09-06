@@ -1,11 +1,9 @@
-import asyncio
 from typing import Awaitable, Callable, Type
 
-import httpx
 import pytest
 from pydantic import TypeAdapter
 
-from fr24._deprecated import JSON_API_DEPRECATION_NOTICE
+from fr24.clients.curl import CurlAsyncClient
 from fr24.static import (
     fetch_aircraft_family,
     fetch_airlines,
@@ -20,8 +18,6 @@ from fr24.types.static import (
     StaticData,
 )
 
-pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
-
 
 @pytest.mark.parametrize(
     "fetch_data,static_data_type",
@@ -32,15 +28,13 @@ pytestmark = pytest.mark.skip(reason=JSON_API_DEPRECATION_NOTICE)
         (fetch_countries, Countries),
     ],
 )
-def test_fetch_static_types(
-    fetch_data: Callable[[httpx.AsyncClient], Awaitable[StaticData]],
+@pytest.mark.anyio
+async def test_fetch_static_types(
+    fetch_data: Callable[[CurlAsyncClient], Awaitable[StaticData]],
     static_data_type: Type[StaticData],
+    curl_client: CurlAsyncClient,
 ) -> None:
-    async def fetch_data_() -> StaticData:
-        async with httpx.AsyncClient() as client:
-            return await fetch_data(client)
-
-    data = asyncio.run(fetch_data_())
+    data = await fetch_data(curl_client)
 
     ta = TypeAdapter(static_data_type)
     ta.rebuild()

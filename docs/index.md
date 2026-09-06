@@ -5,30 +5,31 @@
 [![image](https://img.shields.io/pypi/pyversions/fr24.svg)](https://pypi.python.org/pypi/fr24)
 [![image](https://img.shields.io/pypi/status/fr24)](https://pypi.python.org/pypi/fr24)
 
-`fr24` is a Python library for data retrieval from [Flightradar24](https://flightradar24.com) using [gRPC](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md).
+`fr24` is a Python library for data retrieval from [Flightradar24](https://flightradar24.com) using [gRPC](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md) and JSON APIs.
 
 For a detailed quickstart, examples and references, please refer to the [documentation](https://abc8747.github.io/fr24/usage/quickstart/).
 
-> [!IMPORTANT]
-> As of 2026-05-01, flightradar24 employs Cloudflare bot protection with TLS fingerprinting, and as a result JSON APIs are **no longer supported**. Use the [official API instead](https://fr24api.flightradar24.com/).
-
 ## Features
 
-`fr24` supports the following gRPC endpoints:
+`fr24` supports the following endpoints:
 
-| Endpoint                      | Description                                                |
-| ----------------------------- | ---------------------------------------------------------- |
-| **Live Feed**                 | Current real-time flight data within a bounding box.       |
-| **Live Feed Playback**        | Historical snapshot of live feed data for a specific time. |
-| **Nearest Flights**           | Real-time flight data for aircraft within a given radius.  |
-| **Follow Flight** (streaming) | Historical track and real-time updates for a live flight.  |
-| **Top Flights**               | List of the most viewed flights.                           |
-| **Live Flight Status**        | Real-time status updates for live flights.                 |
-| **Flight Details**            | Detailed information for a live flight.                    |
-| **Playback Flight**           | Detailed information for a historical flight.              |
-<!-- 
-| **Live Trail**                | Real-time trail data for a flight.                         |
-| **Historic Trail**            | Historical trail data for a flight.                        |
+| Endpoint                      | Description                                                | Type |
+| ----------------------------- | ---------------------------------------------------------- | ---- |
+| **Live Feed**                 | Current real-time flight data within a bounding box.       | gRPC |
+| **Live Feed Playback**        | Historical snapshot of live feed data for a specific time. | gRPC |
+| **Flight List**               | List of flights based on registration or flight number.    | JSON |
+| **Playback**                  | Historical state vectors data for a flight.                | JSON |
+| **Airport Arrivals**          | Aircraft arrival information for a given airport.          | JSON |
+| **Airport Search**            | Search for airports by keyword.                            | JSON |
+| **Nearest Flights**           | Real-time flight data for aircraft within a given radius.  | gRPC |
+| **Follow Flight** (streaming) | Historical track and real-time updates for a live flight.  | gRPC |
+| **Top Flights**               | List of the most viewed flights.                           | gRPC |
+| **Live Flight Status**        | Real-time status updates for live flights.                 | gRPC |
+| **Flight Details**            | Detailed information for a live flight.                    | gRPC |
+| **Playback Flight**           | Detailed information for a historical flight.              | gRPC |
+<!--
+| **Live Trail**                | Real-time trail data for a flight.                         | gRPC |
+| **Historic Trail**            | Historical trail data for a flight.                        | gRPC |
 -->
 
 `fr24` is built with modularity and performance in mind, utilising asynchronous programming to handle concurrent requests efficiently.
@@ -38,18 +39,23 @@ For a detailed quickstart, examples and references, please refer to the [documen
 For the latest stable version:
 
 ```sh
-pip install fr24
+pip install 'fr24[curl]'
+pip install 'fr24[httpx]'
 ```
 
 > [!IMPORTANT]
-> `fr24` comes with minimal dependencies.
-> If you need `to_polars()`, `write_table()`, `scan_table()`, or CSV/Parquet (de)serialisation, install the `fr24[polars]`.
+> `fr24` does **not** come with a HTTP client library by default. You must pick one:
 >
-> Feature flags:
+> - `fr24[curl]`: curl client (recommended), supports gRPC and JSON
+> - `fr24[httpx]`: HTTPX client, supports gRPC only
+>
+> If you need `to_polars()`, `write_table()`, `scan_table()`, or CSV/Parquet (de)serialisation, install `fr24[polars]`.
+>
+> Other feature flags:
 >
 > - `fr24[polars]`: dataframe and table I/O support via Polars
 > - `fr24[cli]`: command-line interface dependencies, including `polars` and `rich`
-> - `fr24[tui]`: legacy terminal UI dependencies, including `cli`; the current TUI is unsupported because it depends on deprecated JSON APIs
+> - `fr24[tui]`: terminal UI dependencies, including `cli`
 
 For a development version, clone the repository and run in the directory:
 
@@ -157,6 +163,8 @@ For a full list of commands and options, run:
 
 ```sh
 fr24 --help
+# for a terminal interface, install fr24[tui] and run:
+fr24 tui
 ```
 
 ## Disclaimer

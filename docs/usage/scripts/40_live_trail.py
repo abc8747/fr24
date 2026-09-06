@@ -10,8 +10,8 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def live_trail_data() -> LiveTrailResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_grpc_headers(auth=None)
+    async with httpx.AsyncClient(http2=True) as client:
         message = LiveTrailRequest(flight_id=0x395C43CF)
         response = await live_trail(client, message, headers)
         return parse_data(response.content, LiveTrailResponse).unwrap()

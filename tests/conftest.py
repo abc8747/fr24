@@ -7,6 +7,7 @@ import httpx
 import pytest
 
 from fr24 import FR24, FR24Cache
+from fr24.clients.curl import CurlAsyncClient
 
 
 def pytest_configure(config: pytest.Config) -> None:
@@ -27,9 +28,15 @@ def anyio_backend() -> str:
     return "asyncio"
 
 
-@pytest.fixture(scope="session", autouse=True)
-async def client() -> AsyncGenerator[httpx.AsyncClient, None]:
+@pytest.fixture(scope="session")
+async def httpx_aclient() -> AsyncGenerator[httpx.AsyncClient, None]:
     async with httpx.AsyncClient(http1=False, http2=True) as client:
+        yield client
+
+
+@pytest.fixture(scope="session")
+async def curl_client() -> AsyncGenerator[CurlAsyncClient, None]:
+    async with CurlAsyncClient() as client:
         yield client
 
 
@@ -41,6 +48,7 @@ def cache() -> FR24Cache:
 
 
 @pytest.fixture(scope="session", autouse=True)
-async def fr24() -> AsyncGenerator[FR24, None]:
-    async with FR24() as fr24:
-        yield fr24
+async def fr24(
+    curl_client: CurlAsyncClient,
+) -> AsyncGenerator[FR24, None]:
+    yield FR24(curl_client)

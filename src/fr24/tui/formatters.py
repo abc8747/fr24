@@ -60,9 +60,10 @@ def fmt_aircraft(aircraft: AircraftInfo | None) -> Text:
 
     if registration:
         text = Text(registration)
-        text.append(" (", style="dim")
-        text.append(typecode, style="dim")
-        text.append(")", style="dim")
+        if typecode:
+            text.append(" (", style="dim")
+            text.append(typecode, style="dim")
+            text.append(")", style="dim")
         return text
     return Text(typecode, style="dim")
 

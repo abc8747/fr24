@@ -10,8 +10,8 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def top_flights_data() -> TopFlightsResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_grpc_headers(auth=None)
+    async with httpx.AsyncClient(http2=True) as client:
         message = TopFlightsRequest(limit=10)
         response = await top_flights(client, message, headers)
         return parse_data(response.content, TopFlightsResponse).unwrap()

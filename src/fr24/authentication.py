@@ -10,10 +10,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Literal, cast
 
-import httpx
-
+from .clients import AsyncClientLike
 from .configuration import FP_CONFIG_FILE
-from .transport import AsyncRequestSender
 from .types.json import (
     Authentication,
     TokenSubscriptionKey,
@@ -54,7 +52,7 @@ def get_credentials(
 
 
 async def login(
-    client: AsyncRequestSender,
+    client: AsyncClientLike,
     creds: (
         TokenSubscriptionKey | UsernamePassword | None | Literal["from_env"]
     ) = "from_env",
@@ -87,7 +85,7 @@ async def login(
 
 
 async def login_with_username_password(
-    client: AsyncRequestSender,
+    client: AsyncClientLike,
     username: str,
     password: str,
 ) -> Authentication | None:
@@ -96,7 +94,7 @@ async def login_with_username_password(
     Bearer: `json['userData']['accessToken']`
     `token=` query param: `json['userData']['subscriptionKey']`
     """
-    request = httpx.Request(
+    request = client.build_request(
         "POST",
         "https://www.flightradar24.com/user/login",
         data={"email": username, "password": password},
@@ -105,7 +103,7 @@ async def login_with_username_password(
     response = await client.send(request)
     response.raise_for_status()
     auth = response.json()
-    if not isinstance(auth, dict) or "userData" not in auth:
+    if not isinstance(auth, dict) or not isinstance(auth.get("userData"), dict):
         message = (
             auth.get("msg", auth.get("message", "unknown error"))
             if isinstance(auth, dict)
@@ -117,7 +115,7 @@ async def login_with_username_password(
 
 
 async def login_with_token_subscription_key(
-    _client: AsyncRequestSender,
+    _client: AsyncClientLike,
     subscription_key: str,
     token: str | None,
 ) -> Authentication | None:

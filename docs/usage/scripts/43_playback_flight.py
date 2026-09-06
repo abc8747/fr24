@@ -10,8 +10,8 @@ from fr24.proto.headers import get_grpc_headers
 
 
 async def playback_flight_data() -> PlaybackFlightResponse:
-    headers = httpx.Headers(get_grpc_headers(auth=None))
-    async with httpx.AsyncClient() as client:
+    headers = get_grpc_headers(auth=None)
+    async with httpx.AsyncClient(http2=True) as client:
         message = PlaybackFlightParams(
             flight_id=0x3C500FDB, timestamp=1758467125
         )
