@@ -53,6 +53,7 @@ jobs:
           uv run --script scripts/check_signature.py
 
       # weird mypy false positive: Untyped decorator makes function "playback" untyped  [misc]
+      # mypy>2 doesn't support py39 anyway so we ignore it.
       - name: Type checking
         if: matrix.python-version != '3.9'
         run: uv run mypy src tests docs/usage/scripts --exclude 'cli.py'

@@ -65,13 +65,17 @@ dev = [
     { include-group = "test" },
     { include-group = "docs" },
 ]
-typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf>=6,<7"]
+typing = [
+    "mypy-protobuf>=3.6.0",
+    "mypy>=2; python_version >= '3.10'", # mypy==2.0 dropped support for py39
+    "types-protobuf>=6,<7",
+]
 lint = ["ruff>=0.7.2"]
 test = [
     "anyio>=4.8.0",
     "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
     "pydantic>=2.12.0", # >2.12 for extra="forbid", >3.14
-    "pytest>=8.3.3,<9", # pytest>=9 uses 3.10 syntax; mypy targets py39
+    "pytest>=8.3.3,<9", # pytest>=9 uses 3.10 syntax
     "fr24[httpx,curl,polars]",
 ]
 docs = [
@@ -98,7 +102,7 @@ line-length = 80
 target-version = "py39"
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 exclude = ["proto"]
 platform = "posix"
 
