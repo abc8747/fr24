@@ -246,7 +246,7 @@ class FlightListService(SupportsFetch[FlightListParams]):
             filter_by=filter_by,
         )
         response = await flight_list(
-            self._factory.http.client,
+            self._factory.http.json_client,
             params,
             self._factory.http.json_headers,
             self._factory.http.auth,
@@ -459,7 +459,7 @@ class PlaybackService(SupportsFetch[PlaybackParams]):
         """
         params = PlaybackParams(flight_id, timestamp)
         response = await playback(
-            self._factory.http.client,
+            self._factory.http.json_client,
             params,
             self._factory.http.json_headers,
             self._factory.http.auth,
@@ -705,7 +705,7 @@ class AirportListService(SupportsFetch[AirportListParams]):
             timestamp=timestamp,
         )
         response = await airport_list(
-            self._factory.http.client,
+            self._factory.http.json_client,
             params,
             self._factory.http.json_headers,
             self._factory.http.auth,
@@ -741,7 +741,7 @@ class FindService(SupportsFetch[FindParams]):
         """
         params = FindParams(query=query, limit=limit)
         response = await find(
-            self._factory.http.client,
+            self._factory.http.json_client,
             params,
             self._factory.http.json_headers,
             self._factory.http.auth,

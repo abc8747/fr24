@@ -109,9 +109,9 @@ class FR24Tui(App[None]):
         await self.fr24.login()
         if self.fr24.http.auth is not None:
             auth = self.fr24.http.auth
-            identity = auth.get("user", {}).get("identity") or auth[
-                "userData"
-            ].get("identity")
+            identity = auth.get("user", {}).get("identity") or auth.get(
+                "userData", {}
+            ).get("identity")
             self.sub_title = (
                 f"(authenticated: {identity})"
                 if identity
@@ -119,6 +119,12 @@ class FR24Tui(App[None]):
             )
             self.query_one(Header).add_class("authenticated")
             self.query_one(Footer).add_class("authenticated")
+        else:
+            self.notify(
+                "Login failed; check your credentials and try again.",
+                severity="error",
+                title="Login Error",
+            )
 
     async def on_data_table_row_selected(
         self, event: DataTable.RowSelected

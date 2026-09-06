@@ -28,6 +28,8 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
+    "curl-cffi>=0.9.0,<0.14; python_version < '3.10'",
+    "curl-cffi>=0.14.0; python_version >= '3.10'",
     "httpx[zstd,http2]>=0.28.1",
     "orjson>=3.11.0",
     "platformdirs>=4.3.8",
@@ -42,7 +44,7 @@ cli = [
     "fr24[polars]", # almost all cli commands export to csv or parquet
     "typer>=0.19", # comes with rich
 ]
-tui = ["fr24[cli]", "textual>=1.0.0"]
+tui = ["fr24[cli]", "airportsdata>=20250909", "textual>=1.0.0"]
 
 [project.scripts]
 fr24 = 'fr24.cli:app'
@@ -64,6 +66,7 @@ dev = [
 typing = ["mypy-protobuf>=3.6.0", "mypy>=1.13.0", "types-protobuf>=6,<7"]
 lint = ["ruff>=0.7.2"]
 test = [
+    "airportsdata>=20250909",
     "anyio>=4.8.0",
     "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
     "pydantic>=2.12.0", # >2.12 for extra="forbid", >3.14

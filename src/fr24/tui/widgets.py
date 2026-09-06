@@ -1,14 +1,67 @@
 from __future__ import annotations
 
-import re
+from functools import cache
+from typing import TypedDict, cast
 
+import airportsdata
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
 from textual.widgets import Input, Label, Static
 
 from fr24 import FR24
-from fr24.types.json import is_aircraft, is_airport, is_schedule
+from fr24.types.json import is_aircraft, is_schedule
+
+
+class AirportInfo(TypedDict):
+    name: str
+    iata: str
+    icao: str
+    city: str
+
+
+@cache
+def get_airports() -> dict[str, AirportInfo]:
+    """Load the bundled IATA airport database once per TUI session."""
+    return cast(dict[str, AirportInfo], airportsdata.load("IATA"))
+
+
+def lookup_airport_info(query: str) -> AirportInfo | None:
+    """Find the best IATA airport match without FR24's blocked API."""
+    query = query.strip().casefold()
+    if not query:
+        return None
+
+    airports = get_airports()
+    if airport := airports.get(query.upper()):
+        return airport
+
+    def rank(airport: AirportInfo) -> tuple[int, str]:
+        iata = airport["iata"].casefold()
+        icao = airport["icao"].casefold()
+        name = airport["name"].casefold()
+        city = airport["city"].casefold()
+        if query in (iata, icao):
+            return (0, name)
+        if iata.startswith(query) or icao.startswith(query):
+            return (1, name)
+        if name.startswith(query) or city.startswith(query):
+            return (2, name)
+        return (3, name)
+
+    candidates = (
+        airport
+        for airport in airports.values()
+        if query in " ".join(
+            (
+                airport["iata"].casefold(),
+                airport["icao"].casefold(),
+                airport["name"].casefold(),
+                airport["city"].casefold(),
+            )
+        )
+    )
+    return min(candidates, key=rank, default=None)
 
 
 def get_fr24(app: App[None]) -> FR24:
@@ -46,7 +99,7 @@ class AirportWidget(Static):
             self.update_info()
             self.airport_id = ""
 
-    def update_info(self, info: None | dict[str, str] = None) -> None:
+    def update_info(self, info: AirportInfo | None = None) -> None:
         # NOTE(abr): for some odd reason when i backspace too quickly it doesn't
         # clear properly
         if info is None:
@@ -61,26 +114,13 @@ class AirportWidget(Static):
             self.airport_id = info["iata"]
 
     async def update_airport(self, value: str) -> None:
-        result = await get_fr24(self.app).find.fetch(query=value)
+        # The legacy FR24 find endpoint is Cloudflare-protected. Airport
+        # metadata is static, so resolve it locally instead of making a request
+        # that fails while the user is typing.
         if self.input.value != value:
             return  # stale worker, discard result.
-        find_results = result.to_dict()
-        if find_results is None:
-            return self.update_info()
-        candidate = next(
-            (elt for elt in find_results["results"] if is_airport(elt)),
-            None,
-        )
-        if candidate is None:
-            return self.update_info()
-        group = re.match(
-            r"(?P<name>.+) \((?P<iata>\w+) / (?P<icao>\w+)\)",
-            candidate["label"],
-        )
-        if group is None:
-            return self.update_info()
-        info: dict[str, str] = group.groupdict()
-        return self.update_info(info)
+        info = lookup_airport_info(value)
+        self.update_info(info)
 
 
 class AircraftWidget(Static):

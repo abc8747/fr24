@@ -84,7 +84,7 @@ class Authentication(TypedDict, total=False):
     token: str
     user: User
     features: Features
-    userData: Required[UserData]
+    userData: NotRequired[UserData]
 
 
 class UsernamePassword(TypedDict):

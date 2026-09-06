@@ -15,6 +15,7 @@ else:
 
 from ._deprecated import JSON_API_DEPRECATION_NOTICE
 from .proto.headers import get_device_id
+from .transport import AsyncRequestSender
 from .types.cache import (
     flight_list_schema,
     playback_track_schema,
@@ -133,7 +134,7 @@ class FlightListParams:
 
 @deprecated(JSON_API_DEPRECATION_NOTICE)
 async def flight_list(
-    client: httpx.AsyncClient,
+    client: AsyncRequestSender,
     params: FlightListParams,
     headers: httpx.Headers,
     auth: None | Authentication,
@@ -198,7 +199,7 @@ class AirportListParams:
 
 @deprecated(JSON_API_DEPRECATION_NOTICE)
 async def airport_list(
-    client: httpx.AsyncClient,
+    client: AsyncRequestSender,
     params: AirportListParams,
     headers: httpx.Headers,
     auth: None | Authentication,
@@ -256,7 +257,7 @@ class PlaybackParams:
 
 @deprecated(JSON_API_DEPRECATION_NOTICE)
 async def playback(
-    client: httpx.AsyncClient,
+    client: AsyncRequestSender,
     params: PlaybackParams,
     headers: httpx.Headers,
     auth: None | Authentication,
@@ -297,7 +298,7 @@ class FindParams:
 
 @deprecated(JSON_API_DEPRECATION_NOTICE)
 async def find(
-    client: httpx.AsyncClient,
+    client: AsyncRequestSender,
     params: FindParams,
     headers: httpx.Headers,
     auth: None | Authentication,

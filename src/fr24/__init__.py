@@ -14,6 +14,7 @@ from .json import get_json_headers
 from .proto.headers import get_grpc_headers
 from .service import ServiceFactory
 from .static.bbox import LNGS_WORLD_STATIC
+from .transport import BrowserAsyncClient
 from .types.json import Authentication
 from .utils import dataclass_frozen
 
@@ -44,8 +45,12 @@ class FR24:
             and to be consistent with the browser.
         """
         auth = None
+        grpc_client = (
+            httpx.AsyncClient(http2=True) if client is None else client
+        )
         self.http = HTTPClient(
-            httpx.AsyncClient(http2=True) if client is None else client,
+            client=grpc_client,
+            json_client=BrowserAsyncClient() if client is None else client,
             auth=auth,
             grpc_headers=httpx.Headers(get_grpc_headers(auth=auth)),
             json_headers=httpx.Headers(get_json_headers()),
@@ -112,6 +117,7 @@ class HTTPClient:
     """An HTTPX client for making requests to the API."""
 
     client: httpx.AsyncClient
+    json_client: httpx.AsyncClient | BrowserAsyncClient
     auth: Authentication | None
     grpc_headers: httpx.Headers
     json_headers: httpx.Headers
@@ -122,7 +128,7 @@ class HTTPClient:
             TokenSubscriptionKey | UsernamePassword | Literal["from_env"] | None
         ) = "from_env",
     ) -> HTTPClient:
-        auth = await login(self.client, creds)
+        auth = await login(self.json_client, creds)
         return replace(
             self,
             auth=auth,
@@ -134,8 +140,9 @@ class HTTPClient:
         return self
 
     async def __aexit__(self, *args: Any) -> None:
-        if self.client is not None:
-            await self.client.aclose()
+        await self.client.aclose()
+        if self.json_client is not self.client:
+            await self.json_client.aclose()
 
 
 BBOX_FRANCE_UIR = BoundingBox(42.0, 52.0, -8.0, 10.0)
