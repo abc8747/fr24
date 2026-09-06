@@ -38,7 +38,7 @@ dependencies = [
 [project.optional-dependencies]
 httpx = ["httpx[zstd,http2]>=0.28.1,<1.0"]
 curl = [
-    "curl-cffi>=0.9.0,<0.14; python_version < '3.10'",
+    "curl-cffi>=0.16.3,<0.17; python_version < '3.10'",
     "curl-cffi>=0.14.0; python_version >= '3.10'",
 ]
 polars = ["polars>=1.19.0"]
