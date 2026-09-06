@@ -3,7 +3,6 @@
 # requires-python = ">=3.10"
 # dependencies = [
 #     "griffe>=1.14.0",
-#     "typing-extensions",
 # ]
 # ///
 from __future__ import annotations
@@ -11,12 +10,12 @@ from __future__ import annotations
 import ast
 import logging
 import sys
+from collections.abc import Generator
 from pathlib import Path
-from typing import Any, Generator
+from typing import Any, TypeAlias
 
 import griffe
 from griffe._internal.extensions.dataclasses import _set_dataclass_init
-from typing_extensions import TypeAlias
 
 logger = griffe.get_logger(__name__)
 
@@ -48,10 +47,8 @@ class FR24CheckSignatureExtension(griffe.Extension):
                 args = decorator.value
                 assert isinstance(args, griffe.ExprCall)
                 dataclass_name = args.arguments[0]
-                assert (
-                    isinstance(dataclass_name, griffe.ExprName)
-                    and len(args.arguments) == 1
-                )
+                assert isinstance(dataclass_name, griffe.ExprName)
+                assert len(args.arguments) == 1
                 dataclass_path = dataclass_name.canonical_path
                 break
         if dataclass_path is not None:

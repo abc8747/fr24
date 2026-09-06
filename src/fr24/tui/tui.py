@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import asyncio
 import json
+from collections.abc import Iterator
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterator, Literal, TypeVar
+from typing import Literal, TypeVar
 
 from textual import on
 from textual.app import App, ComposeResult
@@ -226,11 +227,11 @@ class FR24Tui(App[None]):
             results = result.to_dict()
             if results is None or results["stats"]["count"]["schedule"] == 0:
                 return
-            flight_numbers = list(
+            flight_numbers = [
                 sched["detail"]["flight"]
                 for sched in results["results"]
                 if is_schedule(sched)
-            )
+            ]
             flight_lists: list[FlightList] = []
             for value in flight_numbers:
                 try:
@@ -250,7 +251,7 @@ class FR24Tui(App[None]):
                         )
                         res = res_obj.to_dict()
                     else:
-                        raise exc
+                        raise
 
                 flight_lists.append(res)
 

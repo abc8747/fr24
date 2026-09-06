@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import sys
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
@@ -17,9 +18,12 @@ from .types.json import Authentication
 from .utils import dataclass_frozen
 
 if TYPE_CHECKING:
-    from typing import Any, Literal
+    from typing import Literal
 
-    from typing_extensions import Self
+    if sys.version_info >= (3, 11):
+        from typing import Self
+    else:
+        from typing_extensions import Self
 
     from .types.json import (
         TokenSubscriptionKey,
@@ -100,7 +104,7 @@ class FR24:
         await self.http.__aenter__()
         return self
 
-    async def __aexit__(self, *args: Any) -> None:
+    async def __aexit__(self, *args: object) -> None:
         await self.http.__aexit__(*args)
 
 
@@ -127,10 +131,10 @@ class HTTPClient:
             json_headers=get_json_headers(),
         )
 
-    async def __aenter__(self) -> HTTPClient:
+    async def __aenter__(self) -> Self:
         return self
 
-    async def __aexit__(self, *args: Any) -> None:
+    async def __aexit__(self, *args: object) -> None:
         await self.client.aclose()
 
 

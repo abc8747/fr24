@@ -1,6 +1,7 @@
+from typing import Annotated
+
 import pytest
 from pydantic import BaseModel, ConfigDict, Discriminator
-from typing_extensions import Annotated
 
 from fr24 import FR24
 from fr24.types.json import (

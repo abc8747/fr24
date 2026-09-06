@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-from typing import Literal, Union
+import sys
+from typing import Annotated, Literal, TypedDict, Union
 
-from typing_extensions import (
-    Annotated,
-    NotRequired,
-    Required,
-    TypedDict,
-    TypeGuard,
-)
+if sys.version_info >= (3, 11):
+    from typing import NotRequired, Required, TypeGuard
+else:
+    from typing_extensions import NotRequired, Required, TypeGuard
 
 from . import StrFlightIdHex
 from .isqx import (

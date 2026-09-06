@@ -132,7 +132,7 @@ async def login_with_token_subscription_key(
 
     try:
         payload = json.loads(base64.b64decode(token.split(".")[1]))
-    except Exception as e:
+    except (IndexError, ValueError) as e:
         logger.warning(
             f"failed to parse token: {e}. falling back to anonymous access"
         )

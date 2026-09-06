@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import datetime, timezone
 
 from rich.text import Text
@@ -14,11 +15,11 @@ from fr24.utils import dataclass_frozen
 class Time:
     timestamp: None | TimestampS[int]
 
-    def __format__(self, __format_spec: str) -> str:
+    def __format__(self, format_spec: str, /) -> str:
         if self.timestamp is None:
             return ""
         dt = datetime.fromtimestamp(self.timestamp, tz=timezone.utc)
-        return format(dt, __format_spec)
+        return format(dt, format_spec)
 
 
 def fmt_airport(airport: AirportJSON | None) -> Text:
@@ -75,19 +76,22 @@ RED = "#cf7a78"
 GREY = "#959595"
 
 
+STATUS_COLOURS: Mapping[str, str] = {
+    "Scheduled": BLUE,
+    "Departed": GREEN,
+    "Estimated": GREEN,
+    "Landed": GREEN,
+    "Delayed": ORANGE,
+    "Canceled": RED,
+    "Diverted": RED,
+    "Unknown": GREY,
+}
+
+
 def fmt_status(
     status_text: str,
     *,
-    colours: dict[str, str] = {
-        "Scheduled": BLUE,
-        "Departed": GREEN,
-        "Estimated": GREEN,
-        "Landed": GREEN,
-        "Delayed": ORANGE,
-        "Canceled": RED,
-        "Diverted": RED,
-        "Unknown": GREY,
-    },
+    colours: Mapping[str, str] = STATUS_COLOURS,
 ) -> Text:
     for status, status_color in colours.items():
         if status_text.startswith(status):

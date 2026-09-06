@@ -42,15 +42,12 @@ jobs:
         run: uv sync
 
       - name: Style checking
-        continue-on-error: true
         run: |
-          uv run ruff check src tests
-          uv run ruff format --check src tests
-      
+          uv run ruff check src tests scripts docs/usage/scripts
+          uv run ruff format --check src tests scripts docs
+
       - name: Signature checking
-        continue-on-error: true
-        run: |
-          uv run --script scripts/check_signature.py
+        run: uv run --script scripts/check_signature.py
 
       # weird mypy false positive: Untyped decorator makes function "playback" untyped  [misc]
       # mypy>2 doesn't support py39 anyway so we ignore it.

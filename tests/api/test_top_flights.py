@@ -36,9 +36,7 @@ async def test_top_flights_file_ops(
     fp.unlink(missing_ok=True)
 
     top_flights_result.write_table(cache)
-    assert fp.exists(), (
-        f"{fp} not in {list(f.name for f in fp.parent.glob('*'))}"
-    )
+    assert fp.exists(), f"{fp} not in {[f.name for f in fp.parent.glob('*')]}"
 
     df_local = cache.top_flights.scan_table(ident).collect()
     assert df_local.equals(top_flights_result.to_polars())

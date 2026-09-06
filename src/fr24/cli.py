@@ -16,7 +16,9 @@ from typing import (
     Callable,
     Literal,
     NamedTuple,
+    ParamSpec,
     Protocol,
+    TypeAlias,
     TypedDict,
     TypeVar,
     get_args,
@@ -28,7 +30,6 @@ import click
 import typer
 from rich.console import Console
 from rich.logging import RichHandler
-from typing_extensions import ParamSpec, TypeAlias
 
 from . import BBOX_FRANCE_UIR, FR24, BoundingBox, FR24Cache, service
 from .cache import PATH_CACHE
@@ -149,15 +150,15 @@ Fmts: TypeAlias = tuple[Literal["table"], ...]
 FMT_DEFAULT: Fmts = ("table",)
 
 P = ParamSpec("P")
-S = TypeVar("S", bound=SupportsWriteTable, covariant=True)
+S_co = TypeVar("S_co", bound=SupportsWriteTable, covariant=True)
 
 
-class ServiceCommand(Protocol[P, S]):
+class ServiceCommand(Protocol[P, S_co]):
     __name__: str
 
     async def __call__(
         self, fr24: FR24, *args: P.args, **kwargs: P.kwargs
-    ) -> S: ...
+    ) -> S_co: ...
 
 
 def register_command(
@@ -166,10 +167,10 @@ def register_command(
     *,
     fmts: Fmts = FMT_DEFAULT,
 ) -> Callable[[ServiceCommand[P, SupportsWriteTable]], Callable[P, None]]:
-    def decorator(command_func: ServiceCommand[P, S]) -> Callable[P, None]:
+    def decorator(command_func: ServiceCommand[P, S_co]) -> Callable[P, None]:
         async def command_body(*args: P.args, **kwargs: P.kwargs) -> None:
             path = kwargs.pop("output")
-            format = kwargs.pop("format")
+            output_format = kwargs.pop("format")
             when_file_exists = kwargs.pop("when_file_exists")
 
             async with FR24() as fr24:
@@ -177,7 +178,7 @@ def register_command(
                 result = await command_func(fr24, *args, **kwargs)
                 result.write_table(
                     path,  # type: ignore
-                    format=format,  # type: ignore
+                    format=output_format,  # type: ignore
                     when_file_exists=when_file_exists,  # type: ignore
                 )
 

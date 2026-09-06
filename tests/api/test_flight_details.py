@@ -45,9 +45,7 @@ async def test_flight_details_file_ops(
     fp.unlink(missing_ok=True)
 
     flight_details_result.write_table(cache)
-    assert fp.exists(), (
-        f"{fp} not in {list(f.name for f in fp.parent.glob('*'))}"
-    )
+    assert fp.exists(), f"{fp} not in {[f.name for f in fp.parent.glob('*')]}"
 
     df_local = cache.flight_details.scan_table(flight_id, timestamp).collect()
     assert df_local.equals(flight_details_result.to_polars())

@@ -1,5 +1,5 @@
 import time
-from typing import Generator
+from collections.abc import Generator
 
 import pytest
 
@@ -7,7 +7,7 @@ from fr24 import FR24
 from fr24.service import NearestFlightsResult
 
 
-@pytest.fixture(autouse=True, scope="function")
+@pytest.fixture(autouse=True)
 def slow_down() -> Generator[None, None, None]:
     """Ratelimit API tests to avoid overloading the server."""
 

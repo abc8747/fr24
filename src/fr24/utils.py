@@ -5,6 +5,7 @@ import logging
 import re
 import sys
 import time
+from collections.abc import Iterator, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,21 +15,19 @@ from typing import (
     Any,
     Callable,
     Generic,
-    Iterator,
     Literal,
     NamedTuple,
     Protocol,
-    Sequence,
     TypeVar,
     Union,
     overload,
-)
-
-from typing_extensions import (
-    assert_never,
-    dataclass_transform,
     runtime_checkable,
 )
+
+if sys.version_info >= (3, 11):
+    from typing import assert_never, dataclass_transform
+else:
+    from typing_extensions import assert_never, dataclass_transform
 
 dataclass_opts: dict[str, bool] = {}
 if sys.version_info >= (3, 10):
@@ -38,7 +37,11 @@ if TYPE_CHECKING:
     from typing import NoReturn
 
     import polars as pl
-    from typing_extensions import TypeAlias
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
     from .clients import ResponseLike
     from .types import (

@@ -80,7 +80,7 @@ async def test_ll_flight_list(curl_client: CurlAsyncClient) -> None:
 
 @pytest.mark.anyio
 async def test_flight_list_reg(fr24: FR24) -> None:
-    with pytest.raises(ValueError):  # missing reg/flight
+    with pytest.raises(ValueError, match="expected one of `reg` or `flight`"):
         _ = await fr24.flight_list.fetch()
     result = await fr24.flight_list.fetch(reg=REG)
     data = result.to_dict()
@@ -134,7 +134,7 @@ async def test_flight_list_reg_paginate(fr24: FR24) -> None:
         assert updated_rows >= curr_rows
         assert updated_rows <= curr_rows + df_new.height
         if i > 2:
-            assert False, "infinite loop"
+            pytest.fail("infinite loop")
         i += 1
 
     assert results.to_polars().height > 0
@@ -190,7 +190,7 @@ async def test_flight_list_reg_file_ops(fr24: FR24, cache: FR24Cache) -> None:
         fp.unlink(missing_ok=True)
         save()
         assert fp.exists(), (
-            f"{fp} not in {list(f.name for f in fp.parent.glob('*'))}"
+            f"{fp} not in {[f.name for f in fp.parent.glob('*')]}"
         )
 
         df = pl.read_parquet(fp)

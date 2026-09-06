@@ -12,9 +12,9 @@ from __future__ import annotations
 import io
 import logging
 import os
+from collections.abc import Generator
 from contextlib import redirect_stdout
 from pathlib import Path
-from typing import Generator
 
 import click
 from typer.main import get_command
@@ -56,9 +56,9 @@ def main() -> None:
     os.environ["COLUMNS"] = "80"
     app.rich_markup_mode = None
     path_docs = Path(__file__).parent.parent / "docs"
-    with open(path_docs / "usage" / "cli_output.txt", "w") as f:
-        for output in process_command(get_command(app), ["fr24"]):
-            f.write(output)
+    output_path = path_docs / "usage" / "cli_output.txt"
+    with output_path.open("w") as f:
+        f.writelines(process_command(get_command(app), ["fr24"]))
 
 
 if __name__ == "__main__":

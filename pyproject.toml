@@ -70,7 +70,7 @@ typing = [
     "mypy>=2; python_version >= '3.10'", # mypy==2.0 dropped support for py39
     "types-protobuf>=6,<7",
 ]
-lint = ["ruff>=0.7.2"]
+lint = ["ruff>=0.16"]
 test = [
     "anyio>=4.8.0",
     "eval-type-backport>=0.2.0", # for pydantic, <3.10 syntax
@@ -88,18 +88,24 @@ docs = [
 
 
 [tool.ruff]
-lint.select = [
-    "E",
-    "W", # pycodestyle
-    "F", # pyflakes
-    "I", # isort
-    "NPY", # numpy
-    "DTZ", # flake8-datetimez
-    "RUF",
-]
 exclude = ["proto"]
 line-length = 80
 target-version = "py39"
+
+[tool.ruff.lint]
+extend-select = [
+    "NPY",
+    "PT",
+    "A", # shadowing
+    "PTH", # prefer pathlib over os.path and built-in open()
+    "RUF006", # keep references to created asyncio tasks
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/fr24/types/cache.py" = ["UP007"] # py39 get_type_hints incompatibility
+
+[tool.ruff.lint.flake8-builtins]
+ignorelist = ["format"] # public API keyword
 
 [tool.mypy]
 python_version = "3.10"

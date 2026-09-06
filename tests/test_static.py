@@ -1,4 +1,5 @@
-from typing import Awaitable, Callable, Type
+from collections.abc import Awaitable
+from typing import Callable
 
 import pytest
 from pydantic import TypeAdapter
@@ -20,7 +21,7 @@ from fr24.types.static import (
 
 
 @pytest.mark.parametrize(
-    "fetch_data,static_data_type",
+    ("fetch_data", "static_data_type"),
     [
         (fetch_aircraft_family, AircraftFamily),
         (fetch_airlines, Airlines),
@@ -31,7 +32,7 @@ from fr24.types.static import (
 @pytest.mark.anyio
 async def test_fetch_static_types(
     fetch_data: Callable[[CurlAsyncClient], Awaitable[StaticData]],
-    static_data_type: Type[StaticData],
+    static_data_type: type[StaticData],
     curl_client: CurlAsyncClient,
 ) -> None:
     data = await fetch_data(curl_client)

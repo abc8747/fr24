@@ -78,6 +78,7 @@ from fr24 import FR24, BoundingBox
 
 bbox = BoundingBox(south=42, north=52, west=-8, east=10)
 
+
 async def main() -> None:
     async with FR24() as client:
         result = await client.live_feed.fetch(bbox)
@@ -104,16 +105,19 @@ from fr24 import FR24, FR24Cache, BBOX_FRANCE_UIR
 
 cache = FR24Cache.default()
 
+
 async def main() -> None:
     async with FR24() as client:
         result = await client.live_feed.fetch(BBOX_FRANCE_UIR)
         # on Linux, this writes to ~/.cache/fr24/feed/{timestamp_s}.parquet
         result.write_table(cache)
 
+
 def some_time_later() -> None:
     for fp in cache.live_feed.glob("*"):
         print(fp)
         print(cache.live_feed.scan_table(fp).collect())
+
 
 if __name__ == "__main__":
     asyncio.run(main())

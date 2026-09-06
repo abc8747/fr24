@@ -2,16 +2,22 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import sys
+from collections.abc import (
+    AsyncGenerator,
+    AsyncIterator,
+    Sequence,
+)
+from collections.abc import (
+    Set as AbstractSet,
+)
 from dataclasses import dataclass, field
 from typing import (
     TYPE_CHECKING,
     Any,
-    AsyncGenerator,
-    AsyncIterator,
     Generic,
     Literal,
     Protocol,
-    Sequence,
     TypeVar,
     Union,
     runtime_checkable,
@@ -22,6 +28,7 @@ from google.protobuf.json_format import MessageToDict
 from .cache import FR24Cache
 from .clients import ResponseLike
 from .grpc import (
+    DEFAULT_LIVE_FEED_FIELDS,
     BoundingBox,
     FlightDetailsParams,
     FollowFlightParams,
@@ -108,7 +115,11 @@ from .utils import (
 
 if TYPE_CHECKING:
     import polars as pl
-    from typing_extensions import TypeAlias
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
     from . import HTTPClient
 
@@ -504,9 +515,7 @@ class LiveFeedService(SupportsFetch[LiveFeedParams]):
         stats: bool = False,
         limit: int = 1500,
         maxage: DurationS[int] = 14400,
-        fields: set[LiveFeedField] = (
-            lambda: {"flight", "reg", "route", "type"}
-        )(),  # type: ignore
+        fields: AbstractSet[LiveFeedField] = DEFAULT_LIVE_FEED_FIELDS,
     ) -> LiveFeedResult:
         """Fetch the live feed.
 
@@ -586,9 +595,7 @@ class LiveFeedPlaybackService(SupportsFetch[LiveFeedPlaybackParams]):
         stats: bool = False,
         limit: int = 1500,
         maxage: DurationS[int] = 14400,
-        fields: set[LiveFeedField] = (
-            lambda: {"flight", "reg", "route", "type"}
-        )(),  # type: ignore
+        fields: AbstractSet[LiveFeedField] = DEFAULT_LIVE_FEED_FIELDS,
         timestamp: IntoTimestamp | Literal["now"] = "now",
         duration: DurationS[int] = 7,
         hfreq: int | None = None,

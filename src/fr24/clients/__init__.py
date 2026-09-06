@@ -1,13 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import AsyncIterator, Awaitable, Mapping, Sequence
 from importlib.util import find_spec
 from typing import (
-    AsyncIterator,
-    Awaitable,
     Callable,
-    Mapping,
     Protocol,
-    Sequence,
     Union,
 )
 

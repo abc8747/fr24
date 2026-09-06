@@ -35,9 +35,7 @@ async def test_playback_file_ops(fr24: FR24, cache: FR24Cache) -> None:
     fp.parent.mkdir(parents=True, exist_ok=True)
     fp.unlink(missing_ok=True)
     result.write_table(cache)
-    assert fp.exists(), (
-        f"{fp} not in {list(f.name for f in fp.parent.glob('*'))}"
-    )
+    assert fp.exists(), f"{fp} not in {[f.name for f in fp.parent.glob('*')]}"
 
     df_local = cache.playback.scan_table(ident).collect()
     assert df_local.equals(result.to_polars())

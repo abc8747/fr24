@@ -9,7 +9,6 @@ instead, we should use a dynamic bounding box that will change every 30 minutes
 to reduce the number of requests
 """
 
-# ruff: noqa: E501
 # fmt: off
 LNGS_WORLD_STATIC = [
     -180, -117, -110, -100, -95, -90, -85, -82, -79, -75, -68, -30, -2, 1,

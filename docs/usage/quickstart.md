@@ -1,3 +1,6 @@
+<!-- fmt: off -->
+<!-- Ruff parses MkDocs snippet directives as Python expressions. -->
+
 # Library Quickstart
 
 Most code is developed using asynchronous programming, enabling parallel execution of multiple queries and achieve high performance.

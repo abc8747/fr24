@@ -24,10 +24,10 @@ from .utils import (
 )
 
 if TYPE_CHECKING:
-    from typing import Generator
+    from collections.abc import Generator
+    from typing import Literal
 
     import polars as pl
-    from typing_extensions import Literal
 
     from .types import IntoFlightId, IntoTimestamp
     from .types.cache import TabularFileFmt

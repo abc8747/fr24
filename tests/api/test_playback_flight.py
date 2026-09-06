@@ -62,9 +62,7 @@ async def test_playback_flight_file_ops(
     fp.unlink(missing_ok=True)
 
     playback_flight_result.write_table(cache)
-    assert fp.exists(), (
-        f"{fp} not in {list(f.name for f in fp.parent.glob('*'))}"
-    )
+    assert fp.exists(), f"{fp} not in {[f.name for f in fp.parent.glob('*')]}"
 
     df_local = cache.playback_flight.scan_table(flight_id, timestamp).collect()
     assert df_local.equals(playback_flight_result.to_polars())

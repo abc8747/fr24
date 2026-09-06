@@ -32,9 +32,7 @@ async def test_nearest_flights_file_ops(
     fp.unlink(missing_ok=True)
 
     nearest_flights_result.write_table(cache)
-    assert fp.exists(), (
-        f"{fp} not in {list(f.name for f in fp.parent.glob('*'))}"
-    )
+    assert fp.exists(), f"{fp} not in {[f.name for f in fp.parent.glob('*')]}"
 
     df_local = cache.nearest_flights.scan_table(lon, lat, timestamp).collect()
     assert df_local.equals(nearest_flights_result.to_polars())

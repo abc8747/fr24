@@ -117,17 +117,17 @@ class AircraftWidget(Static):
     def update_info(
         self,
         reg: None | str = None,
-        hex: None | str = None,
+        icao24: None | str = None,
         typecode: None | str = None,
     ) -> None:
-        if reg is None or hex is None or typecode is None:
+        if reg is None or icao24 is None or typecode is None:
             self.type.update()
             self.hex.update()
             self.reg.update()
             self.aircraft_id = ""
         else:
             self.type.update(typecode)
-            self.hex.update(hex.lower())
+            self.hex.update(icao24.lower())
             self.reg.update(reg)
             self.aircraft_id = reg
 

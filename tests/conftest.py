@@ -1,7 +1,7 @@
 import logging
 import tempfile
+from collections.abc import AsyncGenerator
 from pathlib import Path
-from typing import AsyncGenerator
 
 import httpx
 import pytest
@@ -50,5 +50,5 @@ def cache() -> FR24Cache:
 @pytest.fixture(scope="session", autouse=True)
 async def fr24(
     curl_client: CurlAsyncClient,
-) -> AsyncGenerator[FR24, None]:
-    yield FR24(curl_client)
+) -> FR24:
+    return FR24(curl_client)

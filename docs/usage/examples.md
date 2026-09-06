@@ -1,3 +1,6 @@
+<!-- fmt: off -->
+<!-- Ruff parses MkDocs snippet directives as Python expressions. -->
+
 # Overview
 
 | Name                                                                                  | Low-level API                                                                           | Service and Cache Location                                                                                                                                                                                           |

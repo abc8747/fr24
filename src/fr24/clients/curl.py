@@ -1,12 +1,19 @@
 from __future__ import annotations
 
-from typing import Any, AsyncIterator, Iterator, Mapping, Protocol, cast
+import sys
+from collections.abc import AsyncIterator, Iterator, Mapping
+from typing import Protocol, cast
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from curl_cffi.requests import AsyncSession, Headers
 from curl_cffi.requests import Request as CurlRequest
 from curl_cffi.requests import Response as CurlCffiResponse
 from curl_cffi.requests.session import HttpMethod
+
+if sys.version_info >= (3, 11):
+    from typing import Self
+else:
+    from typing_extensions import Self
 
 from . import AsyncClientLike, QueryValue, ResponseLike
 
@@ -112,10 +119,10 @@ class CurlAsyncClient(AsyncClientLike):
     async def aclose(self) -> None:
         await self._session.close()
 
-    async def __aenter__(self) -> CurlAsyncClient:
+    async def __aenter__(self) -> Self:
         return self
 
-    async def __aexit__(self, *args: Any) -> None:
+    async def __aexit__(self, *args: object) -> None:
         await self.aclose()
 
 

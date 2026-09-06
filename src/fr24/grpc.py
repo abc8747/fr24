@@ -21,8 +21,11 @@ Methods:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Mapping, NamedTuple, Sequence, Union
+import sys
+from collections.abc import Mapping, Sequence
+from collections.abc import Set as AbstractSet
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, NamedTuple, Union
 
 from google.protobuf.field_mask_pb2 import FieldMask
 from google.protobuf.message import Message
@@ -79,11 +82,16 @@ from .utils import (
 )
 
 if TYPE_CHECKING:
-    from typing import Annotated, AsyncGenerator, Literal
+    from collections.abc import AsyncGenerator
+    from typing import Annotated, Literal
 
     import polars as pl
     from google.protobuf.internal.enum_type_wrapper import _V, _EnumTypeWrapper
-    from typing_extensions import TypeAlias
+
+    if sys.version_info >= (3, 10):
+        from typing import TypeAlias
+    else:
+        from typing_extensions import TypeAlias
 
     from .types import IntoFlightId, IntoTimestamp
     from .types.cache import (
@@ -98,6 +106,11 @@ if TYPE_CHECKING:
         TrailPointRecord,
     )
     from .types.grpc import LiveFeedField
+
+DEFAULT_LIVE_FEED_FIELDS: AbstractSet[LiveFeedField] = frozenset(
+    {"flight", "reg", "route", "type"}
+)
+
 
 #
 # helpers
@@ -160,9 +173,7 @@ class LiveFeedParams(SupportsToProto[LiveFeedRequest]):
     """
     maxage: DurationS[int] = 14400
     """Maximum time since last message update, seconds."""
-    fields: set[LiveFeedField] = field(
-        default_factory=lambda: {"flight", "reg", "route", "type"}
-    )
+    fields: AbstractSet[LiveFeedField] = DEFAULT_LIVE_FEED_FIELDS
     """Fields to include. For unauthenticated users, a maximum of 4 fields can
     be included.
     When authenticated, `squawk`, `vspeed`, `airspace`, `logo_id` and `age`
@@ -270,9 +281,7 @@ class LiveFeedPlaybackParams(SupportsToProto[PlaybackRequest]):
     """
     maxage: DurationS[int] = 14400
     """Maximum time since last message update, seconds."""
-    fields: set[LiveFeedField] = field(
-        default_factory=lambda: {"flight", "reg", "route", "type"}
-    )
+    fields: AbstractSet[LiveFeedField] = DEFAULT_LIVE_FEED_FIELDS
     """Fields to include.
     For unauthenticated users, a maximum of 4 fields can be included.
     When authenticated, `squawk`, `vspeed`, `airspace`, `logo_id` and `age`

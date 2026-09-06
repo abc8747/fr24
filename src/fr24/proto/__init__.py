@@ -9,8 +9,7 @@ import struct
 
 from google.protobuf.message import Message
 from ..utils import Result, Ok, Err
-from typing import Union, Protocol
-from typing_extensions import runtime_checkable
+from typing import Protocol, Union, runtime_checkable
 
 
 T_co = TypeVar("T_co", bound=Message, covariant=True)
