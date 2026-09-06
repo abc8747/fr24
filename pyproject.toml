@@ -30,6 +30,9 @@ classifiers = [
 dependencies = [
     "orjson>=3.11.0",
     "platformdirs>=4.3.8",
+    # NOTE: protobuf 6.x will reach EOL on Mar 31, 2027.
+    # protobuf 7.x drops support for py39, so drop py39 by then.
+    # also update protoc from 33->36
     "protobuf>=6.33,<7",
     "isqx>=0.1.2",
     "typing_extensions>=4.5.0",
