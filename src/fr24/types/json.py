@@ -1,7 +1,12 @@
 from __future__ import annotations
 
 import sys
-from typing import Annotated, Literal, TypedDict, Union
+from typing import Annotated, Literal, Union
+
+from typing_extensions import TypedDict
+
+# we are using typing_extensions.TypedDict because in python<3.12, stdlib implementations
+# of typeddict lack the metadata pydantic 2.x needs for validation.
 
 if sys.version_info >= (3, 11):
     from typing import NotRequired, Required, TypeGuard
@@ -121,8 +126,8 @@ class AircraftAge(TypedDict):
 
 
 class AircraftAvailability(TypedDict):
-    serialNo: bool
-    age: bool
+    serialNo: bool | None
+    age: bool | None
 
 
 class _GenericStatus(TypedDict):
@@ -199,6 +204,7 @@ class _Timezone(TypedDict):
 
 # prior to v0.2.0 this was `common.Airport`
 class CommonAirport(TypedDict):
+    id: NotRequired[int]
     name: str
     code: _AirportCode
     position: _AirportPosition
@@ -281,11 +287,11 @@ class AircraftInfo(TypedDict):
     registration: None | str
     owner: NotRequired[OwnerData]
     airline: NotRequired[AirlineData]
-    country: None | FlightListCountry
+    country: NotRequired[None | FlightListCountry]
     hex: None | str
-    restricted: bool
+    restricted: bool | None
     serialNo: None | str
-    age: AircraftAge
+    age: AircraftAge | None
     availability: AircraftAvailability
 
 
@@ -311,8 +317,8 @@ class FlightListItem(TypedDict):
     identification: Identification
     status: StatusData
     aircraft: AircraftInfo
-    owner: OwnerData
-    airline: AirlineData
+    owner: OwnerData | None
+    airline: AirlineData | None
     airport: AirportPairData
     time: FlightListTime
 
@@ -327,9 +333,9 @@ class FlightListResponse(TypedDict):
     page: Page
     timestamp: TimestampS[int]
     data: list[FlightListItem] | None
-    # TODO: depending on whether the flight list was queried by reg or flight
-    # this may change - check this again
-    aircraftInfo: AircraftInfo
+    # if the query is a registration (e.g. reg=F-HEPK), it will return AircraftInfo
+    # otherwise for flight numbers (e.g. flight=AF7463), it will be null.
+    aircraftInfo: AircraftInfo | None
     aircraftImages: list[AircraftImage]
 
 
@@ -685,8 +691,6 @@ class AircraftEntry(EntryBase):
 Entry = Union[
     AirportEntry, OperatorEntry, LiveEntry, ScheduleEntry, AircraftEntry
 ]
-# NOTE: in tests, we use Annotated[Entry, pydantic.Discriminator("type")]
-# not adding here because pydantic belongs to test dependencies
 
 
 def is_airport(entry: Entry) -> TypeGuard[AirportEntry]:

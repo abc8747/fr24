@@ -1,13 +1,9 @@
-from typing import Annotated
-
 import pytest
-from pydantic import BaseModel, ConfigDict, Discriminator
+from pydantic import TypeAdapter
 
 from fr24 import FR24
 from fr24.types.json import (
-    Entry,
-    Info,
-    Stats,
+    Find,
     is_aircraft,
     is_airport,
     is_live,
@@ -16,15 +12,7 @@ from fr24.types.json import (
 )
 from fr24.utils import get_current_timestamp
 
-
-# overwriting the original FindResult for now
-# https://github.com/python/typing/issues/1467
-class FindResult(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    results: list[Annotated[Entry, Discriminator("type")]]
-    stats: Stats
-    info: Info
+FIND_ADAPTER = TypeAdapter(Find)
 
 
 @pytest.mark.anyio
@@ -40,7 +28,7 @@ async def test_find_airport(fr24: FR24) -> None:
             found_francazal = True
     assert found_francazal
 
-    FindResult.model_validate(list_)
+    FIND_ADAPTER.validate_python(list_, extra="forbid", strict=True)
 
 
 @pytest.mark.anyio
@@ -55,7 +43,7 @@ async def test_find_aircraft(fr24: FR24) -> None:
 
     assert found_bhpb
 
-    FindResult.model_validate(list_)
+    FIND_ADAPTER.validate_python(list_, extra="forbid", strict=True)
 
 
 @pytest.mark.anyio
@@ -69,7 +57,7 @@ async def test_find_operator(fr24: FR24) -> None:
             found_cathay = True
     assert found_cathay
 
-    FindResult.model_validate(list_)
+    FIND_ADAPTER.validate_python(list_, extra="forbid", strict=True)
 
 
 @pytest.mark.anyio
@@ -92,4 +80,4 @@ async def test_find_schedule_and_live(fr24: FR24) -> None:
     assert list_["stats"]["count"]["live"] == live_count
     assert live_count > 0
 
-    FindResult.model_validate(list_)
+    FIND_ADAPTER.validate_python(list_, extra="forbid", strict=True)
