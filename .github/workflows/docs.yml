@@ -36,11 +36,8 @@ jobs:
         with:
           python-version: "3.14"
 
-      - name: Install the project
-        run: uv sync --all-extras --all-groups
-
       - name: Build with Zensical
-        run: uv run zensical build --clean # no cache for zensical v0.0.x
+        run: uv run --locked --no-default-groups --group docs zensical build --clean
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
