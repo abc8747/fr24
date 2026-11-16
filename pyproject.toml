@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fr24"
-version = "0.4.0"
+version = "0.4.1"
 description = "Retrieve Flightradar24 data over gRPC"
 authors = [
     { name = "Abraham Cheung", email = "abraham@ylcheung.com" },
@@ -25,10 +25,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Typing :: Typed",
 ]
 dependencies = [
-    "orjson>=3.11.0",
+    "orjson>=3.11.0,<3.11.6; python_version < '3.10'",
+    "orjson>=3.12.0; python_version >= '3.10'",
     "platformdirs>=4.3.8",
     # NOTE: protobuf 6.x will reach EOL on Mar 31, 2027.
     # protobuf 7.x drops support for py39, so drop py39 by then.

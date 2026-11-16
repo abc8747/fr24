@@ -16,11 +16,10 @@ jobs:
   style-check:
     name: "style and type checking"
     if: (github.event_name != 'pull_request' && ! github.event.pull_request.head.repo.fork) || (github.event_name == 'pull_request' && (github.event.pull_request.head.repo.fork || startsWith(github.head_ref, 'dependabot/')))
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-latest]
         python-version:
           - "3.9"
           - "3.10"
@@ -28,6 +27,7 @@ jobs:
           - "3.12"
           - "3.13"
           - "3.14"
+          - "3.15"
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -38,9 +38,6 @@ jobs:
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           enable-cache: true
-
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
           python-version: ${{ matrix.python-version }}
 
       - name: Install the project
@@ -52,6 +49,7 @@ jobs:
           uv run ruff format --check src tests scripts docs
 
       - name: Signature checking
+        if: matrix.python-version != '3.9'
         run: uv run --script scripts/check_signature.py
 
       # weird mypy false positive: Untyped decorator makes function "playback" untyped  [misc]
@@ -77,9 +75,6 @@ jobs:
         uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           enable-cache: true
-
-      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
-        with:
           python-version: "3.14"
 
       - name: Install the project

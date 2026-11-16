@@ -96,9 +96,10 @@ class CurlAsyncClient(AsyncClientLike):
                 request_headers["content-type"] = (
                     "application/x-www-form-urlencoded"
                 )
-        return CurlRequest(
-            url=url, headers=request_headers, method=method, body=body
-        )
+        # NOTE: curl-cffi 0.13.0 doesn't accept body in constructor
+        request = CurlRequest(url=url, headers=request_headers, method=method)
+        request.body = body
+        return request
 
     async def send(
         self, request: CurlRequest, *, stream: bool = False
@@ -107,7 +108,7 @@ class CurlAsyncClient(AsyncClientLike):
             cast(HttpMethod, request.method),
             request.url,
             headers=request.headers,
-            content=request.body,
+            data=request.body,
             stream=stream,
         )
         if not stream:

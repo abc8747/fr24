@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import asyncio
 from copy import deepcopy
+from dataclasses import replace
 from pathlib import Path
-from typing import Callable, cast
+from typing import Callable
 
+import httpx
 import orjson
 import polars as pl
 import pytest
-from curl_cffi.requests import Response as CurlCFFIResponse
 from pydantic import TypeAdapter
 
 from fr24 import FR24, FR24Cache
@@ -158,17 +159,21 @@ async def test_flight_list_reg_concat(fr24: FR24) -> None:
     results = fr24.flight_list.new_result_collection()
 
     data["result"]["response"]["data"] = left
-    left_result = deepcopy(result)
-    cast(CurlCFFIResponse, left_result.response).content = orjson.dumps(data)
-    results.append(left_result)
+    results.append(
+        replace(
+            result, response=httpx.Response(200, content=orjson.dumps(data))
+        )
+    )
     assert results.to_polars().height == len(
         {flight_identity(flight) for flight in left}
     )
 
     data["result"]["response"]["data"] = right
-    right_result = deepcopy(result)
-    cast(CurlCFFIResponse, right_result.response).content = orjson.dumps(data)
-    results.append(right_result)
+    results.append(
+        replace(
+            result, response=httpx.Response(200, content=orjson.dumps(data))
+        )
+    )
     assert results.to_polars().height == len(
         {flight_identity(flight) for flight in [*left, *right]}
     )
