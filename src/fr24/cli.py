@@ -8,6 +8,7 @@ import inspect
 import logging
 import sys
 from collections.abc import Sequence
+from collections.abc import Set as AbstractSet
 from pathlib import Path
 from typing import (
     IO,
@@ -56,6 +57,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 app = typer.Typer(pretty_exceptions_show_locals=False, no_args_is_help=True)
+_TYPER_HAS_CLICK_TYPE = (
+    "click_type" in inspect.signature(typer.Option).parameters
+)
 
 
 @app.command()
@@ -229,6 +233,10 @@ def create_typer_signature(
             help_text = (
                 extra_help if help_text is None else f"{help_text}{extra_help}"
             )
+        if "click_type" in kwargs and not _TYPER_HAS_CLICK_TYPE:
+            # typer 0.29 removed `click_type`: a click `ParamType` is also a
+            # callable taking the raw value, so it can be passed as `parser`
+            kwargs["parser"] = kwargs.pop("click_type")
         new_annotation = Annotated[  # type: ignore
             param_overrides.get("hint") or type_hint,
             typer.Option(help=help_text, **kwargs),
@@ -400,7 +408,8 @@ def get_typer_parameter_override(type_: type) -> TyperParamOverride:
             "kwargs": {"click_type": BoundingBoxParser()},
             "extra_help": f"Example (france UIR): `{example}`",
         }
-    if origin is set and LiveFeedField in type_args:
+    # `Set[...]` from `collections.abc` has `collections.abc.Set` as origin, not `set`
+    if origin in (set, AbstractSet) and LiveFeedField in type_args:
         return {
             "hint": list[str],
             "kwargs": {"click_type": click.Choice(get_args(LiveFeedField))},
