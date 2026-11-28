@@ -16,8 +16,7 @@ from collections.abc import Generator
 from contextlib import redirect_stdout
 from pathlib import Path
 
-import click
-from typer.main import get_command
+from typer.main import TyperCommand, TyperGroup, get_command
 
 from fr24.cli import app
 
@@ -25,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 def process_command(
-    command: click.Command, parent_context: list[str]
+    command: TyperCommand | TyperGroup, parent_context: list[str]
 ) -> Generator[str, None, None]:
     command_path = " ".join(parent_context)
     logger.info(f"`{command_path} --help`")
@@ -33,7 +32,7 @@ def process_command(
     with redirect_stdout(string_io):
         command.main(
             ["--help"],
-            prog_name=parent_context[0],
+            prog_name=command_path,
             standalone_mode=False,
         )
     help_text = string_io.getvalue().strip().replace("\\[", "[")
@@ -44,7 +43,7 @@ $ {command_path} --help
 {help_text}
 --8<-- [end:{ident}]
 """
-    if not isinstance(command, click.Group):
+    if not isinstance(command, TyperGroup):
         return
     for subcommand_name, subcommand in command.commands.items():
         yield from process_command(

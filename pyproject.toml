@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fr24"
-version = "0.4.1"
+version = "0.4.2"
 description = "Retrieve Flightradar24 data over gRPC"
 authors = [
     { name = "Abraham Cheung", email = "abraham@ylcheung.com" },
@@ -48,10 +48,13 @@ curl = [
 ]
 polars = ["polars>=1.19.0"]
 cli = [
-    "fr24[polars]", # almost all cli commands export to csv or parquet
-    "typer>=0.19", # comes with rich
+    "fr24[polars]; python_version >= '3.10'", # almost all cli commands export to csv or parquet
+    "typer>=0.26; python_version >= '3.10'", # comes with rich
 ]
-tui = ["fr24[cli]", "textual>=1.0.0"]
+tui = [
+    "fr24[cli]; python_version >= '3.10'",
+    "textual>=1.0.0; python_version >= '3.10'",
+]
 
 [project.scripts]
 fr24 = 'fr24.cli:app'
