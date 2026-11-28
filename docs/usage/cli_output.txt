@@ -27,7 +27,7 @@ Commands:
 --8<-- [start:fr24_dirs]
 $ fr24 dirs --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 dirs [OPTIONS]
 
   Shows relevant directories
 
@@ -37,7 +37,7 @@ Options:
 --8<-- [start:fr24_tui]
 $ fr24 tui --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 tui [OPTIONS]
 
   Starts the TUI
 
@@ -47,27 +47,27 @@ Options:
 --8<-- [start:fr24_flight-list]
 $ fr24 flight-list --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 flight-list [OPTIONS]
 
   Fetch the flight list.
 
 Options:
-  --reg TEXT                      Aircraft registration (e.g. `B-HUJ`)
-  --flight TEXT                   Flight number (e.g. `CX8747`)
-  --page INTEGER                  Page number  [default: 1]
-  --limit INTEGER                 Number of results per page - use `100` if
+  --reg <str>                     Aircraft registration (e.g. `B-HUJ`)
+  --flight <str>                  Flight number (e.g. `CX8747`)
+  --page <int>                    Page number  [default: 1]
+  --limit <int>                   Number of results per page - use `100` if
                                   authenticated.  [default: 10]
-  --timestamp TIMESTAMP_S         Show flights with ATD before this Unix
+  --timestamp timestamp_s         Show flights with ATD before this Unix
                                   timestamp  [default: now]
-  --filter-by [historic]          If `historic`, do not return scheduled or
+  --filter-by <historic>          If `historic`, do not return scheduled or
                                   live flights
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   flight_list.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -75,30 +75,30 @@ Options:
 --8<-- [start:fr24_flight-list-all]
 $ fr24 flight-list-all --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 flight-list-all [OPTIONS]
 
   Fetch all pages of the flight list.
 
 Options:
-  --reg TEXT                      Aircraft registration (e.g. `B-HUJ`)
-  --flight TEXT                   Flight number (e.g. `CX8747`)
-  --page INTEGER                  Page number  [default: 1]
-  --limit INTEGER                 Number of results per page - use `100` if
+  --reg <str>                     Aircraft registration (e.g. `B-HUJ`)
+  --flight <str>                  Flight number (e.g. `CX8747`)
+  --page <int>                    Page number  [default: 1]
+  --limit <int>                   Number of results per page - use `100` if
                                   authenticated.  [default: 10]
-  --timestamp TIMESTAMP_S         Show flights with ATD before this Unix
+  --timestamp timestamp_s         Show flights with ATD before this Unix
                                   timestamp  [default: now]
-  --filter-by [historic]          If `historic`, do not return scheduled or
+  --filter-by <historic>          If `historic`, do not return scheduled or
                                   live flights
-  --delay INTEGER                 Delay between requests in seconds.
+  --delay <int>                   Delay between requests in seconds.
                                   [default: 5]
-  --max-pages INTEGER             Maximum number of pages to fetch.
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  --max-pages <int>               Maximum number of pages to fetch.
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   flight_list_all.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -106,23 +106,23 @@ Options:
 --8<-- [start:fr24_playback]
 $ fr24 playback --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 playback [OPTIONS]
 
   Fetch the playback data for a flight.
 
 Options:
-  --flight-id FLIGHT_ID           fr24 flight id, represented in hex
+  --flight-id flight_id           fr24 flight id, represented in hex
                                   [required]
-  --timestamp TIMESTAMP_S         Actual time of departure (ATD) of the
+  --timestamp timestamp_s         Actual time of departure (ATD) of the
                                   historic flight, Unix timestamp in seconds.
                                   Optional, but it is recommended to include
                                   it.
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default: playback.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -130,35 +130,34 @@ Options:
 --8<-- [start:fr24_live-feed]
 $ fr24 live-feed --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 live-feed [OPTIONS]
 
   Fetch the live feed.
 
 Options:
-  --bounding-box SOUTH,NORTH,WEST,EAST
+  --bounding-box south,north,west,east
                                   Example (france UIR): `42.0, 52.0, -8.0,
                                   10.0`  [required]
   --stats / --no-stats            Whether to include stats in the given area.
                                   [default: no-stats]
-  --limit INTEGER                 Maximum number of flights (should be set to
+  --limit <int>                   Maximum number of flights (should be set to
                                   1500 for unauthorized users, 2000 for
                                   authorized users).  [default: 1500]
-  --maxage INTEGER                Maximum time since last message update,
+  --maxage <int>                  Maximum time since last message update,
                                   seconds.  [default: 14400]
   --fields [flight|reg|route|type|squawk|vspeed|airspace|logo_id|age]
                                   Fields to include. For unauthenticated
                                   users, a maximum of 4 fields can be
                                   included. When authenticated, `squawk`,
                                   `vspeed`, `airspace`, `logo_id` and `age`
-                                  can be included.  [default: {'reg',
-                                  'flight', 'route', 'type'}]
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+                                  can be included.  [default: flight, reg,
+                                  route, type]
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
-                                  default cache.  [default:
-                                  live_feed.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+                                  default cache.  [default: live_feed.parquet]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -166,41 +165,41 @@ Options:
 --8<-- [start:fr24_live-feed-playback]
 $ fr24 live-feed-playback --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 live-feed-playback [OPTIONS]
 
   Fetch a playback of the live feed.
 
 Options:
-  --bounding-box SOUTH,NORTH,WEST,EAST
+  --bounding-box south,north,west,east
                                   Example (france UIR): `42.0, 52.0, -8.0,
                                   10.0`  [required]
   --stats / --no-stats            Whether to include stats in the given area.
                                   [default: no-stats]
-  --limit INTEGER                 Maximum number of flights (should be set to
+  --limit <int>                   Maximum number of flights (should be set to
                                   1500 for unauthorized users, 2000 for
                                   authorized users).  [default: 1500]
-  --maxage INTEGER                Maximum time since last message update,
+  --maxage <int>                  Maximum time since last message update,
                                   seconds.  [default: 14400]
   --fields [flight|reg|route|type|squawk|vspeed|airspace|logo_id|age]
                                   Fields to include. For unauthenticated
                                   users, a maximum of 4 fields can be
                                   included. When authenticated, `squawk`,
                                   `vspeed`, `airspace`, `logo_id` and `age`
-                                  can be included.  [default: {'reg',
-                                  'flight', 'route', 'type'}]
-  --timestamp TIMESTAMP_S         Start timestamp  [default: now]
-  --duration INTEGER              Duration of prefetch,
+                                  can be included.  [default: flight, reg,
+                                  route, type]
+  --timestamp timestamp_s         Start timestamp  [default: now]
+  --duration <int>                Duration of prefetch,
                                   `floor(7.5*(multiplier))` seconds  For 1x
                                   playback, this should be 7 seconds.
                                   [default: 7]
-  --hfreq INTEGER                 High frequency mode
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  --hfreq <int>                   High frequency mode
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   live_feed_playback.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -208,23 +207,23 @@ Options:
 --8<-- [start:fr24_nearest-flights]
 $ fr24 nearest-flights --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 nearest-flights [OPTIONS]
 
   Fetch the nearest flights.
 
 Options:
-  --lat FLOAT                     Latitude, degrees, -90 to 90  [required]
-  --lon FLOAT                     Longitude, degrees, -180 to 180  [required]
-  --radius INTEGER                Radius, metres  [default: 10000]
-  --limit INTEGER                 Maximum number of aircraft to return
+  --lat <float>                   Latitude, degrees, -90 to 90  [required]
+  --lon <float>                   Longitude, degrees, -180 to 180  [required]
+  --radius <int>                  Radius, metres  [default: 10000]
+  --limit <int>                   Maximum number of aircraft to return
                                   [default: 1500]
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   nearest_flights.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -232,20 +231,20 @@ Options:
 --8<-- [start:fr24_live-flights-status]
 $ fr24 live-flights-status --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 live-flights-status [OPTIONS]
 
   Fetch the live flights status.
 
 Options:
-  --flight-ids FLIGHT_ID          List of flight IDs to get status for
+  --flight-ids flight_id          List of flight IDs to get status for
                                   [required]
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   live_flights_status.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -253,27 +252,27 @@ Options:
 --8<-- [start:fr24_flight-details]
 $ fr24 flight-details --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 flight-details [OPTIONS]
 
   Fetch flight details.
 
 Options:
-  --flight-id FLIGHT_ID           Flight ID to fetch details for. Must be
+  --flight-id flight_id           Flight ID to fetch details for. Must be
                                   live, or the response will contain an empty
                                   `DATA` frame error.  [required]
-  --restriction-mode FLIGHT_ID    [FAA LADD](https://www.faa.gov/pilots/ladd)
+  --restriction-mode flight_id    [FAA LADD](https://www.faa.gov/pilots/ladd)
                                   visibility mode.  [default: 0]
   --verbose / --no-verbose        Whether to include [fr24.proto.v1_pb2.Flight
                                   DetailsResponse.flight_plan] and [fr24.proto
                                   .v1_pb2.FlightDetailsResponse.aircraft_detai
                                   ls] in the response.  [default: verbose]
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   flight_details.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -281,20 +280,20 @@ Options:
 --8<-- [start:fr24_top-flights]
 $ fr24 top-flights --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 top-flights [OPTIONS]
 
   Fetch the top flights.
 
 Options:
-  --limit INTEGER                 Maximum number of top flights to return
+  --limit <int>                   Maximum number of top flights to return
                                   (1-10)  [default: 10]
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   top_flights.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -302,23 +301,23 @@ Options:
 --8<-- [start:fr24_playback-flight]
 $ fr24 playback-flight --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 playback-flight [OPTIONS]
 
   Fetch playback flight details.
 
 Options:
-  --flight-id FLIGHT_ID           Flight ID to fetch details for. Must not be
+  --flight-id flight_id           Flight ID to fetch details for. Must not be
                                   live, or the response will contain an empty
                                   `DATA` frame error.  [required]
-  --timestamp TIMESTAMP_S         Actual time of departure (ATD) of the
+  --timestamp timestamp_s         Actual time of departure (ATD) of the
                                   historic flight  [required]
-  -o, --output FILEPATH|CACHE|-   Save results to a specific filepath. If `-`,
+  -o, --output filepath|cache|-   Save results to a specific filepath. If `-`,
                                   results will be printed to stdout. If
                                   `cache`, results will be saved to the
                                   default cache.  [default:
                                   playback_flight.parquet]
-  -f, --format [parquet|csv]      Output format  [default: parquet]
-  --when-file-exists [backup|error|overwrite]
+  -f, --format <parquet|csv>      Output format  [default: parquet]
+  --when-file-exists <backup|error|overwrite>
                                   Action when output file path already exists.
                                   [default: backup]
   --help                          Show this message and exit.
@@ -326,7 +325,7 @@ Options:
 --8<-- [start:fr24_auth]
 $ fr24 auth --help
 
-Usage: fr24 [OPTIONS] COMMAND [ARGS]...
+Usage: fr24 auth [OPTIONS] COMMAND [ARGS]...
 
   Commands for authentication
 
@@ -340,7 +339,7 @@ Commands:
 --8<-- [start:fr24_auth_show]
 $ fr24 auth show --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 auth show [OPTIONS]
 
   Shows authentication status
 
@@ -350,7 +349,7 @@ Options:
 --8<-- [start:fr24_auth_create]
 $ fr24 auth create --help
 
-Usage: fr24 [OPTIONS]
+Usage: fr24 auth create [OPTIONS]
 
   Create a template config file in the user config directory
 

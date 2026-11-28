@@ -1,19 +1,23 @@
-"""CLI requires Python 3.10+ to work."""
-# technically 3.9 works but lack of X | Y is annoying
-
 from __future__ import annotations
+
+import sys
+
+if sys.version_info < (3, 10):
+    raise SystemExit("fr24 CLI requires Python 3.10 or newer. ")
+    # technically 3.9 works but lack of X | Y is annoying
+    # besides, typer>0.26 requires py3.10+
+
 
 import asyncio
 import inspect
 import logging
-import sys
-from collections.abc import Sequence
+from collections.abc import Callable, Sequence
+from collections.abc import Set as AbstractSet
 from pathlib import Path
 from typing import (
     IO,
     Annotated,
     Any,
-    Callable,
     Literal,
     NamedTuple,
     ParamSpec,
@@ -26,7 +30,6 @@ from typing import (
     get_type_hints,
 )
 
-import click
 import typer
 from rich.console import Console
 from rich.logging import RichHandler
@@ -170,8 +173,14 @@ def register_command(
     def decorator(command_func: ServiceCommand[P, S_co]) -> Callable[P, None]:
         async def command_body(*args: P.args, **kwargs: P.kwargs) -> None:
             path = kwargs.pop("output")
+            if path == "-":
+                path = sys.stdout.buffer
+            elif path == "cache":
+                path = FR24Cache.default()
             output_format = kwargs.pop("format")
             when_file_exists = kwargs.pop("when_file_exists")
+            if "fields" in kwargs:
+                kwargs["fields"] = set(kwargs["fields"])
 
             async with FR24() as fr24:
                 await fr24.login()
@@ -233,7 +242,12 @@ def create_typer_signature(
             param_overrides.get("hint") or type_hint,
             typer.Option(help=help_text, **kwargs),
         ]
-        new_params.append(param.replace(annotation=new_annotation))
+        default = param.default
+        if isinstance(default, AbstractSet):
+            default = sorted(default)  # to make the cli output determinsitic
+        new_params.append(
+            param.replace(annotation=new_annotation, default=default)
+        )
     if fmts:
         default_fmt = "parquet" if "table" in fmts else "json"
         new_params.extend(
@@ -242,10 +256,7 @@ def create_typer_signature(
                     "output",
                     inspect.Parameter.KEYWORD_ONLY,
                     annotation=Annotated[
-                        # NOTE: for Annotated[T, typer.Option(parser=P)],
-                        # `typer` always tries to build a converter based on `T`
-                        # even though a custom parser `P` is provided.
-                        Any,  # this disables typer from building a converter
+                        str,
                         typer.Option(
                             "-o",
                             "--output",
@@ -255,10 +266,11 @@ def create_typer_signature(
                                 "If `cache`, results will be saved to the "
                                 "default cache."
                             ),
-                            parser=FilePathParser(),
+                            parser=parse_output,
+                            metavar="filepath|cache|-",
                         ),
                     ],
-                    default=Path(f"{default_filename}.{default_fmt}"),
+                    default=f"{default_filename}.{default_fmt}",
                 ),
                 inspect.Parameter(
                     "format",
@@ -288,101 +300,66 @@ def create_typer_signature(
     )
 
 
-class BoundingBoxParser(click.ParamType):
-    # weirdly, typer reads the `__name__` to show the type in the help message
-    __name__ = name = "south,north,west,east"
-
-    def convert(
-        self,
-        value: Any,
-        param: click.Parameter | None,
-        ctx: click.Context | None,
-    ) -> BoundingBox:
-        try:
-            parts = tuple(float(p.strip()) for p in str(value).split(","))
-        except ValueError as e:
-            self.fail(
-                f"could not convert {value!r} to BoundingBox: {e}", param, ctx
-            )
-        if len(parts) != 4:
-            self.fail(
-                f"expected 4 comma separated values, got {value!r}", param, ctx
-            )
-        return BoundingBox(*parts)
+def parse_bounding_box(value: str) -> BoundingBox:
+    try:
+        south, north, west, east = map(float, value.split(","))
+    except ValueError as exc:
+        raise typer.BadParameter(
+            "expected four comma-separated numbers"
+        ) from exc
+    return BoundingBox(south, north, west, east)
 
 
-class TimestampSParser(click.ParamType):
-    __name__ = name = "timestamp_s"
-
-    def __init__(self, allow_now: bool) -> None:
-        self.allow_now = allow_now
-
-    def convert(
-        self,
-        value: Any,
-        param: click.Parameter | None,
-        ctx: click.Context | None,
-    ) -> TimestampS[int] | Literal["now"]:
-        if (
-            isinstance(value, str)
-            and value.lower() == "now"
-            and not self.allow_now
-        ):
-            self.fail(
-                "this command does not support `now` as a timestamp.",
-                param,
-                ctx,
-            )
-
-        return to_unix_timestamp(value)  # type: ignore
+def parse_timestamp(value: str) -> TimestampS[int] | Literal["now"]:
+    try:
+        return to_unix_timestamp(value)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
 
 
-class FlightIdParser(click.ParamType):
-    __name__ = name = "flight_id"
-
-    def convert(
-        self,
-        value: Any,
-        param: click.Parameter | None,
-        ctx: click.Context | None,
-    ) -> IntFlightId:
-        try:
-            return to_flight_id(value)
-        except ValueError as e:
-            self.fail(
-                f"could not convert {value!r} to FlightId: {e}",
-                param,
-                ctx,
-            )
+def parse_past_timestamp(value: str) -> TimestampS[int]:
+    timestamp = parse_timestamp(value)
+    if timestamp == "now":
+        raise typer.BadParameter(
+            "this command does not support `now` as a timestamp."
+        )
+    return timestamp
 
 
-class FilePathParser(click.ParamType):
-    __name__ = name = "filepath|cache|-"
+def parse_flight_id(value: str) -> IntFlightId:
+    try:
+        return to_flight_id(value)
+    except ValueError as exc:
+        raise typer.BadParameter(f"invalid flight ID: {value!r}") from exc
 
-    def convert(
-        self,
-        value: Any,
-        param: click.Parameter | None,
-        ctx: click.Context | None,
-    ) -> Path | IO[bytes] | FR24Cache:
-        if value == "-":
-            return sys.stdout.buffer
-        if value == "cache":
-            return FR24Cache.default()
-        path = Path(value).resolve()
-        if path.is_dir():
-            self.fail(
-                f"expected a file path, got a directory: {path!r}",
-                param,
-                ctx,
-            )
-        return path
+
+def parse_output(value: str) -> Path | Literal["cache", "-"]:
+    if value == "-" or value == "cache":
+        return value
+    path = Path(value).resolve()
+    if path.is_dir():
+        raise typer.BadParameter(
+            f"expected a file path, got a directory: {path!r}"
+        )
+    return path
+
+
+def parse_live_feed_field(value: str) -> LiveFeedField:
+    if value not in get_args(LiveFeedField):
+        raise typer.BadParameter(f"invalid live feed field: {value!r}")
+    return value  # type: ignore
+
+
+class TyperOptionKwargs(TypedDict, total=False):
+    parser: Callable[[str], object]
+    metavar: str
+    show_default: bool
 
 
 class TyperParamOverride(TypedDict, total=False):
-    hint: type | None
-    kwargs: dict[str, Any]
-    extra_help: str | None
+    hint: type
+    kwargs: TyperOptionKwargs
+    extra_help: str
 
 
 _IntoTimestampArgs = set(get_args(IntoTimestamp))
@@ -390,36 +367,47 @@ _IntoFlightIdArgs = set(get_args(IntoFlightId))
 
 
 def get_typer_parameter_override(type_: type) -> TyperParamOverride:
-    """Typer and click do not support `Union` as args. We need to provide custom
-    parsers for specific types."""
     origin = get_origin(type_)
     type_args = set(get_args(type_))
     if type_ is BoundingBox:
         example = ", ".join(f"{v:.1f}" for v in BBOX_FRANCE_UIR)
         return {
-            "kwargs": {"click_type": BoundingBoxParser()},
+            "hint": str,
+            "kwargs": {
+                "parser": parse_bounding_box,
+                "metavar": "south,north,west,east",
+            },
             "extra_help": f"Example (france UIR): `{example}`",
         }
-    if origin is set and LiveFeedField in type_args:
+    if origin in (set, AbstractSet) and LiveFeedField in type_args:
         return {
             "hint": list[str],
-            "kwargs": {"click_type": click.Choice(get_args(LiveFeedField))},
+            "kwargs": {
+                "parser": parse_live_feed_field,
+                "metavar": "[" + "|".join(get_args(LiveFeedField)) + "]",
+            },
         }
     if _IntoTimestampArgs.issubset(type_args):
-        allow_now = Literal["now"] in type_args
         return {
-            "hint": int,
-            "kwargs": {"click_type": TimestampSParser(allow_now=allow_now)},
+            "hint": str,
+            "kwargs": {
+                "parser": (
+                    parse_timestamp
+                    if Literal["now"] in type_args
+                    else parse_past_timestamp
+                ),
+                "metavar": "timestamp_s",
+            },
         }
     if type_args == _IntoFlightIdArgs:
         return {
-            "hint": int,
-            "kwargs": {"click_type": FlightIdParser()},
+            "hint": str,
+            "kwargs": {"parser": parse_flight_id, "metavar": "flight_id"},
         }
     if origin is Sequence and IntoFlightId in type_args:
         return {
-            "hint": list[IntFlightId],
-            "kwargs": {"click_type": FlightIdParser()},
+            "hint": list[str],
+            "kwargs": {"parser": parse_flight_id, "metavar": "flight_id"},
         }
     return {}
 
